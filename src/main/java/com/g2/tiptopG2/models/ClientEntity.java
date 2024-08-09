@@ -10,7 +10,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -18,19 +17,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="Clients")
+@Table(name = "Client")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientEntity implements Serializable {
-	@Id()
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Integer id;
-	@Column(nullable = false)
-	private String nom;
-	@Column(nullable = false)
-	private String prenom;
-	private String telephone;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
 
+    @Column(nullable = false)
+    private String nom;
 
+    @Column(nullable = false)
+    private String prenom;
+
+    private String telephone;
+
+    @OneToMany(mappedBy = "client")
+    private List<CodeGaintEntity> gaints; // Utilisez CodeGaintEntity ici
 }
