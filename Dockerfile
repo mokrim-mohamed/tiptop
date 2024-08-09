@@ -12,7 +12,7 @@ ENV SPRING_DATASOURCE_URL=jdbc:mysql://host.docker.internal:3306/test
 ENV SPRING_DATASOURCE_USERNAME=root
 ENV SPRING_DATASOURCE_PASSWORD=
 
-# Exposer le port 8080
+# Exposer le port 
 EXPOSE 8080
 
 # Commande pour exécuter le JAR
