@@ -1,0 +1,99 @@
+pipeline {
+    agent any  // Utiliser n'importe quel agent disponible
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('id_token_prv')
+        CLOUDSDK_CORE_PROJECT = 'protean-depot-430512-d1'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Récupérer le code source depuis le repository
+                git url: 'https://github.com/mokrim-mohamed/projetArchi', branch: 'developper'
+            }
+        }
+
+        stage('Echo Message') {
+            steps {
+                // Exemple de commande pour afficher un message
+                sh 'echo "Le code a été récupéré avec succès et le pipeline est en cours d\'exécution."'
+            }
+        }
+
+        stage('Check Docker') {
+            steps {
+                script {
+                    // Vérifier que Docker est accessible et obtenir la version
+                    sh 'docker --version'
+
+                    // Optionnel : Exécuter un conteneur Docker basique pour vérifier que Docker fonctionne correctement
+                   // sh 'docker run --rm hello-world'
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    // Construire l'image Docker
+                    sh 'mvn clean package'
+                   
+                    sh 'docker build -t mokrim/test:latest .'
+                    echo 'Image a été créée.'
+                }
+            }
+        }
+
+        stage('Login') {
+            steps {
+                script {
+                    // Se connecter à Docker Hub
+                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                    sh 'echo Login réussi'
+                }
+            }
+        }
+
+        stage('Push') {
+            steps {
+                // Pousser l'image Docker sur Docker Hub
+                sh 'docker push mokrim/test:latest'
+            }
+        }
+
+        stage('Deploy to GCP') {
+            steps {
+                script {
+                    // Authentifier avec Google Cloud Platform en utilisant le fichier de clé GCP
+                    withCredentials([file(credentialsId: 'gcp_key_jenkins', variable: 'GCP_KEY_FILE')]) {
+                        sh '''
+                            gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
+                            gcloud config set project "$CLOUDSDK_CORE_PROJECT"
+                            gcloud compute instances list
+                             docker stop my_container || true
+                                docker rm my_container || true
+                            gcloud compute ssh --zone="us-central1-b" "instance-20240727-201048" -- "
+                            docker stop my_container || true 
+                            docker rm my_container || true 
+                            docker pull mokrim/test:latest && docker run -d -p 8080:8080 --name my_container mokrim/test:latest"
+
+                        '''
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Le pipeline s\'est terminé avec succès.'
+            sh 'docker logout'
+        }
+
+        failure {
+            echo 'Le pipeline a échoué.'
+            sh 'docker logout'
+        }
+    }
+}
