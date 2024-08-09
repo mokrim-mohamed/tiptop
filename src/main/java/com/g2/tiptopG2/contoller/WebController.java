@@ -9,4 +9,5 @@ public class WebController {
     public String index() {
         return "index"; // Correspond à src/main/resources/templates/index.html pour Thymeleaf
     }
+  
 }
