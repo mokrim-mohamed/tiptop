@@ -66,7 +66,7 @@ pipeline {
             steps {
                 script {
                     // Authentifier avec Google Cloud Platform en utilisant le fichier de clé GCP
-                    withCredentials([file(credentialsId: 'gcp_key_jenkins', variable: 'GCP_KEY_FILE')]) {
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCP_KEY_FILE')]) {
                         sh '''
                             gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
                             gcloud config set project "$CLOUDSDK_CORE_PROJECT"
