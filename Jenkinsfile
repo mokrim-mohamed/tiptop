@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     // Construire l'image Docker
-                    sh 'mvn clean package -f my-project/pom.xml'
+                    sh 'mvn clean package'
                    
                     sh 'docker build -t mokrim/test:nano .'
                     echo 'Image a été créée.'
