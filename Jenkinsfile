@@ -28,7 +28,8 @@ pipeline {
                     sh 'docker --version'
 
                     // Optionnel : Exécuter un conteneur Docker basique pour vérifier que Docker fonctionne correctement
-                   sh 'ls -l'
+                   sh 'ls -l my-project'
+
                 }
             }
         }
