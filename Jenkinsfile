@@ -81,7 +81,7 @@ pipeline {
                 -e SPRING_DATASOURCE_URL=jdbc:mysql://34.163.160.174/test \
                 -e SPRING_DATASOURCE_USERNAME=mokrim \
                 -e SPRING_DATASOURCE_PASSWORD=Mokrim123! \
-                --name my_container mokrim/test:latest"
+                --name my_container mokrim/test:nano"
 
                         '''
                     }
