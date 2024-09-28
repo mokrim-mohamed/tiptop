@@ -28,7 +28,7 @@ pipeline {
                     sh 'docker --version'
 
                     // Optionnel : Exécuter un conteneur Docker basique pour vérifier que Docker fonctionne correctement
-                   // sh 'docker run --rm hello-world'
+                   sh 'ls -l'
                 }
             }
         }
