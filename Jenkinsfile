@@ -3,14 +3,14 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('id_token_prv')
-        CLOUDSDK_CORE_PROJECT = 'protean-depot-430512-d1'
+        CLOUDSDK_CORE_PROJECT = 'g2-archi-o23'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Récupérer le code source depuis le repository
-                git url: 'https://github.com/mokrim-mohamed/projetArchi', branch: 'developper'
+                git url: 'https://github.com/mokrim-mohamed/projetArchi', branch: 'main'
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
                     // Construire l'image Docker
                     sh 'mvn clean package'
                    
-                    sh 'docker build -t mokrim/test:latest .'
+                    sh 'docker build -t mokrim/test:nano .'
                     echo 'Image a été créée.'
                 }
             }
@@ -73,10 +73,10 @@ pipeline {
                             gcloud compute instances list
                              docker stop my_container || true
                                 docker rm my_container || true
-                            gcloud compute ssh --zone="us-central1-b" "instance-20240727-201048" -- "
+                            gcloud compute ssh --zone="europe-west9-c" "env-test" -- "
                             docker stop my_container || true 
                             docker rm my_container || true 
-                            docker pull mokrim/test:latest && docker run -d -p 8080:8080 --name my_container mokrim/test:latest"
+                            docker pull mokrim/test:nano && docker run -d -p 8080:8080 --name my_container mokrim/test:latest"
 
                         '''
                     }
