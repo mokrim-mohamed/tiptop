@@ -59,7 +59,7 @@ pipeline {
         stage('Push') {
             steps {
                 // Pousser l'image Docker sur Docker Hub
-                sh 'docker push mokrim/test:latest'
+                sh 'docker push mokrim/test:nano'
             }
         }
 
