@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Récupérer le code source depuis le repository
-                git url: 'https://github.com/mokrim-mohamed/projetArchi', branch: 'main'
+                git url: 'https://github.com/mokrim-mohamed/toptop', branch: 'main'
             }
         }
 
@@ -28,7 +28,7 @@ pipeline {
                     sh 'docker --version'
 
                     // Optionnel : Exécuter un conteneur Docker basique pour vérifier que Docker fonctionne correctement
-                   sh 'ls -l my-project'
+                  
 
                 }
             }
