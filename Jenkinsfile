@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Récupérer le code source depuis le repository
-                git url: 'https://github.com/mokrim-mohamed/toptop', branch: 'main'
+                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'main'
             }
         }
 
