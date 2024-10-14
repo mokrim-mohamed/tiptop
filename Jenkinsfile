@@ -3,14 +3,14 @@ pipeline {
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('id_token_prv')
-        CLOUDSDK_CORE_PROJECT = 'protean-depot-430512-d1'
+        CLOUDSDK_CORE_PROJECT = 'g2-archi-o23'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Récupérer le code source depuis le repository
-                git url: 'https://github.com/mokrim-mohamed/projetArchi', branch: 'developper'
+                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'main'
             }
         }
 
@@ -28,7 +28,8 @@ pipeline {
                     sh 'docker --version'
 
                     // Optionnel : Exécuter un conteneur Docker basique pour vérifier que Docker fonctionne correctement
-                   // sh 'docker run --rm hello-world'
+                  
+
                 }
             }
         }
@@ -39,7 +40,7 @@ pipeline {
                     // Construire l'image Docker
                     sh 'mvn clean package'
                    
-                    sh 'docker build -t mokrim/test:latest .'
+                    sh 'docker build -t mokrim/test:nano .'
                     echo 'Image a été créée.'
                 }
             }
@@ -58,7 +59,7 @@ pipeline {
         stage('Push') {
             steps {
                 // Pousser l'image Docker sur Docker Hub
-                sh 'docker push mokrim/test:latest'
+                sh 'docker push mokrim/test:nano'
             }
         }
 
@@ -73,10 +74,14 @@ pipeline {
                             gcloud compute instances list
                              docker stop my_container || true
                                 docker rm my_container || true
-                            gcloud compute ssh --zone="us-central1-b" "instance-20240727-201048" -- "
+                            gcloud compute ssh --zone="europe-west9-c" "env-test" -- "
                             docker stop my_container || true 
                             docker rm my_container || true 
-                            docker pull mokrim/test:latest && docker run -d -p 8080:8080 --name my_container mokrim/test:latest"
+                            docker pull mokrim/test:nano && docker run -d -p 8080:8080 \
+                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.163.160.174/test \
+                -e SPRING_DATASOURCE_USERNAME=mokrim \
+                -e SPRING_DATASOURCE_PASSWORD=Mokrim123! \
+                --name my_container mokrim/test:nano"
 
                         '''
                     }
