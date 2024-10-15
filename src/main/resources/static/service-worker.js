@@ -5,8 +5,7 @@ const urlsToCache = [
   '/',
   '/index.html',
   '/manifest.json',
-  '/images/icons/icon-192x192.png',
-  '/images/icons/icon-512x512.png'
+  '/image/icon-512x512.png'
 ];
 
 // Install event - cache important assets
