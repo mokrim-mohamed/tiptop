@@ -1,43 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
+
 <head>
     <meta charset="UTF-8">
-    <title>Clients List</title>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch('/api/clients') // GET request to fetch clients
-                .then(response => response.json())
-                .then(data => {
-                    const clientsTable = document.getElementById('clientsTable');
-                    data.forEach(client => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${client.id}</td>
-                            <td>${client.nom}</td>
-                            <td>${client.prenom}</td>
-                            <td>${client.telephone}</td>
-                        `;
-                        clientsTable.appendChild(row);
-                    });
-                })
-                .catch(error => console.error('Error:', error));
-        });
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participer à un concours</title>
+    <link rel="stylesheet" href="css/client.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
-    <h1>Clients List</h1>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Téléphone</th>
-            </tr>
-        </thead>
-        <tbody id="clientsTable">
-            <!-- Rows will be inserted here by JavaScript -->
-        </tbody>
-    </table>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#"><img src="logo.png" alt="Thé Tip Top" height="50"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="#">Accueil</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">A propos</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">FAQ</a></li>
+            </ul>
+            <button class="btn btn-dark">Déconnexion</button>
+        </div>
+    </nav>
+
+    <!-- Participation Section -->
+    <section class="participation-section">
+        <h1>J'ai un code</h1>
+        <div class="participation-bar">
+            <input type="text" placeholder="Entrez votre code">
+            <button class="btn btn-dark">Participer</button>
+        </div>
+        <p class="text-danger">Code invalide</p>
+    </section>
+
+    <!-- Mes Gains Section -->
+    <section class="gains-section">
+        <h1>Mes gains</h1>
+        <div class="gain-card">
+            <img src="gain_image.jpg" alt="Gain">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <ul>
+                <li><a href="#">A propos</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <p>© 2024 Thé Tip Top | Ceci est un projet étudiant, aucune commande ne sera honorée</p>
+            <div class="social-icons">
+                <a href="#"><img src="facebook.png" alt="Facebook" width="30"></a>
+                <a href="#"><img src="instagram.png" alt="Instagram" width="30"></a>
+                <a href="#"><img src="tiktok.png" alt="TikTok" width="30"></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
