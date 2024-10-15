@@ -2,7 +2,7 @@ package com.g2.tiptopG2.models;
 
 import java.io.Serializable;
 import java.util.List;
-
+//test
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
