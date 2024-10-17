@@ -11,7 +11,7 @@ public class WebController {
     }
     @GetMapping("/clients")
     public String getClients() {
-        return "clients"; // Correspond à src/main/resources/templates/index.html pour Thymeleaf
+        return "client"; // Correspond à src/main/resources/templates/index.html pour Thymeleaf
     }    
   
 }
