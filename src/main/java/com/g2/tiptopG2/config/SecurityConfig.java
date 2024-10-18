@@ -22,7 +22,6 @@ public class SecurityConfig {
                 .requestMatchers("/css/**").permitAll() 
                 .requestMatchers("/js/**").permitAll() 
                 .requestMatchers("/image/**").permitAll()
-                
                 // Permettre l'accès à la page d'index et aux fichiers statiques
                 .requestMatchers("/login").permitAll() // Autoriser tout le monde à accéder à la page de login
                 .requestMatchers("/admin/**").authenticated() // Protéger les pages sous /admin
