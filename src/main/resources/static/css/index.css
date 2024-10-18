@@ -66,12 +66,12 @@ button {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    margin: 0 auto; 
 }
 
 .card:hover {
     transform: translateY(-5px);
 }
-
 /* Newsletter Section */
 h5 {
     font-size: 1.5rem;
@@ -115,4 +115,8 @@ footer img {
 footer p {
     font-size: 0.9rem;
     margin: 10px 0;
+}
+.smaller-image {
+    max-width: 80%; /* Réduire davantage la taille de l'image */
+    max-height: 40%;
 }
