@@ -1,0 +1,79 @@
+/* Global */
+body {
+    background-color: #fafafa;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Navbar */
+.navbar-brand img {
+    transition: transform 0.3s ease-in-out;
+}
+.navbar-brand img:hover {
+    transform: rotate(360deg); /* Effet fun lors du survol du logo */
+}
+
+/* Header */
+h1 {
+    font-size: 3rem;
+    color: #4CAF50;
+    font-weight: 700;
+    text-transform: uppercase;
+    animation: bounce 2s infinite;
+}
+p {
+    font-size: 1.2rem;
+    color: #333;
+}
+button.btn-dark {
+    background-color: #FF5722;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+button.btn-dark:hover {
+    background-color: #FF9800;
+    transform: scale(1.05);
+}
+
+/* Carousel */
+.carousel-item img {
+    height: 500px;
+    object-fit: cover;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Cards */
+.card-body img {
+    transition: transform 0.3s ease;
+}
+.card-body img:hover {
+    transform: scale(1.1);
+}
+
+/* Footer */
+footer {
+    background-color: #4CAF50;
+    color: white;
+}
+footer p, footer a {
+    color: white;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}

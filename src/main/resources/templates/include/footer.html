@@ -1,0 +1,259 @@
+</body>
+
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="/assets/datatable/cdn.datatables.net_1.10.12_js_jquery.dataTables.min.js"></script>
+
+<!-- Template Main JS File -->
+<script src="assets/js/main.js"></script>
+
+<script>
+    // Genera un numero casuale tra 1 e 100
+    var randomNumber = Math.floor(Math.random() * 100) + 1;
+    let fire = "🔥";
+    let superFire = "🔥🔥🔥";
+    let water = "💧";
+    let superWater = "💧💧💧";
+    var i=0;
+    // Funzione per verificare il numero inserito dall'utente
+    function checkGuess() {
+
+        i++;
+
+        var guessInput = document.getElementById("guessInput");
+        var guess = parseInt(guessInput.value);
+
+        var result = document.getElementById("result");
+
+        if (isNaN(guess)) {
+            result.innerHTML = "Entrez un nombre valide.";
+        } else if (guess < 1 || guess > 100) {
+            result.innerHTML = "Saisissez un nombre compris entre 1 et 100.";
+        } else if (guess < randomNumber) {
+            result.innerHTML = "Trop bas! Essayer à nouveau.";
+        } else if (guess > randomNumber) {
+            result.innerHTML = "Trop grand! Essayer à nouveau.";
+        } else {
+            result.innerHTML = "Toutes nos félicitations! Vous avez deviné le numéro ! Vous gagnez en <strong style='color: black'>"+i+"<strong> tentatives";
+            result.style.color = "green";
+            guessInput.disabled = true;
+
+            const score = i; // Replace with the actual score value
+
+            var username = $('#username').text().trim();
+            const url = '/scores'; // Replace with the appropriate endpoint URL
+
+            const requestBody = {
+                score: score,
+                user: username
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestBody)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Score saved successfully');
+                    } else {
+                        console.error('Failed to save score');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        }
+
+        guessInput.value = "";
+        // guessInput.focus();
+    }
+
+</script>
+
+<script>
+    var currentPlayer = 'O';
+    var cells = document.getElementsByTagName('td');
+
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].addEventListener('click', cellClicked);
+    }
+
+    function cellClicked() {
+        if (this.textContent === '') {
+            this.textContent = currentPlayer;
+            checkWinner();
+            currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        }
+    }
+
+    function checkWinner() {
+        var winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        for (var i = 0; i < winningCombinations.length; i++) {
+            var combination = winningCombinations[i];
+            var a = cells[combination[0]].textContent;
+            var b = cells[combination[1]].textContent;
+            var c = cells[combination[2]].textContent;
+
+            if (a !== '' && a === b && b === c) {
+                alert('Vencedor: ' + a);
+                resetGame();
+                return;
+            }
+        }
+
+        var allCellsFilled = true;
+
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].textContent === '') {
+                allCellsFilled = false;
+                break;
+            }
+        }
+
+        if (allCellsFilled) {
+            alert('Empate!');
+            resetGame();
+        }
+    }
+
+    function resetGame() {
+        for (var i = 0; i < cells.length; i++) {
+            cells[i].textContent = '';
+        }
+
+        currentPlayer = 'X';
+    }
+</script>
+
+<script>
+    var modal1 = document.getElementById("myModalValider");
+
+    $(document).ready(function(){
+        $("#myBtn").click(function(){
+            $("#myModalSign").hide();
+            $("#myModal").modal();
+        });
+
+        $("#mySign").click(function(){
+            $("#myModal").hide();
+            $("#myModalSign").modal();
+        });
+        //modal validation
+        $("#BtnValider").trigger('click');
+        //modal cookie
+        $("#BtnCookie").trigger('click');
+
+    });
+
+
+    $("#btn_success").click(function (e) {
+       var param =  $("#requiredInput").val();
+       var usernparam =  $("#username").text().trim();
+        window.location.href = '/number?param='+param+"&user="+usernparam;
+    })
+
+</script>
+
+<!-- JavaScript to control the modal -->
+<script>
+    var openModalButton = document.getElementById("BtnValider");
+    var modal = document.getElementById("myModalValider");
+    var requiredInput = document.getElementById("requiredInput");
+
+    openModalButton.addEventListener("click", function() {
+        modal.style.display = "block";
+    });
+
+    window.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            if (requiredInput.checkValidity()) {
+                modal.style.display = "none";
+            } else {
+                window.location.reload();
+
+            }
+        }
+    });
+
+</script>
+<script>
+    // Function to update the current date and time
+    function updateDateTime() {
+        var currentDate = new Date();
+        var options = { weekday: 'long', hour: 'numeric', minute: 'numeric', second: 'numeric' };
+        var formattedDate = currentDate.toLocaleDateString('fr-FR', options);
+        document.getElementById("datetime").textContent = formattedDate;
+    }
+
+    // Call the function to update the date and time when the page loads
+    updateDateTime();
+
+    // Update the date and time every second
+    setInterval(updateDateTime, 1000);
+</script>
+
+<script>
+    // Déclaration des variables
+    var a = "un infuseur a thé ";
+    var b = "Une boite de 100g d'un thé détox ou d'infusion";
+    var c = "Une boite de 100g d'un thé signature";
+    var d = "Un coffret découverte d'une valeur 39€";
+    var e = "Un coffret découverte d'une valeur 69€";
+
+
+    // Tableau contenant les variables
+    var variables = [a, b, c, d, e];
+
+    // Récupération de l'élément <p> par son id
+    var outputElement = document.getElementById("output");
+
+    // Génération d'un indice aléatoire
+    var randomIndex = Math.floor(Math.random() * variables.length);
+
+    // Mise à jour du contenu de l'élément <p> avec la variable correspondant à l'indice aléatoire
+    outputElement.innerHTML = variables[randomIndex];
+    $("#gagne").val(variables[randomIndex]);
+    autoSubmitForm();
+    function autoSubmitForm() {
+        // Récupérer les données du formulaire
+        var formData = $("#validgagne").serialize();
+
+
+
+        // Effectuer la requête AJAX
+        $.ajax({
+            type: "POST",
+            url: "/gagne",
+            data: formData,
+            contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+            success: function (response) {
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+</script>
+
+</html>

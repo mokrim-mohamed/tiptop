@@ -47,13 +47,18 @@ button {
 }
 
 /* Carousel */
-.carousel {
-    margin-bottom: 30px;
+.carousel-item {
+    position: relative;
 }
 
-.carousel-inner img {
-    width: 100%;
-    height: auto;
+.carousel-caption {
+    position: absolute;
+    bottom: 20px; /* Positionne la légende au bas */
+    left: 15px; /* Positionne la légende à gauche */
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    color: #fff; /* Couleur du texte */
+    padding: 10px; /* Ajoute un peu de rembourrage */
+    border-radius: 5px; /* Coins arrondis */
 }
 
 /* Gifts Section */

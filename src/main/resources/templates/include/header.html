@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Jeux TipTop</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="assets/img/logo.jpeg" rel="icon">
+    <link href="assets/img/logo.jpeg" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+    <script src="/assets/js/jquery.min.js"></script>
+
+    <!-- Template Main CSS File -->
+    <link href="assets/css/style.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+
+</head>
+
+<body>
+
+<!-- ======= Top Bar ======= -->
+<div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-center justify-content-md-between">
+        <div class="align-items-center d-none d-md-flex">
+            <i class="bi bi-clock"></i> <span id="datetime"></span>
+        </div>
+        <div class="d-flex align-items-center">
+            <i class="bi bi-people"  th:if="${name != null}" id="username"> <span th:text=" ${name}"></span></i>
+        </div>
+    </div>
+</div>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+        <a href="#" style="margin-top: -20px;" class="logo me-auto" onclick="function index() {
+            var username = $('#username').text().trim();
+            window.location.href = '/index?user='+username;
+
+            }
+            index()"><img src="assets/img/logo.jpeg" alt=""></a>
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li th:if="${name != null && role==2}"> <a class="getstarted nav-link scrollto" href="#" onclick="function number_validation() {
+            var username = $('#username').text().trim();
+            window.location.href = '/number_validation?user='+username;
+
+            }
+            number_validation()" > Jeu concours </a></span> </li>
+
+                <li th:if="${name != null && (role==1 || role==3)}"> <a class="getstarted nav-link scrollto" href="#" onclick="function recherche_client() {
+            var username = $('#username').text().trim();
+            window.location.href = '/recherche_client?user='+username;
+
+            }
+            recherche_client()" > Recherche client </a></span> </li>
+
+                <li th:if="${name != null && (role==1)}"> <a class="getstarted nav-link scrollto" href="#" onclick="function statistiques() {
+            var username = $('#username').text().trim();
+            window.location.href = '/statistique?user='+username;
+
+            }
+            statistiques()" > Statistiques </a></span> </li>
+
+                <li th:if="${name != null}"> <a class="getstarted nav-link scrollto" href="#" onclick="function jouer() {
+            var username = $('#username').text().trim();
+            window.location.href = '/jouer?user='+username;
+
+            }
+            jouer()">  A propos de nous </a></span> </li>
+                <li th:if="${name != null}"> <a class="getstarted nav-link scrollto" href="#" onclick="function faq() {
+            var username = $('#username').text().trim();
+            window.location.href = '/faq?user='+username;
+
+            }
+            faq()">  FAQ </a></span> </li>
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+        <a th:if="${name == null}" href="/login" class="appointment-btn scrollto"><span class="d-none d-md-inline">Con</span>nexion</a>
+        <a th:if="${name != null}" href="/logout" style="margin-top: -20px;" class="appointment-btn scrollto"><span class="d-none d-md-inline">Se déconn</span>ecter</a>
+
+    </div>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LYWBY9ZM1X"></script> <script>   window.dataLayer = window.dataLayer || [];   function gtag(){dataLayer.push(arguments);}   gtag('js', new Date());   gtag('config', 'G-LYWBY9ZM1X'); </script>
+</header><!-- End Header -->
+

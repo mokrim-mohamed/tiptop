@@ -10,6 +10,15 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/rgbd.css"> <!-- Fichier CSS de la bannière RGPD -->
     <link rel="icon" href="/img/icon.png" sizes="192x192">
+    <style>
+        /* Ajout d'une ombre légère aux images des cadeaux */
+        .card img {
+            transition: transform 0.3s; /* Transition douce pour l'effet hover */
+        }
+        .card img:hover {
+            transform: scale(1.05); /* Agrandissement léger à l'hover */
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -49,27 +58,49 @@
         <button class="btn btn-dark">En savoir plus</button>
     </div>
 
-    <!-- Carousel -->
-    <div class="container">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+   <!-- Carousel -->
+<div class="container">
+    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="image/slide/tea-1.jpeg" class="d-block" alt="First Image">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Thé d'Été</h5>
+                    <p>Découvrez notre délicieux thé d'été.</p>
+                </div>
             </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="image1.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-item">
+                <img src="image/slide/tea-2.jpeg" class="d-block" alt="Second Image">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Thé Noir</h5>
+                    <p>Profitez d'une tasse de notre thé noir raffiné.</p>
                 </div>
-                <div class="carousel-item">
-                    <img src="image2.jpg" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                    <img src="image3.jpg" class="d-block w-100" alt="...">
+            </div>
+            <div class="carousel-item">
+                <img src="image/slide/tea-3.jpeg" class="d-block" alt="Third Image">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Thé Vert</h5>
+                    <p>Un goût rafraîchissant avec notre thé vert premium.</p>
                 </div>
             </div>
         </div>
+        
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Précédent</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Suivant</span>
+        </button>
     </div>
+</div>
+
 
     <!-- Gifts Section -->
     <div class="container text-center my-5">
@@ -107,6 +138,7 @@
         <button class="btn btn-dark">Participer</button>
     </div>
 
+    <!-- Contest Section -->
     <div class="container text-center my-5">
         <h5>Pour l'ouverture de notre 10<sup>e</sup> boutique Thé Tip Top à Nice, nous lançons un jeu-concours exceptionnel ! Tentez votre chance pour gagner une année de thé d’une valeur de 360 euros.</h5>
         <p>Plongez dans un univers de saveurs, de moments de détente et de plaisir. Participez dès maintenant et savourez votre victoire avec une tasse de Thé Tip Top.</p>
@@ -141,33 +173,22 @@
             <p class="mt-3">© 2024 Thé Tip Top | Ceci est un projet étudiant, aucune commande ne sera honorée</p>
         </div>
     </footer>
+
+    <!-- Cookie Banner -->
     <div id="cookie-banner" class="cookie-banner">
         <p>
             Notre site utilise des cookies aux seules fins d'analyse de visites et de partage réseaux sociaux. Aucune exploitation marketing autre n'en sera faite.
-            Si vous ne souhaitez pas accepter les cookies, nous vous invitons à (1) utiliser le mode de navigation privé ou (2) interdire les cookies dans votre navigateur internet.
+            Si vous ne souhaitez pas accepter les cookies, nous vous invitons à (1) utiliser le mode de navigation privé ou (2) interdire les cookies dans votre navigateur internet. 
         </p>
-        <div class="cookie-buttons">
-            <button id="accept-cookies" class="cookie-btn accept-btn">OK</button>
-            <button id="decline-cookies" class="cookie-btn decline-btn">Refuser</button>
-            <button id="settings-cookies" class="cookie-btn settings-btn">Paramètres</button>
-        </div>
+        <button class="btn btn-light" onclick="acceptCookies()">J'accepte</button>
     </div>
-    <script>
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
-              .then((registration) => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-              }, (err) => {
-                console.log('ServiceWorker registration failed: ', err);
-              });
-          });
-        }
-      </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/cookie-banner.js"></script> <!-- Fichier JS de la bannière RGPD -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/script.js"></script>
+    <script>
+        function acceptCookies() {
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+    </script>
 </body>
 </html>
