@@ -57,5 +57,10 @@ public class UserServiceImp implements IUserService {
 		
 		return UserDao.findAll().stream().map(el->modelmapper.map(el, UserResponseDto.class)).collect(Collectors.toList());
 	}
-
+	
+	@Override
+public UserResponseDto findByEmail(String email) {
+    UserEntity userEntity = UserDao.findByEmail(email);
+    return modelmapper.map(userEntity, UserResponseDto.class);
+}
 }
