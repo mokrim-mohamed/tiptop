@@ -13,5 +13,8 @@ public class UserResponseDto {
     private String sexe;
     private String email;
     private String telephone;
-    private Integer roleId;  
+    private Integer roleId; 
+    private String motDePasse;
+
+
 }

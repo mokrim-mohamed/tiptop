@@ -15,6 +15,10 @@ public class LoginController {
     public String adminPage() {
         return "admin"; // Retourner la vue de la page admin
     }
+     @GetMapping("/index")
+    public String indexPage() {
+        return "index"; // Retourner la vue de la page admin
+    }
 
     // Ajoutez d'autres méthodes pour d'autres pages protégées
 }
