@@ -1,22 +1,45 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Tea Brand</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}"> <!-- Utilisation de th:href -->
+    <script th:src="@{/js/login.js}" defer></script> <!-- Utilisation de th:src -->
 </head>
 <body>
-    <h2>Login Page</h2>
-    <form th:action="@{/login}" method="post">
-        <div>
-            <label for="username">Username:</label>
-            <input type="text" name="username" required>
+    <div class="background-container">
+        <div class="login-container">
+            <div class="login-box">
+                <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo"> <!-- Utilisation de th:src -->
+                <h2>Bienvenue</h2>
+                <form action="/login" method="post">
+                    <div class="input-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" id="username" placeholder="Entrer votre username" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="Entrer votre mot de pass" required>
+                    </div>
+                    <button type="submit">Login</button>
+                </form>
+                <div class="extra-options">
+                    <a th:href="@{/forgot-password}" class="link">Mot de passe oublié ?</a> <!-- Utilisation de th:href -->
+                    <div class="social-login">
+                        <p>Ou inscrivez-vous avec :</p>
+                        <div class="social-buttons">
+                            <a th:href="@{/login/facebook}" class="social-button"> <!-- Utilisation de th:href -->
+                                <img th:src="@{/image/facebook.png}" alt="Facebook" class="social-logo"> <!-- Utilisation de th:src -->
+                            </a>
+                            <a th:href="@{/login/google}" class="social-button"> <!-- Utilisation de th:href -->
+                                <img th:src="@{/image/google.png}" alt="Gmail" class="social-logo"> <!-- Utilisation de th:src -->
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" required>
-        </div>
-        <div>
-            <input type="submit" value="Login">
-        </div>
-    </form>
+    </div>
 </body>
 </html>

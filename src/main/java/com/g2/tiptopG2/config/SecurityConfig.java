@@ -21,7 +21,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(request -> request.requestMatchers("/", "/resources/*", "/register", "/login","index").permitAll()
+        http.authorizeHttpRequests(request -> request.requestMatchers("/", "/resources/**", "/register", "/login","index").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
                         .defaultSuccessUrl("/index", true)
