@@ -47,13 +47,25 @@ button {
 }
 
 /* Carousel */
-.carousel {
-    margin-bottom: 30px;
+.carousel-item img {
+    object-fit: cover; /* Ajuste l'image pour remplir l'espace sans la déformer */
+    height: 300px; /* Ajuste la hauteur pour uniformiser la taille des images */
+    border-radius: 10px; /* Arrondir légèrement les coins */
+}       
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Arrière-plan sombre pour les flèches */
+    border-radius: 50%; /* Arrondir les coins */
 }
 
-.carousel-inner img {
-    width: 100%;
-    height: auto;
+.carousel-caption {
+    position: absolute;
+    bottom: 20px; /* Positionne la légende au bas */
+    left: 55px; /* Positionne la légende à gauche */
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    color: #fff; /* Couleur du texte */
+    padding: 10px; /* Ajoute un peu de rembourrage */
+    border-radius: 3px; /* Coins arrondis */
 }
 
 /* Gifts Section */
@@ -61,12 +73,12 @@ button {
     border: none;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
+    margin: 0 auto; 
 }
 
 .card:hover {
     transform: translateY(-5px);
 }
-
 /* Newsletter Section */
 h5 {
     font-size: 1.5rem;
@@ -110,4 +122,44 @@ footer img {
 footer p {
     font-size: 0.9rem;
     margin: 10px 0;
+}
+.header-section {
+    display: flex; /* Utiliser flexbox pour aligner les éléments */
+    justify-content: center; /* Centre le contenu horizontalement */
+    align-items: center; /* Centre le contenu verticalement */
+}
+
+.carousel {
+    position: relative; /* Positionnement relatif pour le carrousel */
+    overflow: hidden; /* Cache tout débordement */
+}
+
+.carousel-inner {
+    width: 100%; /* S'assure que le carrousel prend toute la largeur */
+    display: flex; /* Utilisation de flexbox */
+    align-items: center; /* Centre les éléments verticalement */
+}
+
+.carousel-item {
+    display: flex; /* Utilisation de flexbox */
+    justify-content: center; /* Centre le contenu de chaque item */
+    align-items: center; /* Centre verticalement */
+    height: 400px; /* Hauteur fixe pour les items */
+    flex: 0 0 auto; /* Empêche le rétrécissement des items */
+}
+
+.carousel img {
+    max-width: 100%; /* Limite la largeur à celle de l'élément parent */
+    height: auto; /* Conserve le rapport d'aspect */
+    object-fit: cover; /* Remplit l'élément tout en conservant le rapport d'aspect */
+    
+}
+
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute; /* Positionnement absolu pour les contrôles */
+    top: 50%; /* Centre verticalement */
+    transform: translateY(-50%); /* Ajuste la position pour un centrage parfait */
+    z-index: 1; /* S'assurer que les flèches sont au-dessus des images */
 }

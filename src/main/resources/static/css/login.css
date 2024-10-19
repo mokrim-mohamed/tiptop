@@ -1,0 +1,155 @@
+/* Styles généraux */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+}
+
+.background-container {
+    position: relative;
+    background-color: #d8e4bc; /* Couleur de fond */
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 10%, transparent 30%);
+    z-index: 0; /* Pour être derrière le contenu */
+}
+
+.login-container {
+    position: relative; /* Pour que les éléments à l'intérieur apparaissent par-dessus le motif */
+    z-index: 1; /* Pour le contenu */
+}
+
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.login-box {
+    background-color: rgba(255, 255, 255, 0.9); /* Un peu plus opaque */
+    border-radius: 12px;
+    box-shadow: none; /* Retirer le cadre */
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+.logo {
+    width: 120px; /* Taille du logo ajustée */
+    margin-bottom: 20px;
+}
+
+h2 {
+    color: #4b8a08; /* Couleur du texte */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    color: #333;
+    font-size: 14px;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+button {
+    width: 100%;
+    background-color: #4b8a08;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #367507;
+}
+
+.extra-options {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.link {
+    display: block;
+    margin: 10px 0;
+    color: #367507; /* Couleur du lien */
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.social-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px; /* Espacement entre le texte et les boutons */
+}
+
+.social-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent; /* Bouton transparent */
+    border: none; /* Pas de bordure */
+    border-radius: 50%; /* Rendre les boutons ronds */
+    width: 40px; /* Largeur des boutons */
+    height: 40px; /* Hauteur des boutons */
+    margin: 0 10px; /* Espacement horizontal */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.social-button:hover {
+    background-color: rgba(200, 200, 200, 0.5); /* Légère couleur au survol */
+    transform: scale(1.1); /* Légère augmentation de la taille au survol */
+}
+
+.social-logo {
+    width: 20px; /* Ajustez la taille de l'icône */
+    height: 20px; /* Ajustez la taille de l'icône */
+}
