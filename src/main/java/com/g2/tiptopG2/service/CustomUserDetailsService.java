@@ -2,13 +2,15 @@ package com.g2.tiptopG2.service;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.g2.tiptopG2.models.UserEntity;
 import org.springframework.stereotype.Service;
 import com.g2.tiptopG2.dto.UserDto;
-
+import java.util.Collections;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -22,12 +24,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         
 
         if (byLogin == null) {
-            return null;
+            throw new UsernameNotFoundException("user mot found");
         }
-        return User.builder()
-                .username(byLogin.getNom())
-                .password(byLogin.getMotDePasse())
-                //.roles(new String[]{byLogin.getRoleId().toString()}) // Convertir en String[]
-                .build();
+        
+        return new User(byLogin.getEmail(),byLogin.getMotDePasse(),Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        
     }
 }
