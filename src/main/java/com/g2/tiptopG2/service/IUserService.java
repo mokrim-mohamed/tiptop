@@ -12,4 +12,5 @@ public interface IUserService {
 	UserDto findByEmail(String nom);
 	UserDto update(UserDto UserDto, Integer id);
 	List<UserDto> findAll();
+	
 }
