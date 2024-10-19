@@ -14,8 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.g2.tiptopG2.dao.IUserDao;
-import com.g2.tiptopG2.dto.UserRequestDto;
-import com.g2.tiptopG2.dto.UserResponseDto;
+import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.models.UserEntity;
 @SpringBootApplication
 public class TiptopG2Application {

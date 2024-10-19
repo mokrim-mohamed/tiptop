@@ -2,11 +2,11 @@ package com.g2.tiptopG2.service;
 
 import java.util.List;
 
-import com.g2.tiptopG2.dto.GainRequestDto;
-import com.g2.tiptopG2.dto.GainResponseDto;
+import com.g2.tiptopG2.dto.GainDto;
+import com.g2.tiptopG2.dto.GainDto;
 
 public interface IGainService {
-    GainResponseDto findById(Integer id);
-    GainResponseDto findByCode(String code);
-    //List<GainResponseDto> findAll();
+    GainDto findById(Integer id);
+    GainDto findByCode(String code);
+    //List<GainDto> findAll();
 }

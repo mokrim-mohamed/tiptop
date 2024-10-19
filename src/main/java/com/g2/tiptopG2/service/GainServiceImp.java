@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.g2.tiptopG2.dao.IGainDao;
-import com.g2.tiptopG2.dto.GainRequestDto;
-import com.g2.tiptopG2.dto.GainResponseDto;
+import com.g2.tiptopG2.dto.GainDto;
+import com.g2.tiptopG2.dto.GainDto;
 import com.g2.tiptopG2.models.GainEntity;
 
 @Service
@@ -25,16 +25,16 @@ public class GainServiceImp implements IGainService {
   
 
     @Override
-    public GainResponseDto findById(Integer id) {
+    public GainDto findById(Integer id) {
         GainEntity gainEntity = gainDao.findById(id)
                 .orElseThrow(() -> new RuntimeException("Gain not found"));
-        return modelMapper.map(gainEntity, GainResponseDto.class);
+        return modelMapper.map(gainEntity, GainDto.class);
     }
 
     @Override
-    public GainResponseDto findByCode(String code) {
+    public GainDto findByCode(String code) {
         GainEntity gainEntity = gainDao.findByCode(code);
-        return modelMapper.map(gainEntity, GainResponseDto.class);
+        return modelMapper.map(gainEntity, GainDto.class);
     }
 
     

@@ -8,8 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.g2.tiptopG2.dao.IRoleDao; // Assurez-vous que cette interface existe
-import com.g2.tiptopG2.dto.RoleRequestDto;
-import com.g2.tiptopG2.dto.RoleResponseDto;
+import com.g2.tiptopG2.dto.RoleDto;
+import com.g2.tiptopG2.dto.RoleDto;
 import com.g2.tiptopG2.models.RoleEntity;
 
 @Service
@@ -23,25 +23,25 @@ public class RoleServiceImp implements IRoleService {
     }
 
     @Override
-    public RoleResponseDto findById(Integer id) {
+    public RoleDto findById(Integer id) {
         RoleEntity roleEntity = roleDao.findById(id)
             .orElseThrow(() -> new RuntimeException("Role not found"));
-        return modelMapper.map(roleEntity, RoleResponseDto.class);
+        return modelMapper.map(roleEntity, RoleDto.class);
     }
 
     @Override
-    public RoleResponseDto findByRole(String role) {
+    public RoleDto findByRole(String role) {
         RoleEntity roleEntity = roleDao.findByRole(role);
         if (roleEntity == null) {
             throw new RuntimeException("Role not found");
         }
-        return modelMapper.map(roleEntity, RoleResponseDto.class);
+        return modelMapper.map(roleEntity, RoleDto.class);
     }
 
     @Override
-    public List<RoleResponseDto> findAll() {
+    public List<RoleDto> findAll() {
         return roleDao.findAll().stream()
-            .map(roleEntity -> modelMapper.map(roleEntity, RoleResponseDto.class))
+            .map(roleEntity -> modelMapper.map(roleEntity, RoleDto.class))
             .collect(Collectors.toList());
     }
 }

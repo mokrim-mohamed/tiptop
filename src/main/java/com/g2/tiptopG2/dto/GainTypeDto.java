@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class GainResponseDto {
+public class GainTypeDto {
     private Integer id; // L'identifiant du gain
-    private String code; // Le code du gain
-    private Integer userId; // ID de l'utilisateur qui a gagné
-    private Integer gainTypeId; // ID du type de gain
+    private String description; // Le code du gain
 }

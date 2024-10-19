@@ -2,11 +2,11 @@ package com.g2.tiptopG2.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.List;  // Import de la classe List
+import java.util.List;   // Import de la classe List
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDto {
+public class UserDto {
     private Integer id;
     private String nom;
     private String prenom;

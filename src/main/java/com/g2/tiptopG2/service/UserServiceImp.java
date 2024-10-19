@@ -10,8 +10,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.g2.tiptopG2.dao.IUserDao;
-import com.g2.tiptopG2.dto.UserRequestDto;
-import com.g2.tiptopG2.dto.UserResponseDto;
+import com.g2.tiptopG2.dto.UserDto;
+import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.models.UserEntity;
 @Service()
 public class UserServiceImp implements IUserService {
@@ -25,27 +25,27 @@ public class UserServiceImp implements IUserService {
 	}
 
 	@Override
-	public UserResponseDto save(UserRequestDto UserRequestDto) {
-		UserEntity UserEntity=modelmapper.map(UserRequestDto, UserEntity.class);
+	public UserDto save(UserDto UserDto) {
+		UserEntity UserEntity=modelmapper.map(UserDto, UserEntity.class);
 		UserEntity saved=UserDao.save(UserEntity);
-		return modelmapper.map(saved, UserResponseDto.class);
+		return modelmapper.map(saved, UserDto.class);
 	}
 
 	@Override
-	public UserResponseDto findById(Integer id) {
+	public UserDto findById(Integer id) {
 		UserEntity UserEntity=UserDao.findById(id).orElseThrow(()-> new RuntimeException("User not found"));
 		
-		return modelmapper.map(UserEntity, UserResponseDto.class);
+		return modelmapper.map(UserEntity, UserDto.class);
 	}
 
 	@Override
-	public UserResponseDto update(UserRequestDto UserRequestDto, Integer id) {
+	public UserDto update(UserDto UserDto, Integer id) {
 		Optional<UserEntity> UserEntityOptional=UserDao.findById(id);
 		if(UserEntityOptional.isPresent()) {
-			UserEntity UserEntity = modelmapper.map(UserRequestDto, UserEntity.class);
+			UserEntity UserEntity = modelmapper.map(UserDto, UserEntity.class);
 			
 			UserEntity updated=UserDao.save(UserEntity);
-			return modelmapper.map(updated,UserResponseDto.class);
+			return modelmapper.map(updated,UserDto.class);
 		}else {
 			return null;
 		}
@@ -53,14 +53,14 @@ public class UserServiceImp implements IUserService {
 	}
 
 	@Override
-	public List<UserResponseDto> findAll() {
+	public List<UserDto> findAll() {
 		
-		return UserDao.findAll().stream().map(el->modelmapper.map(el, UserResponseDto.class)).collect(Collectors.toList());
+		return UserDao.findAll().stream().map(el->modelmapper.map(el, UserDto.class)).collect(Collectors.toList());
 	}
 	
 	@Override
-public UserResponseDto findByEmail(String email) {
+public UserDto findByEmail(String email) {
     UserEntity userEntity = UserDao.findByEmail(email);
-    return modelmapper.map(userEntity, UserResponseDto.class);
+    return modelmapper.map(userEntity, UserDto.class);
 }
 }
