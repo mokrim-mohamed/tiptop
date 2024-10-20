@@ -21,7 +21,8 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(request -> request.requestMatchers("/", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**").permitAll()
+        http.csrf().disable()
+                .authorizeHttpRequests(request -> request.requestMatchers("/", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin()
                         .loginPage("/login")
@@ -36,6 +37,7 @@ public class SecurityConfig {
                         .invalidateHttpSession(true) // Invalider la session HTTP
                         .clearAuthentication(true)  // Effacer les informations d'authentification
                         .permitAll();
+                       
 
         return http.build();
     }
