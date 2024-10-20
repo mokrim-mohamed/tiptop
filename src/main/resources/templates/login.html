@@ -20,7 +20,7 @@
                     </div>
                     <div class="input-group">
                         <label for="password">Password</label>
-                        <input type="password" name="password" id="password" placeholder="Entrer votre mot de pass" required>
+                        <input type="password" name="password" id="password" placeholder="Entrer votre mot de passe" required>
                     </div>
                     <button type="submit">Login</button>
                 </form>
@@ -36,6 +36,8 @@
                                 <img th:src="@{/image/google.png}" alt="Gmail" class="social-logo"> <!-- Utilisation de th:src -->
                             </a>
                         </div>
+                        <!-- Ajout du lien pour l'inscription manuelle -->
+                        <p>Ou <a th:href="@{/register}" class="link">inscrivez-vous via votre email</a></p> <!-- Lien vers la page d'inscription -->
                     </div>
                 </div>
             </div>
