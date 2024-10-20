@@ -31,6 +31,10 @@ public class SecurityConfig {
                         .defaultSuccessUrl("/index", true)
                         .permitAll()
                         .and()
+                    .oauth2Login()  // Activer OAuth2 pour Google login
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/index", true)
+                        .and()
                 .logout()
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout=true") // Rediriger après une déconnexion réussie
@@ -38,6 +42,7 @@ public class SecurityConfig {
                         .clearAuthentication(true)  // Effacer les informations d'authentification
                         .permitAll();
                        
+                 
 
         return http.build();
     }
