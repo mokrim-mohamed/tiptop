@@ -8,5 +8,5 @@ import com.g2.tiptopG2.dto.GainDto;
 public interface IGainService {
     GainDto findById(Integer id);
     GainDto findByCode(String code);
-    //List<GainDto> findAll();
+    List<GainDto> findByUserIdIsNotNull();
 }

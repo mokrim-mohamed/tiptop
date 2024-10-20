@@ -12,7 +12,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -20,14 +21,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.authorizeHttpRequests(request -> request.requestMatchers("/", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**").permitAll()
-     
                         .anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login")
+                .formLogin()
+                        .loginPage("/login")
+                        .usernameParameter("username")
+                        .failureUrl("/login?error=true")
                         .defaultSuccessUrl("/index", true)
-                        .permitAll())
-                .logout(LogoutConfigurer::permitAll);
+                        .permitAll()
+                        .and()
+                .logout()
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout=true") // Rediriger après une déconnexion réussie
+                        .invalidateHttpSession(true) // Invalider la session HTTP
+                        .clearAuthentication(true)  // Effacer les informations d'authentification
+                        .permitAll();
+
         return http.build();
     }
 
@@ -36,15 +45,10 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new CustomUserDetailsService();
-    }
+  
 
-    @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
-        authenticationManagerBuilder.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder());
-        return authenticationManagerBuilder.build();
+  @Bean
+    public AuthenticationManager authManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
