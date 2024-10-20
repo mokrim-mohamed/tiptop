@@ -21,6 +21,11 @@ public class LoginController {
     public String adminUser() {
         return "/admin/user"; // Nom du fichier Thymeleaf
     }
+    @GetMapping("/admin/historique-gains")
+    public String historique() {
+        return "/admin/historique-gains"; // Nom du fichier Thymeleaf
+    }
+    
     @GetMapping("/admin/parrametre")
 public String showSettingsPage(Model model) {
     // Création d'un utilisateur fictif

@@ -22,11 +22,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.authorizeHttpRequests(request -> request.requestMatchers("/","/admin/dashboard","/admin/user","/admin/parrametre", "/resources/**","/static/**", "/css/**", "/js/**","/image/**", "/register", "/login","index","/gainUpdat").permitAll()
+        http.authorizeHttpRequests(request -> request.requestMatchers("/","/admin/dashboard","/admin/user","/admin/parrametre", "/resources/**","/static/**", "/css/**", "/js/**","/image/**", "/register", "/login","index","/gainUpdat","/admin/historique-gains").permitAll()
                         .anyRequest().authenticated())
                 .formLogin(form -> form.loginPage("/login")
-                        .defaultSuccessUrl("/index", true)
-
+                .defaultSuccessUrl("/admin/dashboard", true) 
                         .permitAll())
                 .logout(LogoutConfigurer::permitAll);
         return http.build();

@@ -1,6 +1,5 @@
 package com.g2.tiptopG2.contoller;
 
-
 import java.util.List;
 
 import org.springframework.http.HttpStatus;

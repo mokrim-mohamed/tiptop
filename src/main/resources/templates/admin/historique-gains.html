@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des Gains</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/historique-gains.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/user">User</a></li>
+                <li><a href="/admin/historique-gains" class="active">Historique des Gains</a></li>
+                <li><a href="/admin/parrametre">Parrametre</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <main class="main-content">
+            <!-- Section de l'historique des gains -->
+            <section class="table-section">
+                <h2 style="text-decoration: none;">Historique des Gains</h2> <!-- Ajout de style inline -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Utilisateur</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Jean Dupont</td>
+                            <td>50.00 €</td>
+                            <td>2024-01-15</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Marie Curie</td>
+                            <td>75.00 €</td>
+                            <td>2024-01-16</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Albert Camus</td>
+                            <td>100.00 €</td>
+                            <td>2024-01-17</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Émile Zola</td>
+                            <td>25.00 €</td>
+                            <td>2024-01-18</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Victor Hugo</td>
+                            <td>120.00 €</td>
+                            <td>2024-01-19</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
