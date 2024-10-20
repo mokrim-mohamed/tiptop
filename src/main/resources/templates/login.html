@@ -13,6 +13,9 @@
             <div class="login-box">
                 <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo"> <!-- Utilisation de th:src -->
                 <h2>Bienvenue</h2>
+                <div th:if="${errorMessage}" style="color: red;">
+                    <p th:text="${errorMessage}"></p>
+                </div>
                 <form th:action="@{/login}" method="post">
                     <div class="input-group">
                         <label for="username">Username</label>
