@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f8f5; /* Fond très clair avec une touche de vert */
+    color: #333;
+    height: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #81c784; /* Vert clair et doux pour la sidebar */
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo img {
+    width: 100px;
+    margin-bottom: 30px;
+}
+
+.menu {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+
+.menu li {
+    width: 100%;
+    text-align: center;
+}
+
+.menu li a {
+    display: block;
+    padding: 15px 0;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.menu li a:hover, .menu li a.active {
+    background-color: #66bb6a; /* Vert plus foncé au survol */
+}
+
+.main-wrapper {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s; /* Transition pour le menu burger */
+}
+
+.dashboard-section, .tickets-section {
+    margin: 20px 0;
+}
+
+.dashboard-cards {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux cartes de se répartir sur plusieurs lignes */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.dashboard-card {
+    flex: 1 1 calc(33.333% - 20px); /* Trois cartes par ligne */
+    min-width: 250px; /* Largeur minimum pour chaque carte */
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adaptation des graphiques */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #81c784; /* En-têtes de tableau vert clair */
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 250px;
+        transform: translateX(-100%);
+        z-index: 999;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-wrapper {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .dashboard-card {
+        flex: 1 1 100%; /* Une carte par ligne sur mobile */
+    }
+
+    .charts-grid {
+        grid-template-columns: 1fr; /* Une colonne pour les graphiques sur mobile */
+    }
+
+    .burger-menu {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 24px;
+        width: 30px;
+        z-index: 1000;
+    }
+
+    .burger-menu .bar {
+        height: 4px;
+        width: 100%;
+        background-color: #333;
+        border-radius: 4px;
+    }
+}
+
+@media (min-width: 769px) {
+    .burger-menu {
+        display: none;
+    }
+
+    .sidebar {
+        transform: none;
+    }
+}
