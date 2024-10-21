@@ -28,6 +28,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Code</th>
+                        <th>Actions</th> <!-- Nouvelle colonne pour les boutons -->
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -53,10 +54,16 @@
                         $("#gainsTable tbody").empty();
 
                         gains.forEach(function(gain) {
+                            // Création d'un bouton cliquable si remis est false
+                            var button = gain.remis ? 
+                                "<button class='btn btn-secondary' disabled>Non Cliquable</button>" : 
+                                "<button class='btn btn-success' onclick='handleRemis(" + gain.id + ")'>Cliquable</button>";
+
                             $("#gainsTable tbody").append(
                                 "<tr>" +
                                 "<td>" + gain.id + "</td>" +
                                 "<td>" + gain.code + "</td>" +
+                                "<td>" + button + "</td>" + // Ajout de la colonne avec le bouton
                                 "</tr>"
                             );
                         });
@@ -69,6 +76,12 @@
                 });
             });
         });
+
+        // Fonction pour gérer le clic sur le bouton
+        function handleRemis(gainId) {
+            // Ajoutez ici la logique que vous souhaitez exécuter lorsque le bouton est cliqué
+            alert("Gain ID " + gainId + " a été cliqué !");
+        }
     </script>
 </body>
 </html>
