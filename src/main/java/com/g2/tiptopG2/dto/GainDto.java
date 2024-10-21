@@ -11,4 +11,5 @@ public class GainDto {
     private String code; // Le code du gain
     private Integer userId; // ID de l'utilisateur qui a gagné
     private Integer gainTypeId; // ID du type de gain
+    private boolean remis;
 }
