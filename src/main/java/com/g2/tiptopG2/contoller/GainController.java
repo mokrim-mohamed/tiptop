@@ -53,30 +53,21 @@ public class GainController {
     public String histoGain() {
         return "/admin/historique-gains";
     }
-    // hadi test  wlkn hya bach andiro participation atmodifia chwya
+    // khdama f participation
     @PutMapping("/gains/gain")
     public ResponseEntity<GainDto> updateGainUser(@RequestParam Integer gainId) {
         try {
-        // Récupération de l'utilisateur connecté
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        
-        // Vérifiez si le principal est une instance de UserDetails (comme User)
             if (principal instanceof User) {
             String userEmail = ((User) principal).getUsername();  // Récupérer l'email de l'utilisateur connecté
-            
-            // Appel au service pour obtenir l'utilisateur par email
             UserDto userDto = userService.findByEmail(userEmail);  // Assurez-vous que la méthode existe dans IUserService
-            
-            // Mise à jour du gain avec l'utilisateur
             GainDto updatedGain = gainService.updateUser(gainId, userDto.getId());
             
             return ResponseEntity.ok(updatedGain);
             } else {
-            // Si le principal n'est pas un utilisateur authentifié
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
         } catch (Exception e) {
-        // Log the error
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
