@@ -27,28 +27,30 @@ public class GainController {
         this.gainService = gainService;
     }
 
-    // Endpoint pour la vue Thymeleaf
+    // page dyal les gain gains makhdaminch biha db
     @GetMapping("/gain")
     public String getGainsPage() {
         return "gain";
     }
+    // hadi dyakl test
     @GetMapping("/gainUpdat")
     public String updateGain() {
         return "gainUpdate";
     }
 
-    // Endpoint pour récupérer les gains avec clientId non null en JSON
+    //hadi bach ankhdmo admin khasha mazal tbdl bach data doz f model
     @GetMapping("/gain/data")
     @ResponseBody
     public ResponseEntity<List<GainDto>> getGainsWithClientIdNotNull() {
         List<GainDto> gains = gainService.findByUserIdIsNotNull();
         return ResponseEntity.ok(gains);
     }
+    // hadi lizdty nta 
     @GetMapping("/admin/historique-gains")
     public String histoGain() {
         return "/admin/historique-gains";
     }
-
+    // hadi test  wlkn hya bach andiro participation atmodifia chwya
     @PutMapping("/gains/{gainId}/user")
 public ResponseEntity<GainDto> updateGainUser(@PathVariable Integer gainId, @RequestParam Integer userId) {
     try {
