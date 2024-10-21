@@ -44,6 +44,10 @@ public class GainController {
         List<GainDto> gains = gainService.findByUserIdIsNotNull();
         return ResponseEntity.ok(gains);
     }
+    @GetMapping("/admin/historique-gains")
+    public String histoGain() {
+        return "/admin/historique-gains";
+    }
 
     @PutMapping("/gains/{gainId}/user")
 public ResponseEntity<GainDto> updateGainUser(@PathVariable Integer gainId, @RequestParam Integer userId) {

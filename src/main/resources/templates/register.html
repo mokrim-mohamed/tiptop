@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription - Tea Brand</title>
+    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <script th:src="@{/js/inscription.js}" defer></script>
+</head>
+<body>
+    <div class="background-container">
+        <div class="register-container">
+            <div class="register-box">
+                <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo">
+                <h2>Inscription</h2>
+                <form th:action="@{/register}" method="post">
+                    <div class="input-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" id="nom" placeholder="Entrer votre nom" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" name="prenom" id="prenom" placeholder="Entrer votre prénom" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="sexe">Sexe</label>
+                        <select name="sexe" id="sexe" required>
+                            <option value="Homme">Homme</option>
+                            <option value="Femme">Femme</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="Entrer votre email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" name="telephone" id="telephone" placeholder="Entrer votre numéro de téléphone">
+                    </div>
+                    <div class="input-group">
+                        <label for="motDePasse">Mot de passe</label>
+                        <input type="password" name="motDePasse" id="motDePasse" placeholder="Entrer un mot de passe" required>
+                    </div>
+                    <button type="submit">S'inscrire</button>
+                </form>
+                <div class="extra-options">
+                    <a th:href="@{/login}" class="link">Déjà inscrit ? Connectez-vous ici</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
