@@ -46,6 +46,13 @@ public class GainServiceImp implements IGainService {
                 .collect(Collectors.toList());
     }
     @Override
+    public List<GainDto> findByUserId(Integer Id) {
+        List<GainEntity> gainEntities = gainDao.findByUserIdIsNotNull();
+        return gainEntities.stream()
+                .map(gain -> modelMapper.map(gain, GainDto.class))
+                .collect(Collectors.toList());
+    }
+    @Override
     public GainDto updateUser(Integer gainId, Integer userId) {
         GainEntity gainEntity =gainDao.findById(gainId)
                 .orElseThrow(() -> new RuntimeException("Gain not found"));

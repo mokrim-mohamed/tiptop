@@ -1,7 +1,7 @@
 package com.g2.tiptopG2.controller;
 
 import org.springframework.http.HttpStatus;
-
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +34,10 @@ public class GainController {
     @GetMapping("/gain")
     public String getGainsPage() {
         return "gain";
+    }
+    @GetMapping("/emp")
+    public String getEmpPage() {
+        return "Emp";
     }
     // hadi dyakl test
     @GetMapping("/gainUpdat")
@@ -72,4 +76,23 @@ public class GainController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+    @PostMapping("/getUserGains")
+    public ResponseEntity<List<GainDto>> getUserGains(@RequestParam("email") String email) {
+        UserDto userDto = userService.findByEmail(email);
+        if (userDto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                             .body(null);  // Utilisateur non trouvé
+        }
+        //System.out.println("Email reçu: " + userDto.getEmail() );
+
+        List<GainDto> gains = gainService.findByUserId(userDto.getId()); 
+        if (gains == null || gains.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                             .body(null);  
+        }
+        //System.out.println("gain trouve"  );
+
+        return ResponseEntity.ok(gains);
+    }
+
 }

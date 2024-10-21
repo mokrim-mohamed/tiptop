@@ -10,4 +10,5 @@ public interface IGainDao extends JpaRepository<GainEntity, Integer> {
     // Par exemple, si vous voulez trouver un gain par code :
     GainEntity findByCode(String code);
     List<GainEntity> findByUserIdIsNotNull();
+    List<GainEntity> findByUserId(Integer Id);
 }

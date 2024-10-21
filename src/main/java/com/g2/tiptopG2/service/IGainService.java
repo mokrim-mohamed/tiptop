@@ -10,4 +10,6 @@ public interface IGainService {
     GainDto findByCode(String code);
     List<GainDto> findByUserIdIsNotNull();
     GainDto updateUser(Integer gainId, Integer userId);
+    List<GainDto> findByUserId(Integer Id);
+
 }
