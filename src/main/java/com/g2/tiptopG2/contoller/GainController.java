@@ -7,24 +7,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import com.g2.tiptopG2.dto.GainDto;
+import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IGainService;
+import com.g2.tiptopG2.service.IUserService;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.List;
-
 @Controller
 @RequestMapping()
 public class GainController {
 
     private final IGainService gainService;
-
-    public GainController(IGainService gainService) {
+    private final IUserService userService;
+    public GainController(IGainService gainService,IUserService userService) {
         this.gainService = gainService;
+        this.userService= userService;
     }
 
     // page dyal les gain gains makhdaminch biha db
@@ -51,15 +54,31 @@ public class GainController {
         return "/admin/historique-gains";
     }
     // hadi test  wlkn hya bach andiro participation atmodifia chwya
-    @PutMapping("/gains/{gainId}/user")
-public ResponseEntity<GainDto> updateGainUser(@PathVariable Integer gainId, @RequestParam Integer userId) {
-    try {
-        GainDto updatedGain = gainService.updateUser(gainId, userId);
-        return ResponseEntity.ok(updatedGain);
-    } catch (Exception e) {
+    @PutMapping("/gains/gain")
+    public ResponseEntity<GainDto> updateGainUser(@RequestParam Integer gainId) {
+        try {
+        // Récupération de l'utilisateur connecté
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        
+        // Vérifiez si le principal est une instance de UserDetails (comme User)
+            if (principal instanceof User) {
+            String userEmail = ((User) principal).getUsername();  // Récupérer l'email de l'utilisateur connecté
+            
+            // Appel au service pour obtenir l'utilisateur par email
+            UserDto userDto = userService.findByEmail(userEmail);  // Assurez-vous que la méthode existe dans IUserService
+            
+            // Mise à jour du gain avec l'utilisateur
+            GainDto updatedGain = gainService.updateUser(gainId, userDto.getId());
+            
+            return ResponseEntity.ok(updatedGain);
+            } else {
+            // Si le principal n'est pas un utilisateur authentifié
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+            }
+        } catch (Exception e) {
         // Log the error
         e.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-}
 }
