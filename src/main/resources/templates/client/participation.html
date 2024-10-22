@@ -23,7 +23,7 @@
             <ul class="menu">
                 <li><a href="/client/participation" class="active">Participation</a></li>
                 <li><a href="/client/historique-gains" >Historique des Gains</a></li>
-                <li><a href="/client/parrametre" >Parrametre</a></li>
+                <li><a href="/client/parrametre" >Paramètre</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -43,6 +43,8 @@
     <div id="popup" class="popup hidden">
         <div class="popup-content">
             <span class="close-btn" id="closePopup">&times;</span>
+            <!-- Ajout du logo à la place de l'image du gain -->
+            <img th:src="@{/image/logo.png}" alt="Logo du Gain" class="popup-logo">
             <p>Félicitations ! Vous avez gagné un lot fictif !</p>
         </div>
     </div>
@@ -65,6 +67,13 @@
 
         closePopup.addEventListener('click', () => {
             popup.classList.add('hidden');
+        });
+
+        // Ferme le pop-up si on clique en dehors du contenu
+        window.addEventListener('click', (event) => {
+            if (event.target === popup) {
+                popup.classList.add('hidden');
+            }
         });
     </script>
 </body>
@@ -131,11 +140,18 @@
 }
 
 .popup-content {
+    position: relative;
     background-color: white;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.popup-logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 15px;
 }
 
 .close-btn {
