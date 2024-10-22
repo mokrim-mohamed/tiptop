@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Bouton burger pour afficher/cacher le menu sur mobile -->
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+
+                <li><a href="/employee/historique-gains" >Historique des Gains</a></li>
+                <li><a href="/employee/parrametre" class="active">Parrametre</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <header>
+                <h1>Settings</h1>
+            </header>
+
+            <section class="settings-section">
+                <h2>Paramètres du profil</h2>
+                <form method="post" action="/employee/updateProfile">
+                    <label for="nom">Nom :</label>
+                    <input type="text" id="nom" name="nom" th:value="${user.nom}" />
+
+                    <label for="email">Email :</label>
+                    <input type="email" id="email" name="email" th:value="${user.email}" />
+
+                    <label for="telephone">Téléphone :</label>
+                    <input type="text" id="telephone" name="telephone" th:value="${user.telephone}" />
+
+                    <button class="btn-save" type="submit">Mettre à jour</button>
+                </form>
+            </section>
+
+            <section class="settings-section">
+                <h2>Changer le mot de passe</h2>
+                <form method="post" action="/employee/updatePassword">
+                    <label for="currentPassword">Mot de passe actuel :</label>
+                    <input type="password" id="currentPassword" name="currentPassword" />
+
+                    <label for="newPassword">Nouveau mot de passe :</label>
+                    <input type="password" id="newPassword" name="newPassword" />
+
+                    <label for="confirmPassword">Confirmer le mot de passe :</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" />
+
+                    <button class="btn-save" type="submit">Changer le mot de passe</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <!-- JavaScript pour gérer le menu burger -->
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
