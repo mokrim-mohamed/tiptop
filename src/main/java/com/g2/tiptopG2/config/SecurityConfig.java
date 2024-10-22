@@ -60,7 +60,7 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
-    
+
     @Bean
 public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
     return (request, response, authentication) -> {
@@ -72,9 +72,9 @@ public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         if (authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"))) {
             redirectUrl = "/admin.html";
         } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("employer"))) {
-            redirectUrl = "/client.html";
-        } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("user"))) {
             redirectUrl = "/emp.html";
+        } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("user"))) {
+            redirectUrl = "/gainUpdate.html";
         }
 
         response.sendRedirect(redirectUrl); // Rediriger vers l'URL appropriée

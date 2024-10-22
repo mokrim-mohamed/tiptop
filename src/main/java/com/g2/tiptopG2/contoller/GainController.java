@@ -40,9 +40,9 @@ public class GainController {
         return "Emp";
     }
     // hadi dyakl test
-    @GetMapping("/gainUpdat")
+    @GetMapping("/participer")
     public String updateGain() {
-        return "gainUpdate";
+        return "participer";
     }
 
     //hadi bach ankhdmo admin khasha mazal tbdl bach data doz f model
