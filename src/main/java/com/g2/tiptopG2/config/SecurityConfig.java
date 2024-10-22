@@ -1,6 +1,7 @@
 package com.g2.tiptopG2.config;
 import com.g2.tiptopG2.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -28,7 +29,7 @@ public class SecurityConfig {
                         .loginPage("/login")
                         .usernameParameter("username")
                         .failureUrl("/login?error=true")
-                        .defaultSuccessUrl("/index", true)
+                        .successHandler(customAuthenticationSuccessHandler())
                         .permitAll()
                         .and()
                     .oauth2Login()  // Activer OAuth2 pour Google login
@@ -58,4 +59,25 @@ public class SecurityConfig {
     public AuthenticationManager authManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
+    
+    @Bean
+public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
+    return (request, response, authentication) -> {
+        // Récupérer les rôles de l'utilisateur connecté
+        var authorities = authentication.getAuthorities();
+        String redirectUrl = "/index"; // URL par défaut
+
+        // Rediriger en fonction du rôle
+        if (authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"))) {
+            redirectUrl = "/admin.html";
+        } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("employer"))) {
+            redirectUrl = "/client.html";
+        } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("user"))) {
+            redirectUrl = "/emp.html";
+        }
+
+        response.sendRedirect(redirectUrl); // Rediriger vers l'URL appropriée
+    };
+}
 }
