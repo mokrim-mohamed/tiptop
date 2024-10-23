@@ -95,4 +95,33 @@ public class GainController {
         return ResponseEntity.ok(gains);
     }
 
+
+
+    @GetMapping("/historique")
+    public String getHistoriqueByUserId(Model model) {
+        try {
+            Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (principal instanceof User) {
+                String userEmail = ((User) principal).getUsername();  
+                UserDto userDto = userService.findByEmail(userEmail);
+                
+                if (userDto != null) {
+                    List<GainDto> updatedGain = gainService.findByUserId(userDto.getId());
+                    model.addAttribute("gains", updatedGain);
+                    return "histo";  // Affiche la page historique avec les gains
+                } else {
+                    model.addAttribute("errorMessage", "Utilisateur non trouvé");
+                    return "error";
+                }
+            } else {
+                return "redirect:/login";  // Redirige vers la page de login si l'utilisateur n'est pas authentifié
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            model.addAttribute("errorMessage", "Une erreur est survenue : " + e.getMessage());
+            return "error";
+        }
+    }
+
+
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Historique des gains</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Historique des gains</h1>
+        
+        <!-- Section pour afficher un message d'erreur s'il y en a -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+        <!-- Section pour afficher les gains -->
+        <div th:if="${gains}">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nom du gain</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="gain : ${gains}">
+                        <td th:text="${gain.nom}"></td>
+                        <td th:text="${#dates.format(gain.date, 'dd/MM/yyyy')}"></td>
+                        <td th:text="${gain.description}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Si aucun gain n'est trouvé, un message d'information sera affiché -->
+        <div th:if="${#lists.isEmpty(gains)}" class="alert alert-info">
+            <p>Aucun gain trouvé pour cet utilisateur.</p>
+        </div>
+    </div>
+</body>
+</html>
