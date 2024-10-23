@@ -108,7 +108,7 @@ public class GainController {
                 if (userDto != null) {
                     List<GainDto> updatedGain = gainService.findByUserId(userDto.getId());
                     model.addAttribute("gains", updatedGain);
-                    return "histo";  // Affiche la page historique avec les gains
+                    return "historique";  // Affiche la page historique avec les gains
                 } else {
                     model.addAttribute("errorMessage", "Utilisateur non trouvé");
                     return "error";
