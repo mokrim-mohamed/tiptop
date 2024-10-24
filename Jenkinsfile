@@ -34,7 +34,7 @@ pipeline {
             steps {
                 script {
                     // Générer un tag basé sur le timestamp
-                    def dockerTag = "nano-${env.BUILD_ID}-\$(date +%Y%m%d%H%M%S)"
+                    def dockerTag = "nano-${env.BUILD_ID}"
 
                     // Construire l'image Docker avec le tag dynamique
                     sh 'mvn clean package'
