@@ -71,10 +71,10 @@ public AuthenticationSuccessHandler customAuthenticationSuccessHandler() {
         // Rediriger en fonction du rôle
         if (authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"))) {
             redirectUrl = "/admin/dashboard";
-        } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("employer"))) {
-            redirectUrl = "/emp";
+        } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("employee"))) {
+            redirectUrl = "/employee/historique-gains";
         } else if (authorities.stream().anyMatch(a -> a.getAuthority().equals("user"))) {
-            redirectUrl = "/gainUpdate";
+            redirectUrl = "/client/participation";
         }
 
         response.sendRedirect(redirectUrl); // Rediriger vers l'URL appropriée
