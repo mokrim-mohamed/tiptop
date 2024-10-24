@@ -78,7 +78,7 @@ pipeline {
                             docker stop my_container || true 
                             docker rm my_container || true 
                             docker pull mokrim/test:nano && docker run -d -p 8080:8080 \
-                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.163.160.174/test \
+                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.155.105.62/test \
                 -e SPRING_DATASOURCE_USERNAME=mokrim \
                 -e SPRING_DATASOURCE_PASSWORD=Mokrim123! \
                 --name my_container mokrim/test:nano"
