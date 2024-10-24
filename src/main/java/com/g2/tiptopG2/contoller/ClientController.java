@@ -32,10 +32,10 @@ public String showSettingsPage(Model model) {
     
 } 
     // hadi lizdty nta 
-    @GetMapping("/client/historique-gains")
-    public String histoGain() {
-        return "/client/historique-gains";
-    }
+ //   @GetMapping("/client/historique-gains")
+  //  public String histoGain() {
+  //      return "/client/historique-gains";
+  //  }
 
     @GetMapping("/client/participation")
     public String histoGains() {

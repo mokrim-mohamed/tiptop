@@ -97,7 +97,7 @@ public class GainController {
 
 
 
-    @GetMapping("/historique")
+    @GetMapping("/client/historique-gains")
     public String getHistoriqueByUserId(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -108,7 +108,7 @@ public class GainController {
                 if (userDto != null) {
                     List<GainDto> updatedGain = gainService.findByUserId(userDto.getId());
                     model.addAttribute("gains", updatedGain);
-                    return "historique";  // Affiche la page historique avec les gains
+                    return "client/historique-gains";  // Affiche la page historique avec les gains
                 } else {
                     model.addAttribute("errorMessage", "Utilisateur non trouvé");
                     return "error";

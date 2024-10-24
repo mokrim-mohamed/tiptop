@@ -47,7 +47,7 @@ public class GainServiceImp implements IGainService {
     }
     @Override
     public List<GainDto> findByUserId(Integer Id) {
-        List<GainEntity> gainEntities = gainDao.findByUserIdIsNotNull();
+        List<GainEntity> gainEntities = gainDao.findByUserId(Id);
         return gainEntities.stream()
                 .map(gain -> modelMapper.map(gain, GainDto.class))
                 .collect(Collectors.toList());
