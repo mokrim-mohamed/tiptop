@@ -1,35 +1,104 @@
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
     background-color: #f4f4f4;
+    font-size: 1.1rem;
+}
+
+/* Navbar */
+.navbar {
+    border-bottom: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Espacement du logo et du texte */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+}
+
+/* Logo dynamique - Animation continue */
+.logo {
+    animation: spin 5s infinite linear, scaleUpDown 3s infinite ease-in-out;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes scaleUpDown {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* Conteneur des liens de navigation */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+/* Liens de navigation */
+.navbar-nav .nav-link {
+    color: #5a5a5a;
+    transition: color 0.3s, font-weight 0.3s;
+    font-size: 1.2rem;
+    padding-left: 40px;
+    padding-right: 40px;
+    position: relative;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #b3b300;
+    font-weight: bold;
+}
+
+/* Boutons de Connexion/Inscription avec des icônes */
+.btn-outline-dark, .btn-dark {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 20px;
+    padding: 5px 15px;
+    transition: all 0.3s;
+}
+
+.btn-outline-dark {
+    border-color: #333;
+    color: #333;
+    margin-right: 15px;
+}
+
+.btn-outline-dark:hover {
+    background-color: #333;
+    color: #fff;
+}
+
+.btn-dark {
+    background-color: #333;
+    border-color: #333;
+    color: #fff;
+}
+
+.btn-dark:hover {
+    background-color: #b3b300;
+    border-color: #b3b300;
     color: #333;
 }
 
-.navbar-light .navbar-nav .nav-link {
-    color: #333;
-}
-
-.hero-section {
-    background: linear-gradient(135deg, #9cc5a1, #6b8e23);
-    color: white;
-    padding: 60px 0;
-}
-
-.product-card img {
-    height: 200px;
-    object-fit: cover;
+/* Social Icons */
+.social-icon {
+    width: 24px;
+    height: auto;
+    margin: 0 10px;
     transition: transform 0.3s;
 }
 
-.product-card:hover img {
-    transform: scale(1.05);
-}
-
-.newsletter-section {
-    background-color: #f8f9fa;
-    padding: 40px 0;
-}
-
-.social-icon {
-    width: 30px;
-    margin: 0 10px;
+.social-icon:hover {
+    transform: scale(1.2);
 }

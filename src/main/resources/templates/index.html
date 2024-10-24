@@ -3,106 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thé Tip Top - Jeu-Concours de Thé Bio</title>
+    <title>Thé Tip Top - Jeu-Concours</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-lg" style="background-color: #f5f5dc;">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="/image/logo.png" alt="Thé Tip Top" style="height: 50px;" class="logo">
+                <img src="/image/logo.png" alt="Thé Tip Top" class="logo" style="height: 50px;">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">À propos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Règles du jeu</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Prix</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Participer</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
                 </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Inscription</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link btn btn-dark text-light" href="#">Connexion</a>
-                    </li>
-                </ul>
+                <div class="d-flex">
+                    <a href="#" class="btn btn-outline-dark me-2">
+                        <i class="fas fa-sign-in-alt"></i> Connexion
+                    </a>
+                    <a href="#" class="btn btn-dark">
+                        <i class="fas fa-user-plus"></i> Inscription
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section text-center py-5" style="background: linear-gradient(135deg, #9cc5a1, #6b8e23); color: white;">
+    <section class="hero-section text-center text-white" style="background-image: url('/image/banner.jpg'); background-size: cover; padding: 100px 0;">
         <div class="container">
-            <h1 class="display-4">Découvrez notre sélection de thés bio</h1>
-            <p class="lead">Participez à notre jeu-concours pour gagner des coffrets exclusifs !</p>
-            <button class="btn btn-outline-light mt-4">En savoir plus</button>
+            <h1>Participez à notre grand jeu concours Thé Tip Top !</h1>
+            <p>Tentez de gagner des coffrets exclusifs et bien plus encore.</p>
+            <a href="#" class="btn btn-primary mt-4">Participer Maintenant</a>
         </div>
     </section>
 
-    <!-- Featured Products Section -->
-    <section class="products-section py-5">
+    <!-- Section Règles du Jeu -->
+    <section class="rules-section py-5">
         <div class="container text-center">
-            <h2 class="mb-4">Nos produits phares</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card">
-                        <img src="/image/slide/tea-1.jpeg" class="card-img-top" alt="Thé Vert Bio">
-                        <div class="card-body">
-                            <h5 class="card-title">Thé Vert Bio</h5>
-                            <p class="card-text">Un thé de qualité supérieure, cultivé dans le respect de la nature.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card">
-                        <img src="/image/slide/tea-2.jpeg" class="card-img-top" alt="Thé Noir Bio">
-                        <div class="card-body">
-                            <h5 class="card-title">Thé Noir Bio</h5>
-                            <p class="card-text">Savourez un thé noir aux arômes intenses et riches.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card product-card">
-                        <img src="/image/slide/tea-3.jpeg" class="card-img-top" alt="Thé Blanc Bio">
-                        <div class="card-body">
-                            <h5 class="card-title">Thé Blanc Bio</h5>
-                            <p class="card-text">Découvrez notre thé blanc d'exception, aux notes florales subtiles.</p>
-                        </div>
-                    </div>
-                </div>
+            <h2>Comment ça marche ?</h2>
+            <p>Achetez un produit, entrez le code de participation, et découvrez si vous avez gagné !</p>
+            <div class="row mt-4">
+                <div class="col-md-4"><img src="/image/icon1.png" alt="Étape 1" class="img-fluid"><p>Étape 1</p></div>
+                <div class="col-md-4"><img src="/image/icon2.png" alt="Étape 2" class="img-fluid"><p>Étape 2</p></div>
+                <div class="col-md-4"><img src="/image/icon3.png" alt="Étape 3" class="img-fluid"><p>Étape 3</p></div>
             </div>
         </div>
     </section>
 
-    <!-- Newsletter Section -->
-    <section class="newsletter-section py-5 bg-light">
+    <!-- Section Prix à Gagner -->
+    <section class="prizes-section py-5 bg-light">
         <div class="container text-center">
-            <h3>Abonnez-vous à notre newsletter</h3>
-            <p>Recevez nos offres exclusives et ne manquez aucune nouveauté sur nos thés bio.</p>
-            <form class="d-flex justify-content-center">
-                <input type="email" class="form-control w-50" placeholder="Votre email">
-                <button class="btn btn-primary ms-2">S'abonner</button>
-            </form>
+            <h2>Nos Prix</h2>
+            <div class="row mt-4">
+                <div class="col-md-3"><img src="/image/prize1.png" alt="Prix 1" class="img-fluid"><p>Coffret de thés</p></div>
+                <div class="col-md-3"><img src="/image/prize2.png" alt="Prix 2" class="img-fluid"><p>Accessoires de dégustation</p></div>
+                <div class="col-md-3"><img src="/image/prize3.png" alt="Prix 3" class="img-fluid"><p>Ateliers de dégustation</p></div>
+                <div class="col-md-3"><img src="/image/prize4.png" alt="Prix 4" class="img-fluid"><p>Abonnement d’un an</p></div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-light text-center py-4">
+    <footer class="bg-dark text-white text-center py-4">
         <div class="container">
             <p>&copy; 2024 Thé Tip Top - Tous droits réservés</p>
-            <div class="social-icons">
+            <p><a href="#" class="text-white">Mentions Légales</a> | <a href="#" class="text-white">Politique de Confidentialité</a></p>
+            <p>Contactez-nous : contact@thetiptop.com | +33 1 23 45 67 89</p>
+            <div class="social-icons mt-3">
                 <a href="#"><img src="/image/facebook.png" alt="Facebook" class="social-icon"></a>
                 <a href="#"><img src="/image/instagram.png" alt="Instagram" class="social-icon"></a>
                 <a href="#"><img src="/image/tiktok.png" alt="TikTok" class="social-icon"></a>
@@ -111,6 +89,5 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/interactions.js"></script>
 </body>
 </html>
