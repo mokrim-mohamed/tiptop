@@ -18,3 +18,7 @@ function acceptCookies() {
     document.getElementById('cookie-banner').style.display = 'none';
     // Ici, vous pouvez ajouter un cookie pour mémoriser le choix de l'utilisateur
 }
+// Animation lors du clic sur le bouton "Jouer Maintenant"
+document.querySelector('.cta-button').addEventListener('click', function() {
+    alert('Bonne chance dans le jeu concours de Thé Tip Top !');
+});

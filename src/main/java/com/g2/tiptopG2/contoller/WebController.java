@@ -9,9 +9,9 @@ public class WebController {
     public String index() {
         return "index"; // Correspond à src/main/resources/templates/index.html pour Thymeleaf
     }
+    
     @GetMapping("/clients")
     public String getClients() {
-        return "client"; // Correspond à src/main/resources/templates/index.html pour Thymeleaf
+        return "client"; // Correspond à src/main/resources/templates/client.html pour Thymeleaf
     }    
-  
 }
