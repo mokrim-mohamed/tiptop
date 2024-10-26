@@ -70,5 +70,15 @@ public class GainServiceImp implements IGainService {
         // Retourner l'objet DTO mis à jour
         return modelMapper.map(updatedGain, GainDto.class);
     }
+
+    @Override
+    public GainDto updateRemis(Integer gainId) {
+        GainEntity gainEntity =gainDao.findById(gainId)
+                .orElseThrow(() -> new RuntimeException("Gain not found"));
+        gainEntity.setRemis(true);
+        GainEntity updatedGain = gainDao.save(gainEntity);
+        return modelMapper.map(updatedGain, GainDto.class);
+    }
+
     
 }

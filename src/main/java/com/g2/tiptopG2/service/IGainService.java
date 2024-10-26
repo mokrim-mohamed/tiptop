@@ -11,5 +11,8 @@ public interface IGainService {
     List<GainDto> findByUserIdIsNotNull();
     GainDto updateUser(Integer gainId, Integer userId);
     List<GainDto> findByUserId(Integer Id);
+    GainDto updateRemis(Integer Id);
+
+
 
 }

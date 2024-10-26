@@ -44,6 +44,10 @@ public class GainController {
     public String updateGain() {
         return "participer";
     }
+    @GetMapping("/gainRecup")
+    public String updateGain2() {
+        return "testRemis";
+    }
 
     //hadi bach ankhdmo admin khasha mazal tbdl bach data doz f model
     @GetMapping("/gain/data")
@@ -123,5 +127,15 @@ public class GainController {
         }
     }
 
+    @PostMapping("/employee/setRemis")
+    public ResponseEntity<GainDto> getUserGains(@RequestParam("gainId") Integer id) {
+        GainDto gainDto = gainService.findById(id);
+        if (gainDto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                             .body(null);  // Utilisateur non trouvé
+        }
+        gainDto = gainService.updateRemis(id);
+        return ResponseEntity.ok(gainDto);
+    }
 
 }
