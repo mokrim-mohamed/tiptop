@@ -35,6 +35,11 @@ public class GainController {
     public String getGainsPage() {
         return "gain";
     }
+
+    @GetMapping("/gainUpdate")
+    public String getGainsPageTest() {
+        return "gainUpdate";
+    }
     @GetMapping("/emp")
     public String getEmpPage() {
         return "Emp";
@@ -59,13 +64,13 @@ public class GainController {
     }
     // khdama f participation
     @PutMapping("/gains/gain")
-    public ResponseEntity<GainDto> updateGainUser(@RequestParam Integer gainId) {
+    public ResponseEntity<GainDto> updateGainUser(@RequestParam String gainCode) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (principal instanceof User) {
             String userEmail = ((User) principal).getUsername();  // Récupérer l'email de l'utilisateur connecté
             UserDto userDto = userService.findByEmail(userEmail);  // Assurez-vous que la méthode existe dans IUserService
-            GainDto updatedGain = gainService.updateUser(gainId, userDto.getId());
+            GainDto updatedGain = gainService.updateUser(gainCode, userDto.getId());
             
             return ResponseEntity.ok(updatedGain);
             } else {

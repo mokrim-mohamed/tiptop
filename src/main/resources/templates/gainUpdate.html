@@ -15,7 +15,7 @@
         <form id="updateGainForm" action="#" method="post"> <!-- Action modifiée -->
             <div class="form-group">
                 <label for="gainId">ID du Gain :</label>
-                <input type="number" class="form-control" id="gainId" name="gainId" required>
+                <input type="text" class="form-control" id="gainCode" name="gainCode" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Mettre à jour</button>
@@ -28,9 +28,9 @@
             $('#updateGainForm').on('submit', function(event) {
                 event.preventDefault();
 
-                const gainId = $('#gainId').val();
+                const gainCode = $('#gainCode').val();
                 $.ajax({
-                    url: `/gains/gain?gainId=${gainId}`,
+                    url: `/gains/gain?gainCode=${gainCode}`,
                     type: 'PUT',
                     success: function(data) {
                         $('#result').html(`<div class="alert alert-success">L'utilisateur du gain a été mis à jour avec succès.</div>`);
