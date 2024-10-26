@@ -23,7 +23,7 @@ public String showSettingsPage(Model model) {
             String userEmail = ((User) principal).getUsername();  
             UserDto userDto = userService.findByEmail(userEmail);
             model.addAttribute("user", userDto);
-            return "admin/parrametre";
+            return "client/parrametre";
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "Une erreur est survenue : " + e.getMessage());
