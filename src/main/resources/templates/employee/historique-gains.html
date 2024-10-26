@@ -78,7 +78,6 @@
                 return;
             }
 
-            // Appel au contrôleur pour récupérer les gains
             try {
                 const response = await fetch(`/getUserGains?email=${encodeURIComponent(email)}`, {
                     method: 'POST',
@@ -101,7 +100,6 @@
 
                 const gainsData = await response.json();
 
-                // Injection des données dans le tableau
                 gainsTableBody.innerHTML = "";
                 gainsData.forEach(gain => {
                     const row = document.createElement('tr');
@@ -117,10 +115,8 @@
                     gainsTableBody.appendChild(row);
                 });
 
-                // Affiche la section du tableau
                 gainsTableSection.classList.remove('hidden');
 
-                // Ajout des événements de récupération de gain
                 document.querySelectorAll('.btn-recuperer').forEach(button => {
                     button.addEventListener('click', function() {
                         const gainId = this.getAttribute('data-id');
@@ -133,13 +129,27 @@
             }
         });
 
-        // Fonction de récupération du gain
-        function recupererGain(gainId) {
-            alert(`Gain ID ${gainId} récupéré avec succès !`);
-            // Ici, tu peux ajouter une requête pour mettre à jour l'état du gain via l'API
-            const row = document.querySelector(`button[data-id="${gainId}"]`).closest('tr');
-            row.querySelector('td:nth-child(4)').innerText = 'Récupéré';
-            row.querySelector('td:nth-child(5)').innerHTML = '';
+        // Fonction pour mettre à jour l'état du gain
+        async function recupererGain(gainId) {
+            try {
+                const response = await fetch(`/employee/setRemis?gainId=${gainId}`, {
+                    method: 'POST',
+                });
+
+                if (response.ok) {
+                    alert(`Gain ID ${gainId} récupéré avec succès !`);
+
+                    // Mise à jour de l'interface utilisateur
+                    const row = document.querySelector(`button[data-id="${gainId}"]`).closest('tr');
+                    row.querySelector('td:nth-child(4)').innerText = 'Récupéré';
+                    row.querySelector('td:nth-child(5)').innerHTML = '';
+                } else {
+                    alert("Une erreur est survenue lors de la mise à jour du gain.");
+                }
+            } catch (error) {
+                alert("Une erreur est survenue.");
+                console.error("Erreur:", error);
+            }
         }
     </script>
 
