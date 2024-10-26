@@ -35,13 +35,13 @@ public class UserEntity implements Serializable {
     @Column(nullable = false)
     private String prenom;
 
-    @Column(nullable = false)
+    @Column()
     private String sexe;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column()
     private String telephone;
 
     @Column(nullable = false)

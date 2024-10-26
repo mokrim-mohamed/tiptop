@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:src="@{/js/dashboard.js}" defer></script>
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
+                <li><a href="/admin/user">User</a></li>
+                <li><a href="/admin/historique-gains" >Historique des Gains</a></li>
+                <li><a href="/admin/parrametre" >Parrametre</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="dashboard-section">
+                <h2>Statistiques du Jeu-Concours</h2>
+
+                <div class="dashboard-cards">
+                    <!-- Carte 1 : Nombre de tickets -->
+                    <div class="dashboard-card">
+                        <h3>Tickets Fournis</h3>
+                        <p>3,000</p>
+                    </div>
+
+                    <!-- Carte 2 : Tickets utilisés -->
+                    <div class="dashboard-card">
+                        <h3>Tickets Utilisés</h3>
+                        <p>1,500</p>
+                    </div>
+
+                    <!-- Carte 3 : Lots gagnés -->
+                    <div class="dashboard-card">
+                        <h3>Lots Gagnés</h3>
+                        <p>50</p>
+                    </div>
+                </div>
+
+                <!-- Graphiques -->
+                <div class="charts-grid">
+                    <div class="chart-container">
+                        <canvas id="ticketsChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="lotsGagnesChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="sexeChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="ageChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Historique des tickets -->
+            <section class="tickets-section">
+                <h2>Historique des tickets</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>N° ticket</th>
+                            <th>Gain obtenu</th>
+                            <th>Date de récupération</th>
+                            <th>Statut du gain</th>
+                            <th>Détails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12345</td>
+                            <td>Lot A</td>
+                            <td>01/10/2024</td>
+                            <td>Livré</td>
+                            <td><a href="#" class="details-btn">Voir détails</a></td>
+                        </tr>
+                        <tr>
+                            <td>12346</td>
+                            <td>Lot B</td>
+                            <td>02/10/2024</td>
+                            <td>En attente</td>
+                            <td><a href="#" class="details-btn">Voir détails</a></td>
+                        </tr>
+                        <!-- Contenu dynamique -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            document.querySelector('.main-content').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

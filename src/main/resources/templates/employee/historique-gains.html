@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des Gains</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/historique-gains.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/employee/historique-gains" class="active">Historique des Gains</a></li>
+                <li><a href="/employee/parrametre">Parrametre</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <main class="main-content">
+            <!-- Section d'entrée de l'email et de l'historique des gains -->
+            <section class="input-section">
+                <h2>Rechercher les gains d'un utilisateur</h2>
+                <label for="email-input">Entrez l'email de l'utilisateur :</label>
+                <input type="email" id="email-input" placeholder="Email de l'utilisateur" required>
+                <button class="btn-search" id="searchBtn">Rechercher</button>
+            </section>
+
+            <!-- Section de l'historique des gains -->
+            <section class="table-section hidden" id="gainsTableSection">
+                <h2 style="text-decoration: none;">Historique des Gains</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Utilisateur</th>
+                            <th>Montant</th>
+                            <th>Date</th>
+                            <th>État</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gainsTableBody">
+                        <!-- Les données des gains seront injectées ici -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+        const searchBtn = document.getElementById('searchBtn');
+        const emailInput = document.getElementById('email-input');
+        const gainsTableSection = document.getElementById('gainsTableSection');
+        const gainsTableBody = document.getElementById('gainsTableBody');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Simule la récupération des gains à partir de l'email
+        searchBtn.addEventListener('click', () => {
+            const email = emailInput.value.trim();
+            if (email === "") {
+                alert("Veuillez entrer un email valide.");
+                return;
+            }
+
+            // Mock des données des gains (à remplacer par des données réelles de l'API)
+            const gainsData = [
+                { id: 1, utilisateur: 'Jean Dupont', montant: '50.00 €', date: '2024-01-15', etat: 'Non récupéré' },
+                { id: 2, utilisateur: 'Jean Dupont', montant: '75.00 €', date: '2024-01-16', etat: 'Récupéré' },
+                { id: 3, utilisateur: 'Jean Dupont', montant: '100.00 €', date: '2024-01-17', etat: 'Non récupéré' }
+            ];
+
+            // Injection des données dans le tableau
+            gainsTableBody.innerHTML = "";
+            gainsData.forEach(gain => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${gain.id}</td>
+                    <td>${gain.utilisateur}</td>
+                    <td>${gain.montant}</td>
+                    <td>${gain.date}</td>
+                    <td>${gain.etat}</td>
+                    <td>
+                        ${gain.etat === 'Non récupéré' ? `<button class="btn-recuperer" data-id="${gain.id}">Récupérer</button>` : ''}
+                    </td>
+                `;
+                gainsTableBody.appendChild(row);
+            });
+
+            // Affiche la section du tableau
+            gainsTableSection.classList.remove('hidden');
+
+            // Ajout d'un événement de récupération de gain
+            const recupererBtns = document.querySelectorAll('.btn-recuperer');
+            recupererBtns.forEach(button => {
+                button.addEventListener('click', function() {
+                    const gainId = this.getAttribute('data-id');
+                    recupererGain(gainId);
+                });
+            });
+        });
+
+        // Fonction de récupération du gain
+        function recupererGain(gainId) {
+            alert(`Gain ID ${gainId} récupéré avec succès !`);
+            // Ici, vous pouvez envoyer une requête pour mettre à jour l'état du gain (API ou base de données)
+            // Après récupération, actualisez la table pour mettre à jour l'état
+            const row = document.querySelector(`button[data-id="${gainId}"]`).closest('tr');
+            row.querySelector('td:nth-child(5)').innerText = 'Récupéré';
+            row.querySelector('td:nth-child(6)').innerHTML = '';
+        }
+    </script>
+
+    <style>
+        /* Input Section */
+        .input-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .input-section h2 {
+            color: #388e3c;
+            margin-bottom: 15px;
+        }
+
+        .input-section label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            color: #333;
+        }
+
+        .input-section input {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-search {
+            background-color: #66bb6a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-search:hover {
+            background-color: #388e3c;
+        }
+
+        /* Button Récupérer */
+        .btn-recuperer {
+            background-color: #ff7043;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-recuperer:hover {
+            background-color: #e64a19;
+        }
+
+        /* Table Section */
+        .table-section.hidden {
+            display: none;
+        }
+
+        /* Style table remains as is */
+    </style>
+</body>
+</html>

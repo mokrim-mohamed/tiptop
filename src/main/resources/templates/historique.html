@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Historique des Gains</title>
+</head>
+<body>
+    <h1>Historique des Gains</h1>
+
+    <!-- Affiche un message d'erreur si présent -->
+    <div th:if="${errorMessage}">
+        <p th:text="${errorMessage}"></p>
+    </div>
+
+    <!-- Si des gains sont présents, affiche-les dans un tableau -->
+    <div th:if="${gains}">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID du Gain</th>
+                    <th>Code</th>
+                    <th>Type de Gain</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="gain : ${gains}">
+                    <td th:text="${gain.id}"></td>
+                    <td th:text="${gain.code}"></td>
+                    <td th:text="${gain.gainTypeId}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
