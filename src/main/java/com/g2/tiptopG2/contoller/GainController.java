@@ -44,10 +44,6 @@ public class GainController {
     public String updateGain() {
         return "participer";
     }
-    @GetMapping("/gainRecup")
-    public String updateGain2() {
-        return "testRemis";
-    }
 
     //hadi bach ankhdmo admin khasha mazal tbdl bach data doz f model
     @GetMapping("/gain/data")
