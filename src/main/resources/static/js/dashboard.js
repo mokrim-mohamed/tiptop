@@ -33,8 +33,6 @@ var ticketsChart = new Chart(ticketsCtx, {
         },
     }
 });
-
-// Graphique pour le nombre de lots gagnés
 var lotsCtx = document.getElementById('lotsGagnesChart').getContext('2d');
 var lotsGagnesChart = new Chart(lotsCtx, {
     type: 'doughnut',
@@ -42,7 +40,7 @@ var lotsGagnesChart = new Chart(lotsCtx, {
         labels: ['Lots Gagnés', 'Lots Restants'],
         datasets: [{
             label: 'Lots',
-            data: [lotsGagner, ticketsData - lotsGagner], // Données fictives
+            data: [lotsGagner, ticketsData - lotsGagner], // Utiliser les données dynamiques
             backgroundColor: ['#FF6384', '#36A2EB'],
             borderWidth: 1 // Épaisseur de bordure
         }]
@@ -60,15 +58,26 @@ var lotsGagnesChart = new Chart(lotsCtx, {
                         return tooltipItem.label + ': ' + tooltipItem.raw; // Affiche la valeur dans l'infobulle
                     }
                 }
+            },
+            datalabels: {
+                color: '#ffffff', // Couleur du texte
+                anchor: 'center', // Centre le texte
+                align: 'center', // Aligne le texte au centre
+                formatter: function(value, context) {
+                    // Calcule le total des données
+                    const total = context.chart.data.datasets[context.datasetIndex].data.reduce((acc, val) => acc + val, 0);
+                    const percentage = ((value / total) * 100).toFixed(1) + '%'; // Calcul du pourcentage
+                    return percentage; // Retourne le pourcentage
+                }
             }
         },
-    }
+    },
+    plugins: [ChartDataLabels] // Ajoutez le plugin ici
 });
 
-// Graphique pour les gagnants par sexe
 var sexeCtx = document.getElementById('sexeChart').getContext('2d');
 var sexeChart = new Chart(sexeCtx, {
-    type: 'pie',
+    type: 'doughnut',
     data: {
         labels: ['Homme', 'Femme'],
         datasets: [{
@@ -83,11 +92,31 @@ var sexeChart = new Chart(sexeCtx, {
         maintainAspectRatio: false,
         plugins: {
             legend: {
-                position: 'top',
+                position: 'top', // Positionne la légende en haut
             },
+            tooltip: {
+                callbacks: {
+                    label: function(tooltipItem) {
+                        return tooltipItem.label + ': ' + tooltipItem.raw; // Affiche la valeur dans l'infobulle
+                    }
+                }
+            },
+            datalabels: {
+                color: '#ffffff', // Couleur du texte
+                anchor: 'center', // Centre le texte
+                align: 'center', // Aligne le texte au centre
+                formatter: function(value, context) {
+                    // Calcule le total des données
+                    const total = context.chart.data.datasets[context.datasetIndex].data.reduce((acc, val) => acc + val, 0);
+                    const percentage = ((value / total) * 100).toFixed(1) + '%'; // Calcul du pourcentage
+                    return percentage; // Retourne le pourcentage
+                }
+            }
         },
-    }
+    },
+    plugins: [ChartDataLabels] // Ajoutez le plugin ici
 });
+
 
 // Graphique pour les gagnants par type de gain
 var ageCtx = document.getElementById('typeChart').getContext('2d');
