@@ -8,14 +8,16 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:src="@{/js/dashboard.js}" defer></script>
     <script th:inline="javascript">
-    let lotsGagner = /*[[${totalGains}]]*/ [];
-    let lotsRecuperer = /*[[${countRemis}]]*/ [];
+    let lotsGagner = /*[[${countRemis}]]*/ [];
+    let lotsRecuperer = /*[[${totalGains}]]*/ [];
     let ticketsData = /*[[${total}]]*/ [];
     let genderDataM = /*[[${countGainsForMen}]]*/ [];
     let genderDataF = /*[[${countGainsForWomen}]]*/ [];
-    let ageData = /*[[${totalGains}]]*/ [];
     let gainLabels = /*[[${gainLabels}]]*/ [];
     let countGainsByType = /*[[${countGainsByType}]]*/ [];
+    const ageLabels = /*[[${ageLabels}]]*/ []; 
+    const ageCounts = /*[[${ageCounts}]]*/ []; 
+
 
     </script>
 
@@ -81,6 +83,9 @@
                     </div>
                     <div class="chart-container">
                         <canvas id="typeChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="ageChart"></canvas>
                     </div>
                 </div>
             </section>

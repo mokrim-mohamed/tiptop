@@ -47,52 +47,71 @@ public String getGainsWithClientIdNotNull(Model model) {
             entry -> (double) entry.getValue() / jouer * 100
         ));
 
-// Group by gender
+// Group by gender// Group by gender and keep only one gain per user
 Map<Boolean, List<GainDto>> gainsByGender = gains.stream()
-.collect(Collectors.partitioningBy(gain -> {
+.filter(gain -> {
     Integer userId = gain.getUserId();
     UserDto user = userService.findById(userId);
+    return user != null; // Filtrer les gains pour les utilisateurs existants
+})
+.collect(Collectors.groupingBy(gain -> {
+    UserDto user = userService.findById(gain.getUserId());
     return user != null && "H".equals(user.getSexe()); // true si homme
 }));
 
-List<GainDto> gainsForMen = gainsByGender.get(true);
-List<GainDto> gainsForWomen = gainsByGender.get(false);
+List<GainDto> gainsForMen = gainsByGender.getOrDefault(true, new ArrayList<>());
+List<GainDto> gainsForWomen = gainsByGender.getOrDefault(false, new ArrayList<>());
 
-// Calcul des totaux pour les hommes
-long countGainsForMen = gainsForMen.size();
+// Calcul des totaux pour les hommes (uniquement des gains uniques)
+long countGainsForMen = gainsForMen.stream()
+.map(GainDto::getUserId) // On utilise l'ID de l'utilisateur pour ne compter qu'une seule fois par utilisateur
+.distinct() // Supprimer les doublons
+.count();
 
-// Calcul des totaux pour les femmes
-long countGainsForWomen = gainsForWomen.size();
+// Calcul des totaux pour les femmes (uniquement des gains uniques)
+long countGainsForWomen = gainsForWomen.stream()
+.map(GainDto::getUserId)
+.distinct()
+.count();
+
+// Group gains by type and count them (en gardant seulement un gain par utilisateur)
 
 
- Map<GainTypeDto, Long> countGainsByType = gains.stream()
-        .collect(Collectors.groupingBy(GainDto::getGainType, Collectors.counting()));
+Map<GainTypeDto, Long> countGainsByType = gains.stream()
+.collect(Collectors.groupingBy(GainDto::getGainType, Collectors.counting()));
 
-    // Conversion des données en liste pour l'accès dans le template
-    List<Long> gainCounts = new ArrayList<>();
-    List<String> gainLabels = new ArrayList<>();
-    
-    for (Map.Entry<GainTypeDto, Long> entry : countGainsByType.entrySet()) {
-        gainLabels.add(entry.getKey().getNom()); // Utilisez la méthode `getNom()` pour obtenir le nom
-        gainCounts.add(entry.getValue());
-    }
-/* 
-        // Group by age group
-    Map<String, Long> gainsByAgeGroup = gains.stream()
-    .collect(Collectors.groupingBy(gain -> {
-        Integer userId = gain.getUserId();
-        UserDto user = userService.findById(userId);
-        if (user != null) {
-            int age = calculateAge(user.getBirthDate()); // Assuming you have a birth date field
-            if (age >= 18 && age <= 25) return "18-25";
-            else if (age >= 26 && age <= 35) return "26-35";
-            else if (age >= 36 && age <= 45) return "36-45";
-            else if (age >= 46 && age <= 55) return "46-55";
-            else return "56 and above";
-        }
-        return "Unknown";
-    }, Collectors.counting()));
-*/
+// Conversion des données en liste pour l'accès dans le template
+List<Long> gainCounts = new ArrayList<>();
+List<String> gainLabels = new ArrayList<>();
+
+for (Map.Entry<GainTypeDto, Long> entry : countGainsByType.entrySet()) {
+gainLabels.add(entry.getKey().getNom()); // Utilisez la méthode `getNom()` pour obtenir le nom
+gainCounts.add(entry.getValue());
+}
+
+// Group gains by age range and count them (en gardant seulement un gain par utilisateur)
+Map<String, Long> gainsByAgeGroup = gains.stream()
+.filter(gain -> {
+    Integer userId = gain.getUserId();
+    UserDto user = userService.findById(userId);
+    return user != null; // Filtrer les gains pour les utilisateurs existants
+})
+.collect(Collectors.groupingBy(gain -> {
+    Integer userId = gain.getUserId();
+    UserDto user = userService.findById(userId);
+    int age = (user != null) ? user.getAge() : 0;
+    if (age < 18) return "Moins de 18 ans";
+    else if (age <= 25) return "18-25 ans";
+    else if (age <= 35) return "26-35 ans";
+    else if (age <= 50) return "36-50 ans";
+    else return "Plus de 50 ans";
+}, Collectors.mapping(GainDto::getUserId, Collectors.toSet())))
+.entrySet().stream()
+.collect(Collectors.toMap(Map.Entry::getKey, entry -> (long) entry.getValue().size()));
+
+// Prepare ageLabels and ageCounts
+List<String> ageLabels = new ArrayList<>(gainsByAgeGroup.keySet());
+List<Long> ageCounts = new ArrayList<>(gainsByAgeGroup.values());
     // Add all statistics to the model
     model.addAttribute("totalGains", jouer);
     model.addAttribute("tauxRemis", tauxRemis);
@@ -104,6 +123,9 @@ long countGainsForWomen = gainsForWomen.size();
     model.addAttribute("countGainsForWomen", countGainsForWomen);
     model.addAttribute("countGainsByType", gainCounts);
     model.addAttribute("gainLabels", gainLabels);
+    model.addAttribute("ageLabels", ageLabels); // Add age labels
+    model.addAttribute("ageCounts", ageCounts); // Add age counts
+
     // Return the dashboard view
     return "/admin/dashboard";
 }
