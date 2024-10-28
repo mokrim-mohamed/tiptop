@@ -203,7 +203,20 @@ table tbody tr:nth-child(even) {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+.chart-container {
+    background-color: #ffffff; /* Couleur de fond blanche pour le conteneur */
+    padding: 20px; /* Espace autour du graphique */
+    border-radius: 12px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    margin-bottom: 20px; /* Espacement entre les conteneurs */
+    width: 100%; /* Utilise toute la largeur disponible */
+    height: auto; /* Permet au conteneur de s'ajuster à son contenu */
+}
 
+canvas {
+    max-height: 400px; /* Limite la hauteur pour garder la lisibilité */
+    width: 100%; /* Utilise toute la largeur disponible */
+}
 /* Tableau */
 table {
     width: 100%;
