@@ -1,20 +1,15 @@
 package com.g2.tiptopG2.config;
-import com.g2.tiptopG2.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -23,30 +18,33 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeHttpRequests(request -> request.requestMatchers("/", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**").permitAll()
-                        .anyRequest().authenticated())
-                .formLogin()
-                        .loginPage("/login")
-                        .usernameParameter("username")
-                        .failureUrl("/login?error=true")
-                        .successHandler(customAuthenticationSuccessHandler())
-                        .permitAll()
-                        .and()
-                    .oauth2Login()  // Activer OAuth2 pour Google login
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/index", true)
-                        .and()
-                .logout()
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout=true") // Rediriger après une déconnexion réussie
-                        .invalidateHttpSession(true) // Invalider la session HTTP
-                        .clearAuthentication(true)  // Effacer les informations d'authentification
-                        .permitAll();
-                       
-                 
-
+            .authorizeHttpRequests(request -> request
+                .requestMatchers("/", "/resources/**", "/register", "/login", "/index", "/css/**", "/js/**", "/image/**", "/templates/**").permitAll()
+                .anyRequest().authenticated())
+            .formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .failureUrl("/login?error=true")
+                .successHandler(customAuthenticationSuccessHandler())
+                .permitAll()
+                .and()
+            .oauth2Login()
+                .loginPage("/login")
+                .defaultSuccessUrl("/index", true)
+                .and()
+            .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login?logout=true")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .permitAll()
+                .and() // Ajoutez cette ligne pour continuer la chaîne
+            .exceptionHandling()
+                .accessDeniedPage("/403"); // Spécifiez la page d'accès refusé
+    
         return http.build();
     }
+    
 
     @Bean
     public PasswordEncoder passwordEncoder() {

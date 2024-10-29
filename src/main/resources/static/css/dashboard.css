@@ -333,3 +333,33 @@ table tbody tr:hover {
         transform: none;
     }
 }
+.error-section {
+    text-align: center;
+    margin-top: 50px; /* Espace au-dessus de la section d'erreur */
+}
+
+.error-section h2 {
+    color: #388e3c; /* Couleur verte pour le titre */
+    font-size: 36px; /* Taille de police pour le titre */
+}
+
+.error-section p {
+    color: #777; /* Couleur pour le texte du message */
+    font-size: 18px; /* Taille de police pour le texte */
+    margin: 20px 0; /* Espacement au-dessus et en dessous du texte */
+}
+
+.btn-return {
+    background-color: #66bb6a; /* Couleur verte pour le bouton */
+    color: white; /* Couleur du texte en blanc */
+    padding: 10px 20px; /* Espacement à l'intérieur du bouton */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille de police pour le bouton */
+    text-decoration: none; /* Pas de soulignement */
+    transition: background-color 0.3s; /* Transition pour le survol */
+}
+
+.btn-return:hover {
+    background-color: #388e3c; /* Couleur du bouton au survol */
+}

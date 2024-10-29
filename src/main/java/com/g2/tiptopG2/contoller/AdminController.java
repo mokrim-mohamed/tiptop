@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -28,6 +29,8 @@ public class AdminController {
 
 
     @GetMapping("/admin/dashboard")
+    @PreAuthorize("hasRole('client')")
+
 public String getGainsWithClientIdNotNull(Model model) {
     // Collect data
     List<GainDto> gains = gainService.findByUserIdIsNotNull();
