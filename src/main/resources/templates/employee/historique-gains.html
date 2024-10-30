@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des Gains</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/historique-gains.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/employee/historique-gains" class="active">Historique des Gains</a></li>
+                <li><a href="/employee/parrametre">Paramètres</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
+            </ul>
+        </div>
+
+        <main class="main-content">
+            <!-- Section d'entrée de l'email et de l'historique des gains -->
+            <section class="input-section">
+                <h2>Rechercher les gains d'un utilisateur</h2>
+                <label for="email-input">Entrez l'email de l'utilisateur :</label>
+                <input type="email" id="email-input" placeholder="Email de l'utilisateur" required>
+                <button class="btn-search" id="searchBtn">Rechercher</button>
+            </section>
+
+            <!-- Section de l'historique des gains -->
+            <section class="table-section hidden" id="gainsTableSection">
+                <h2>Historique des Gains</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Code</th>
+                            <th>Type de Gain</th>
+                            <th>État</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="gainsTableBody">
+                        <!-- Les données des gains seront injectées ici -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+        const searchBtn = document.getElementById('searchBtn');
+        const emailInput = document.getElementById('email-input');
+        const gainsTableSection = document.getElementById('gainsTableSection');
+        const gainsTableBody = document.getElementById('gainsTableBody');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Récupération des gains à partir de l'email
+        searchBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            if (email === "") {
+                alert("Veuillez entrer un email valide.");
+                return;
+            }
+
+            try {
+                const response = await fetch(`/getUserGains?email=${encodeURIComponent(email)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.status === 404) {
+                    alert("Utilisateur non trouvé.");
+                    gainsTableSection.classList.add('hidden');
+                    return;
+                }
+
+                if (response.status === 204) {
+                    alert("Aucun gain trouvé pour cet utilisateur.");
+                    gainsTableSection.classList.add('hidden');
+                    return;
+                }
+
+                const gainsData = await response.json();
+
+                gainsTableBody.innerHTML = "";
+                gainsData.forEach(gain => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${gain.id}</td>
+                        <td>${gain.code}</td>
+                        <td>${gain.gainType.nom}</td>
+                        <td>${gain.remis ? 'Récupéré' : 'Non récupéré'}</td>
+                        <td>
+                            ${!gain.remis ? `<button class="btn-recuperer" data-id="${gain.id}">Récupérer</button>` : ''}
+                        </td>
+                    `;
+                    gainsTableBody.appendChild(row);
+                });
+
+                gainsTableSection.classList.remove('hidden');
+
+                document.querySelectorAll('.btn-recuperer').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const gainId = this.getAttribute('data-id');
+                        recupererGain(gainId);
+                    });
+                });
+            } catch (error) {
+                alert("Une erreur est survenue lors de la récupération des gains.");
+                console.error("Erreur:", error);
+            }
+        });
+
+        // Fonction pour mettre à jour l'état du gain
+        async function recupererGain(gainId) {
+            try {
+                const response = await fetch(`/employee/setRemis?gainId=${gainId}`, {
+                    method: 'POST',
+                });
+
+                if (response.ok) {
+                    alert(`Gain ID ${gainId} récupéré avec succès !`);
+
+                    // Mise à jour de l'interface utilisateur
+                    const row = document.querySelector(`button[data-id="${gainId}"]`).closest('tr');
+                    row.querySelector('td:nth-child(4)').innerText = 'Récupéré';
+                    row.querySelector('td:nth-child(5)').innerHTML = '';
+                } else {
+                    alert("Une erreur est survenue lors de la mise à jour du gain.");
+                }
+            } catch (error) {
+                alert("Une erreur est survenue.");
+                console.error("Erreur:", error);
+            }
+        }
+    </script>
+
+    <style>
+        /* Input Section */
+        .input-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .input-section h2 {
+            color: #388e3c;
+            margin-bottom: 15px;
+        }
+
+        .input-section label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            color: #333;
+        }
+
+        .input-section input {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-search {
+            background-color: #66bb6a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .btn-search:hover {
+            background-color: #388e3c;
+        }
+
+        /* Button Récupérer */
+        .btn-recuperer {
+            background-color: #ff7043;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-recuperer:hover {
+            background-color: #e64a19;
+        }
+
+        /* Table Section */
+        .table-section.hidden {
+            display: none;
+        }
+
+        /* Style table remains as is */
+    </style>
+</body>
+</html>

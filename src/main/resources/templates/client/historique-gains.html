@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historique des Gains</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/historique-gains.css}">
+    <link rel="stylesheet" th:href="@{/css/user.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/client/participation">Participation</a></li>
+                <li><a href="/client/historique-gains" class="active">Historique des Gains</a></li>
+                <li><a href="/client/parrametre">Paramètre</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <main class="main-content">
+            <!-- Section de l'historique des gains -->
+            <section class="table-section">
+                <h2 style="text-decoration: none;">Historique des Gains</h2> <!-- Ajout de style inline -->
+                
+                <!-- Vérification si la liste des gains est vide -->
+                <div th:if="${#lists.isEmpty(gains)}">
+                    <p>Aucun gain trouvé pour cet utilisateur.</p>
+                </div>
+
+                <!-- Si la liste des gains n'est pas vide, on affiche le tableau -->
+                <div th:unless="${#lists.isEmpty(gains)}">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>code</th>
+                                <th>status</th>
+                                <th>type</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Boucle Thymeleaf pour afficher chaque gain -->
+                            <tr th:each="gain : ${gains}">
+                                <td th:text="${gain.id}"></td>
+                                <td th:text="${gain.code}"></td>
+                                <td th:text="${gain.remis}"></td>
+                                <td th:text="${gain.gainType.nom}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

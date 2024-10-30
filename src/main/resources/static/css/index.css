@@ -1,0 +1,165 @@
+/* Styles globaux */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-link {
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+.btn-dark {
+    background-color: #000;
+    border: none;
+}
+
+.btn-dark:hover {
+    background-color: #444;
+}
+
+/* Header Section */
+h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 1rem;
+    color: #666;
+}
+
+button {
+    font-size: 1rem;
+}
+
+/* Carousel */
+.carousel-item img {
+    object-fit: cover; /* Ajuste l'image pour remplir l'espace sans la déformer */
+    height: 300px; /* Ajuste la hauteur pour uniformiser la taille des images */
+    border-radius: 10px; /* Arrondir légèrement les coins */
+}       
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.5); /* Arrière-plan sombre pour les flèches */
+    border-radius: 50%; /* Arrondir les coins */
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 20px; /* Positionne la légende au bas */
+    left: 55px; /* Positionne la légende à gauche */
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    color: #fff; /* Couleur du texte */
+    padding: 10px; /* Ajoute un peu de rembourrage */
+    border-radius: 3px; /* Coins arrondis */
+}
+
+/* Gifts Section */
+.card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    margin: 0 auto; 
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+/* Newsletter Section */
+h5 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+p {
+    font-size: 1.1rem;
+}
+
+form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form button {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    background-color: #f8f8f8;
+    border-top: 1px solid #e7e7e7;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+footer img {
+    margin: 0 10px;
+}
+
+footer p {
+    font-size: 0.9rem;
+    margin: 10px 0;
+}
+.header-section {
+    display: flex; /* Utiliser flexbox pour aligner les éléments */
+    justify-content: center; /* Centre le contenu horizontalement */
+    align-items: center; /* Centre le contenu verticalement */
+}
+
+.carousel {
+    position: relative; /* Positionnement relatif pour le carrousel */
+    overflow: hidden; /* Cache tout débordement */
+}
+
+.carousel-inner {
+    width: 100%; /* S'assure que le carrousel prend toute la largeur */
+    display: flex; /* Utilisation de flexbox */
+    align-items: center; /* Centre les éléments verticalement */
+}
+
+.carousel-item {
+    display: flex; /* Utilisation de flexbox */
+    justify-content: center; /* Centre le contenu de chaque item */
+    align-items: center; /* Centre verticalement */
+    height: 400px; /* Hauteur fixe pour les items */
+    flex: 0 0 auto; /* Empêche le rétrécissement des items */
+}
+
+.carousel img {
+    max-width: 100%; /* Limite la largeur à celle de l'élément parent */
+    height: auto; /* Conserve le rapport d'aspect */
+    object-fit: cover; /* Remplit l'élément tout en conservant le rapport d'aspect */
+    
+}
+
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute; /* Positionnement absolu pour les contrôles */
+    top: 50%; /* Centre verticalement */
+    transform: translateY(-50%); /* Ajuste la position pour un centrage parfait */
+    z-index: 1; /* S'assurer que les flèches sont au-dessus des images */
+}
