@@ -33,5 +33,25 @@ public class WebController {
         return "redirect:/register?success";
     }
 
+    @GetMapping("/rse")
+    public String getRsePage() {
+        return "rse";
+    }
+
+    @GetMapping("/faq")
+    public String getFaqPage() {
+        return "faq";
+    }
+
+    @GetMapping("/cgu")
+    public String getCguPage() {
+        return "cgu";
+    }
+
+    @GetMapping("/mentionslegals")
+    public String getMlPage() {
+        return "mentionsLegals";
+    }
+
   
 }
