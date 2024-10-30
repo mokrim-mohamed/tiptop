@@ -157,13 +157,17 @@
                     <a class="nav-link" href="#">À propos</a>
                 </li>
             </ul>
-            <ul class="navbar-nav" id="auth-links">
-                <ul>
-                    <li th:if="${!isAuthenticated}"><a th:href="@{/login}">Connexion</a></li>
-                    <li th:if="${!isAuthenticated}"><a th:href="@{/register}">Inscription</a></li>
-                    <li th:if="${isAuthenticated}"><a th:href="@{/logout}">Déconnexion</a></li>
-                    <li th:if="${isAuthenticated}"><a th:href="@{/my-account}">Mon compte</a></li>
-                </ul>
+            <ul class="nav-list">
+                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+                <li th:if="${isAuthenticated}" class="nav-item">
+                    
+                    <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+                    <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+                    <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+                    <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+                </li>
+            </ul>
             </ul>
         </div>
     </div>
@@ -225,6 +229,7 @@
 
 <!-- Contest Section -->
 <div class="container contest-section my-5">
+    
     <h5>Comment participer au jeu-concours ?</h5>
     <p>Pour participer, <strong>inscrivez-vous à notre newsletter</strong> et partagez le lien du concours sur vos réseaux sociaux.</p>
     <p>Les gagnants seront tirés au sort le <strong>1<sup>er</sup> janvier 2025</strong>.</p>

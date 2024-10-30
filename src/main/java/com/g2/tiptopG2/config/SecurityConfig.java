@@ -19,6 +19,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeHttpRequests(request -> request
+            .requestMatchers("/admin/**").hasAuthority("admin")
+    .requestMatchers("/employee/**").hasAuthority("employee")
+    .requestMatchers("/client/**").hasAuthority("user")
                 .requestMatchers("/", "/resources/**", "/register", "/login", "/index", "/css/**", "/js/**", "/image/**", "/templates/**").permitAll()
                 .anyRequest().authenticated())
             .formLogin()
@@ -41,7 +44,7 @@ public class SecurityConfig {
                 .and() // Ajoutez cette ligne pour continuer la chaîne
             .exceptionHandling()
                 .accessDeniedPage("/403"); // Spécifiez la page d'accès refusé
-    
+            
         return http.build();
     }
     

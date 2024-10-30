@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -58,7 +59,9 @@ public class GainController {
         return ResponseEntity.ok(gains);
     }
     // hadi lizdty nta 
+
     @GetMapping("/admin/historique-gains")
+    @PreAuthorize("hasRole('admin')")
     public String histoGain() {
         return "/admin/historique-gains";
     }
@@ -103,6 +106,7 @@ public class GainController {
 
 
     @GetMapping("/client/historique-gains")
+    @PreAuthorize("hasRole('user')")
     public String getHistoriqueByUserId(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();

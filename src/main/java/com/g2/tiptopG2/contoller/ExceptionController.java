@@ -8,5 +8,9 @@ public class ExceptionController {
 public String accessDenied() {
     return "403"; // Assurez-vous que ce fichier existe dans le dossier templates
 }
+@GetMapping("/404")
+public String introuvable() {
+    return "404"; // Assurez-vous que ce fichier existe dans le dossier templates
+}
 
 }

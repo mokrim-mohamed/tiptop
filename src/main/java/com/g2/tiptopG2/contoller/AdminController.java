@@ -29,7 +29,7 @@ public class AdminController {
 
 
     @GetMapping("/admin/dashboard")
-    @PreAuthorize("hasRole('client')")
+    @PreAuthorize("hasRole('admin')")
 
 public String getGainsWithClientIdNotNull(Model model) {
     // Collect data
@@ -134,10 +134,12 @@ List<Long> ageCounts = new ArrayList<>(gainsByAgeGroup.values());
 }
 
     @GetMapping("/admin/user")
+    @PreAuthorize("hasRole('admin')")
     public String adminUser() {
         return "/admin/user"; // Nom du fichier Thymeleaf
     }
     @GetMapping("/admin/parrametre")
+    @PreAuthorize("hasRole('admin')")
     public String showSettingsPage(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
