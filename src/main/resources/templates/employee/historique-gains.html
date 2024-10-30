@@ -23,8 +23,8 @@
             </div>
             <ul class="menu">
                 <li><a href="/employee/historique-gains" class="active">Historique des Gains</a></li>
-                <li><a href="/employee/parrametre">Parrametre</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/employee/parrametre">Paramètres</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
             </ul>
         </div>
 
@@ -39,14 +39,13 @@
 
             <!-- Section de l'historique des gains -->
             <section class="table-section hidden" id="gainsTableSection">
-                <h2 style="text-decoration: none;">Historique des Gains</h2>
+                <h2>Historique des Gains</h2>
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Utilisateur</th>
-                            <th>Montant</th>
-                            <th>Date</th>
+                            <th>Code</th>
+                            <th>Type de Gain</th>
                             <th>État</th>
                             <th>Action</th>
                         </tr>
@@ -71,59 +70,86 @@
             sidebar.classList.toggle('active');
         });
 
-        // Simule la récupération des gains à partir de l'email
-        searchBtn.addEventListener('click', () => {
+        // Récupération des gains à partir de l'email
+        searchBtn.addEventListener('click', async () => {
             const email = emailInput.value.trim();
             if (email === "") {
                 alert("Veuillez entrer un email valide.");
                 return;
             }
 
-            // Mock des données des gains (à remplacer par des données réelles de l'API)
-            const gainsData = [
-                { id: 1, utilisateur: 'Jean Dupont', montant: '50.00 €', date: '2024-01-15', etat: 'Non récupéré' },
-                { id: 2, utilisateur: 'Jean Dupont', montant: '75.00 €', date: '2024-01-16', etat: 'Récupéré' },
-                { id: 3, utilisateur: 'Jean Dupont', montant: '100.00 €', date: '2024-01-17', etat: 'Non récupéré' }
-            ];
-
-            // Injection des données dans le tableau
-            gainsTableBody.innerHTML = "";
-            gainsData.forEach(gain => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${gain.id}</td>
-                    <td>${gain.utilisateur}</td>
-                    <td>${gain.montant}</td>
-                    <td>${gain.date}</td>
-                    <td>${gain.etat}</td>
-                    <td>
-                        ${gain.etat === 'Non récupéré' ? `<button class="btn-recuperer" data-id="${gain.id}">Récupérer</button>` : ''}
-                    </td>
-                `;
-                gainsTableBody.appendChild(row);
-            });
-
-            // Affiche la section du tableau
-            gainsTableSection.classList.remove('hidden');
-
-            // Ajout d'un événement de récupération de gain
-            const recupererBtns = document.querySelectorAll('.btn-recuperer');
-            recupererBtns.forEach(button => {
-                button.addEventListener('click', function() {
-                    const gainId = this.getAttribute('data-id');
-                    recupererGain(gainId);
+            try {
+                const response = await fetch(`/getUserGains?email=${encodeURIComponent(email)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
                 });
-            });
+
+                if (response.status === 404) {
+                    alert("Utilisateur non trouvé.");
+                    gainsTableSection.classList.add('hidden');
+                    return;
+                }
+
+                if (response.status === 204) {
+                    alert("Aucun gain trouvé pour cet utilisateur.");
+                    gainsTableSection.classList.add('hidden');
+                    return;
+                }
+
+                const gainsData = await response.json();
+
+                gainsTableBody.innerHTML = "";
+                gainsData.forEach(gain => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${gain.id}</td>
+                        <td>${gain.code}</td>
+                        <td>${gain.gainType.nom}</td>
+                        <td>${gain.remis ? 'Récupéré' : 'Non récupéré'}</td>
+                        <td>
+                            ${!gain.remis ? `<button class="btn-recuperer" data-id="${gain.id}">Récupérer</button>` : ''}
+                        </td>
+                    `;
+                    gainsTableBody.appendChild(row);
+                });
+
+                gainsTableSection.classList.remove('hidden');
+
+                document.querySelectorAll('.btn-recuperer').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const gainId = this.getAttribute('data-id');
+                        recupererGain(gainId);
+                    });
+                });
+            } catch (error) {
+                alert("Une erreur est survenue lors de la récupération des gains.");
+                console.error("Erreur:", error);
+            }
         });
 
-        // Fonction de récupération du gain
-        function recupererGain(gainId) {
-            alert(`Gain ID ${gainId} récupéré avec succès !`);
-            // Ici, vous pouvez envoyer une requête pour mettre à jour l'état du gain (API ou base de données)
-            // Après récupération, actualisez la table pour mettre à jour l'état
-            const row = document.querySelector(`button[data-id="${gainId}"]`).closest('tr');
-            row.querySelector('td:nth-child(5)').innerText = 'Récupéré';
-            row.querySelector('td:nth-child(6)').innerHTML = '';
+        // Fonction pour mettre à jour l'état du gain
+        async function recupererGain(gainId) {
+            try {
+                const response = await fetch(`/employee/setRemis?gainId=${gainId}`, {
+                    method: 'POST',
+                });
+
+                if (response.ok) {
+                    alert(`Gain ID ${gainId} récupéré avec succès !`);
+
+                    // Mise à jour de l'interface utilisateur
+                    const row = document.querySelector(`button[data-id="${gainId}"]`).closest('tr');
+                    row.querySelector('td:nth-child(4)').innerText = 'Récupéré';
+                    row.querySelector('td:nth-child(5)').innerHTML = '';
+                } else {
+                    alert("Une erreur est survenue lors de la mise à jour du gain.");
+                }
+            } catch (error) {
+                alert("Une erreur est survenue.");
+                console.error("Erreur:", error);
+            }
         }
     </script>
 

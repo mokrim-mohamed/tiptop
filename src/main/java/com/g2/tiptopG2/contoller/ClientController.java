@@ -1,13 +1,13 @@
 package com.g2.tiptopG2.contoller;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.g2.tiptopG2.service.IUserService;
 
-import com.g2.tiptopG2.models.UserEntity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.context.SecurityContextHolder;
 import com.g2.tiptopG2.dto.UserDto;
+import com.g2.tiptopG2.service.IUserService;
 @Controller
 public class ClientController {
     private final IUserService userService;
@@ -17,6 +17,8 @@ public class ClientController {
 
 
     @GetMapping("/client/parrametre")
+    @PreAuthorize("hasRole('user')")
+
 public String showSettingsPage(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -38,6 +40,7 @@ public String showSettingsPage(Model model) {
   //  }
 
     @GetMapping("/client/participation")
+    @PreAuthorize("hasRole('user')")
     public String histoGains() {
         return "/client/participation";
     }

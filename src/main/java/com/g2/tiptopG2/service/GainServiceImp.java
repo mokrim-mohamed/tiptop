@@ -53,14 +53,14 @@ public class GainServiceImp implements IGainService {
                 .collect(Collectors.toList());
     }
     @Override
-    public GainDto updateUser(Integer gainId, Integer userId) {
-        GainEntity gainEntity =gainDao.findById(gainId)
-                .orElseThrow(() -> new RuntimeException("Gain not found"));
-
+    public GainDto updateUser(String gainCode, Integer userId) {
+        GainEntity gainEntity = gainDao.findByCode(gainCode);
+        if (gainEntity == null) {
+        throw new RuntimeException("Gain not found");
+        }
         // Récupérer l'entité UserEntity correspondant au userId
         UserEntity userEntity = userDao.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-
+            .orElseThrow(() -> new RuntimeException("User not found"));
         // Mettre à jour uniquement le champ user de GainEntity
         gainEntity.setUser(userEntity);
 
@@ -70,5 +70,15 @@ public class GainServiceImp implements IGainService {
         // Retourner l'objet DTO mis à jour
         return modelMapper.map(updatedGain, GainDto.class);
     }
+
+    @Override
+    public GainDto updateRemis(Integer gainId) {
+        GainEntity gainEntity =gainDao.findById(gainId)
+                .orElseThrow(() -> new RuntimeException("Gain not found"));
+        gainEntity.setRemis(true);
+        GainEntity updatedGain = gainDao.save(gainEntity);
+        return modelMapper.map(updatedGain, GainDto.class);
+    }
+
     
 }

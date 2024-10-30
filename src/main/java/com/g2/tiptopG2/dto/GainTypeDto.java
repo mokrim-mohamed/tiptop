@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GainTypeDto {
     private Integer id; // L'identifiant du gain
-    private String description; // Le code du gain
+    private String nom; // Le code du gain
 }

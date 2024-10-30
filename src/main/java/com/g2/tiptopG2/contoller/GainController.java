@@ -1,28 +1,29 @@
-package com.g2.tiptopG2.controller;
+package com.g2.tiptopG2.contoller;
+
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.g2.tiptopG2.dto.GainDto;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IGainService;
 import com.g2.tiptopG2.service.IUserService;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.security.core.context.SecurityContextHolder;
-import java.util.List;
+
 @Controller
 @RequestMapping()
 public class GainController {
-
     private final IGainService gainService;
     private final IUserService userService;
     public GainController(IGainService gainService,IUserService userService) {
@@ -34,6 +35,11 @@ public class GainController {
     @GetMapping("/gain")
     public String getGainsPage() {
         return "gain";
+    }
+
+    @GetMapping("/gainUpdate")
+    public String getGainsPageTest() {
+        return "gainUpdate";
     }
     @GetMapping("/emp")
     public String getEmpPage() {
@@ -53,19 +59,21 @@ public class GainController {
         return ResponseEntity.ok(gains);
     }
     // hadi lizdty nta 
+
     @GetMapping("/admin/historique-gains")
+    @PreAuthorize("hasRole('admin')")
     public String histoGain() {
         return "/admin/historique-gains";
     }
     // khdama f participation
     @PutMapping("/gains/gain")
-    public ResponseEntity<GainDto> updateGainUser(@RequestParam Integer gainId) {
+    public ResponseEntity<GainDto> updateGainUser(@RequestParam String gainCode) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             if (principal instanceof User) {
             String userEmail = ((User) principal).getUsername();  // Récupérer l'email de l'utilisateur connecté
             UserDto userDto = userService.findByEmail(userEmail);  // Assurez-vous que la méthode existe dans IUserService
-            GainDto updatedGain = gainService.updateUser(gainId, userDto.getId());
+            GainDto updatedGain = gainService.updateUser(gainCode, userDto.getId());
             
             return ResponseEntity.ok(updatedGain);
             } else {
@@ -98,6 +106,7 @@ public class GainController {
 
 
     @GetMapping("/client/historique-gains")
+    @PreAuthorize("hasRole('user')")
     public String getHistoriqueByUserId(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -115,7 +124,7 @@ public class GainController {
                 }
             } else {
                 return "redirect:/login";  // Redirige vers la page de login si l'utilisateur n'est pas authentifié
-            }
+            }   
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "Une erreur est survenue : " + e.getMessage());
@@ -123,5 +132,15 @@ public class GainController {
         }
     }
 
+    @PostMapping("/employee/setRemis")
+    public ResponseEntity<GainDto> getUserGains(@RequestParam("gainId") Integer id) {
+        GainDto gainDto = gainService.findById(id);
+        if (gainDto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                             .body(null);  // Utilisateur non trouvé
+        }
+        gainDto = gainService.updateRemis(id);
+        return ResponseEntity.ok(gainDto);
+    }
 
 }

@@ -203,7 +203,20 @@ table tbody tr:nth-child(even) {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+.chart-container {
+    background-color: #ffffff; /* Couleur de fond blanche pour le conteneur */
+    padding: 20px; /* Espace autour du graphique */
+    border-radius: 12px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    margin-bottom: 20px; /* Espacement entre les conteneurs */
+    width: 100%; /* Utilise toute la largeur disponible */
+    height: auto; /* Permet au conteneur de s'ajuster à son contenu */
+}
 
+canvas {
+    max-height: 400px; /* Limite la hauteur pour garder la lisibilité */
+    width: 100%; /* Utilise toute la largeur disponible */
+}
 /* Tableau */
 table {
     width: 100%;
@@ -319,4 +332,34 @@ table tbody tr:hover {
     .sidebar {
         transform: none;
     }
+}
+.error-section {
+    text-align: center;
+    margin-top: 50px; /* Espace au-dessus de la section d'erreur */
+}
+
+.error-section h2 {
+    color: #388e3c; /* Couleur verte pour le titre */
+    font-size: 36px; /* Taille de police pour le titre */
+}
+
+.error-section p {
+    color: #777; /* Couleur pour le texte du message */
+    font-size: 18px; /* Taille de police pour le texte */
+    margin: 20px 0; /* Espacement au-dessus et en dessous du texte */
+}
+
+.btn-return {
+    background-color: #66bb6a; /* Couleur verte pour le bouton */
+    color: white; /* Couleur du texte en blanc */
+    padding: 10px 20px; /* Espacement à l'intérieur du bouton */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille de police pour le bouton */
+    text-decoration: none; /* Pas de soulignement */
+    transition: background-color 0.3s; /* Transition pour le survol */
+}
+
+.btn-return:hover {
+    background-color: #388e3c; /* Couleur du bouton au survol */
 }

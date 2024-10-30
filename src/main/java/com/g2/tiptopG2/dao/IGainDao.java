@@ -11,4 +11,5 @@ public interface IGainDao extends JpaRepository<GainEntity, Integer> {
     GainEntity findByCode(String code);
     List<GainEntity> findByUserIdIsNotNull();
     List<GainEntity> findByUserId(Integer Id);
+
 }
