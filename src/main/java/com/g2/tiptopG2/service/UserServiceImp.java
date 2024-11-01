@@ -8,21 +8,23 @@ import javax.security.auth.login.AccountNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import com.g2.tiptopG2.dao.IRoleDao;
-
+import java.security.SecureRandom;
 import com.g2.tiptopG2.dao.IUserDao;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.dto.RoleDto;
 import com.g2.tiptopG2.models.UserEntity;
+import com.g2.tiptopG2.service.EmailService;
 @Service()
 public class UserServiceImp implements IUserService {
 	private IUserDao UserDao;
 	private ModelMapper modelmapper;
 	private IRoleDao roleDao;
-	
-	public UserServiceImp(IUserDao UserDao, ModelMapper modelmapper) {
+	private final EmailService emailService;
+	public UserServiceImp(IUserDao UserDao, ModelMapper modelmapper, EmailService emailService) {
 		super();
 		this.UserDao = UserDao;
 		this.modelmapper = modelmapper;
+		this.emailService = emailService;
 	}
 
 
@@ -65,5 +67,27 @@ public class UserServiceImp implements IUserService {
 	public UserDto update(UserDto UserDto, Integer id) {
    
     return null;
-}
+}    
+	@Override
+	public UserDto updateMdp(UserDto user) {
+		UserEntity userEntity = UserDao.findByEmail(user.getEmail());
+		if (userEntity == null) {
+			throw new RuntimeException("User not found");
+		}
+		
+		String mdp = RandomStringGenerator.generateRandomString(10);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		userEntity.setMotDePasse(passwordEncoder.encode(mdp));
+		UserEntity saved = UserDao.save(userEntity);
+
+		String subject = "Réinitialisation de votre mot de passe";
+		String body = "Réinitialisation de votre mot de passe\n\n" +
+					"Voici votre code de réinitialisation : " + mdp + "\n\n" +
+					"Merci !";
+
+		// Appel à la méthode sendEmail
+		emailService.sendEmail(user.getEmail(), subject, body);
+		return modelmapper.map(saved, UserDto.class);
+	}
+
 }

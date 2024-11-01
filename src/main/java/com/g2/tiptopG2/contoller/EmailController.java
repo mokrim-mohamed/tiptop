@@ -3,6 +3,7 @@ package com.g2.tiptopG2.contoller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.g2.tiptopG2.service.EmailService;
 
 @RestController
 public class EmailController {
