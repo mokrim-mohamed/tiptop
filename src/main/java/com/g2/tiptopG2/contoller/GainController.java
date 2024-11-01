@@ -92,7 +92,9 @@ public class GainController {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
     
-            // Met à jour le gain et retourne la réponse
+            if(gainService.findByCodeAndUserIsNull(gainCode)==null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
             GainDto updatedGain = gainService.updateUser(gainCode, userDto.getId());
             return ResponseEntity.ok(updatedGain);
             

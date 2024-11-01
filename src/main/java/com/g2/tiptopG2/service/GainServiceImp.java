@@ -79,6 +79,11 @@ public class GainServiceImp implements IGainService {
         GainEntity updatedGain = gainDao.save(gainEntity);
         return modelMapper.map(updatedGain, GainDto.class);
     }
-
-    
+    @Override
+    public GainDto findByCodeAndUserIsNull(String code){
+        GainEntity gainEntity = gainDao.findByCodeAndUserIsNull(code);
+        if (gainEntity == null) {
+            return null; }
+        return modelMapper.map(gainEntity, GainDto.class);
+    }
 }

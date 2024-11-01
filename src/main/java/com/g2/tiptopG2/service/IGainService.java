@@ -12,6 +12,7 @@ public interface IGainService {
     GainDto updateUser(String gainCode, Integer userId);
     List<GainDto> findByUserId(Integer Id);
     GainDto updateRemis(Integer Id);
+    GainDto findByCodeAndUserIsNull(String code);
 
 
 

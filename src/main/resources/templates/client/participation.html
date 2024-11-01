@@ -64,7 +64,7 @@
                         $('#result').html(`<div class="alert alert-success">L'utilisateur du gain a été mis à jour avec succès.</div>`);
                     },
                     error: function(xhr) {
-                        $('#result').html(`<div class="alert alert-danger">Erreur : ${xhr.responseText}</div>`);
+                        $('#result').html(`<div class="alert alert-danger"> Le code de gain est incorrect ou a déjà été utilisé. : ${xhr.responseText}</div>`);
                     }
                 });
             });
