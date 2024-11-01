@@ -12,4 +12,5 @@ public interface IUserService {
 	UserDto update(UserDto UserDto, Integer id);
 	List<UserDto> findAll();
 	UserDto updateMdp(UserDto user);	
+	UserDto saveClientAOuth(UserDto userDto);
 }

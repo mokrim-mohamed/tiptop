@@ -89,5 +89,16 @@ public class UserServiceImp implements IUserService {
 		emailService.sendEmail(user.getEmail(), subject, body);
 		return modelmapper.map(saved, UserDto.class);
 	}
-
+	@Override
+	public UserDto saveClientAOuth(UserDto userDto) {
+    // Encoder le mot de passe avant de sauvegarder l'utilisateur
+	    UserEntity existingUser = UserDao.findByEmail(userDto.getEmail());
+   		 if (existingUser != null) {
+        throw new RuntimeException("Cet utilisateur avec cet email existe déjà !");
+    	}
+		//userDto.setRoleId(3);
+    	UserEntity userEntity = modelmapper.map(userDto, UserEntity.class);
+    	UserEntity saved = UserDao.save(userEntity);
+    	return modelmapper.map(saved, UserDto.class);
+		}
 }

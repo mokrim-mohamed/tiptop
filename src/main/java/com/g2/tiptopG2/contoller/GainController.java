@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.List;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+
 @Controller
 @RequestMapping()
 public class GainController {
@@ -67,20 +69,37 @@ public class GainController {
     public ResponseEntity<GainDto> updateGainUser(@RequestParam String gainCode) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String userEmail;
+            UserDto userDto;
+    
             if (principal instanceof User) {
-            String userEmail = ((User) principal).getUsername();  // Récupérer l'email de l'utilisateur connecté
-            UserDto userDto = userService.findByEmail(userEmail);  // Assurez-vous que la méthode existe dans IUserService
-            GainDto updatedGain = gainService.updateUser(gainCode, userDto.getId());
-            
-            return ResponseEntity.ok(updatedGain);
+                // Utilisateur authentifié via une méthode classique
+                userEmail = ((User) principal).getUsername();
+                userDto = userService.findByEmail(userEmail);
+            } else if (principal instanceof OAuth2User) {
+                OAuth2User oauthUser = (OAuth2User) principal;
+                userEmail = oauthUser.getAttribute("email");
+                String name = oauthUser.getAttribute("name");
+
+                userDto = new UserDto();                   
+                userDto.setEmail(userEmail);
+                userDto.setNom(name);
+                userDto.setRoleId(3);
+                userDto=userService.saveClientAOuth(userDto);                
             } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
+    
+            // Met à jour le gain et retourne la réponse
+            GainDto updatedGain = gainService.updateUser(gainCode, userDto.getId());
+            return ResponseEntity.ok(updatedGain);
+            
         } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
     @PostMapping("/getUserGains")
     public ResponseEntity<List<GainDto>> getUserGains(@RequestParam("email") String email) {
         UserDto userDto = userService.findByEmail(email);
