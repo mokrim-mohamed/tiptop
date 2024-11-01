@@ -70,7 +70,7 @@ public class GainController {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String userEmail;
-            UserDto userDto;
+            UserDto userDto=new UserDto();
     
             if (principal instanceof User) {
                 // Utilisateur authentifié via une méthode classique
@@ -80,12 +80,14 @@ public class GainController {
                 OAuth2User oauthUser = (OAuth2User) principal;
                 userEmail = oauthUser.getAttribute("email");
                 String name = oauthUser.getAttribute("name");
-
+                userDto=userService.findByEmail(userEmail);
+                if(userDto==null){
                 userDto = new UserDto();                   
                 userDto.setEmail(userEmail);
                 userDto.setNom(name);
                 userDto.setRoleId(3);
-                userDto=userService.saveClientAOuth(userDto);                
+                userDto=userService.saveClientAOuth(userDto);   
+            }             
             } else {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
