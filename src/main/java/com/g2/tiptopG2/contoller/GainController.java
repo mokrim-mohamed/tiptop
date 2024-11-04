@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.List;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping()
@@ -129,42 +130,40 @@ public class GainController {
     public String getHistoriqueByUserId(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<GainDto> updatedGain = new ArrayList<>(); // Liste vide par défaut
+            UserDto userDto=null;
             if (principal instanceof User) {
                 String userEmail = ((User) principal).getUsername();  
-                UserDto userDto = userService.findByEmail(userEmail);
+                userDto = userService.findByEmail(userEmail);
                 
                 if (userDto != null) {
-                    List<GainDto> updatedGain = gainService.findByUserId(userDto.getId());
-                    model.addAttribute("gains", updatedGain);
-                    return "client/historique-gains";  // Affiche la page historique avec les gains
+                    updatedGain = gainService.findByUserId(userDto.getId());
                 } else {
                     model.addAttribute("errorMessage", "Utilisateur non trouvé");
-                    return "error";
                 }
-            }else if (principal instanceof OAuth2User) {
+            } else if (principal instanceof OAuth2User) {
                 OAuth2User oauthUser = (OAuth2User) principal;
                 String userEmail = oauthUser.getAttribute("email");
-                UserDto userDto = userService.findByEmail(userEmail);
+                userDto = userService.findByEmail(userEmail);
                 if (userDto != null) {
-                    List<GainDto> updatedGain = gainService.findByUserId(userDto.getId());
-                    model.addAttribute("gains", updatedGain);
-                    return "client/historique-gains";  // Affiche la page historique avec les gains
+                    updatedGain = gainService.findByUserId(userDto.getId());
                 } else {
                     model.addAttribute("errorMessage", "Utilisateur non trouvé");
-                    return "error";
                 }
-
-            
             } else {
                 return "redirect:/login";  // Redirige vers la page de login si l'utilisateur n'est pas authentifié
             }
+    
+            // Ajoute la liste des gains (vide ou remplie)
+            model.addAttribute("gains", updatedGain);
+            return "client/historique-gains";  // Affiche la page historique avec les gains
+            
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "Une erreur est survenue : " + e.getMessage());
             return "error";
         }
     }
-
     @PostMapping("/employee/setRemis")
     public ResponseEntity<GainDto> getUserGains(@RequestParam("gainId") Integer id) {
         GainDto gainDto = gainService.findById(id);

@@ -35,8 +35,9 @@
                 <h2 style="text-decoration: none;">Historique des Gains</h2> <!-- Ajout de style inline -->
                 
                 <!-- Vérification si la liste des gains est vide -->
-                <div th:if="${#lists.isEmpty(gains)}">
-                    <p>Aucun gain trouvé pour cet utilisateur.</p>
+                <div th:if="${#lists.isEmpty(gains)}" style="text-align: center;">
+                    <p style="color: #888;">Aucun gain trouvé.</p>
+                    
                 </div>
 
                 <!-- Si la liste des gains n'est pas vide, on affiche le tableau -->
@@ -45,10 +46,9 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>code</th>
-                                <th>status</th>
-                                <th>type</th>
-
+                                <th>Code</th>
+                                <th>Status</th>
+                                <th>Type</th>
                             </tr>
                         </thead>
                         <tbody>
