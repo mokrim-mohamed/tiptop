@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.g2.tiptopG2.models.UserEntity;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import javax.management.modelmbean.ModelMBean;
 
@@ -21,20 +22,30 @@ public class ClientController {
 
 
     @GetMapping("/client/parrametre")
-public String showSettingsPage(Model model) {
+    public String showSettingsPage(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            String userEmail = ((User) principal).getUsername();  
-            UserDto userDto = userService.findByEmail(userEmail);
+            UserDto userDto = null;
+            
+            if (principal instanceof User) {
+                String userEmail = ((User) principal).getUsername();
+                userDto = userService.findByEmail(userEmail);
+            } else if (principal instanceof OAuth2User) {
+                OAuth2User oauthUser = (OAuth2User) principal;
+                String userEmail = oauthUser.getAttribute("email");
+                userDto = userService.findByEmail(userEmail);
+            }
+    
             model.addAttribute("user", userDto);
             return "client/parrametre";
+            
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "Une erreur est survenue : " + e.getMessage());
             return "error";
         }
+    }
     
-} 
     // hadi lizdty nta 
  //   @GetMapping("/client/historique-gains")
   //  public String histoGain() {

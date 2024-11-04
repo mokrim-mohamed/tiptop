@@ -141,6 +141,20 @@ public class GainController {
                     model.addAttribute("errorMessage", "Utilisateur non trouvé");
                     return "error";
                 }
+            }else if (principal instanceof OAuth2User) {
+                OAuth2User oauthUser = (OAuth2User) principal;
+                String userEmail = oauthUser.getAttribute("email");
+                UserDto userDto = userService.findByEmail(userEmail);
+                if (userDto != null) {
+                    List<GainDto> updatedGain = gainService.findByUserId(userDto.getId());
+                    model.addAttribute("gains", updatedGain);
+                    return "client/historique-gains";  // Affiche la page historique avec les gains
+                } else {
+                    model.addAttribute("errorMessage", "Utilisateur non trouvé");
+                    return "error";
+                }
+
+            
             } else {
                 return "redirect:/login";  // Redirige vers la page de login si l'utilisateur n'est pas authentifié
             }

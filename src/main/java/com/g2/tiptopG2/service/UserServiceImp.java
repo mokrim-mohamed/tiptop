@@ -61,6 +61,9 @@ public class UserServiceImp implements IUserService {
 	@Override
 	public UserDto findByEmail(String email) {
     UserEntity userEntity = UserDao.findByEmail(email);
+	if(userEntity ==null ){
+		return null;
+	}
     return modelmapper.map(userEntity, UserDto.class);
 }
 	@Override

@@ -39,14 +39,14 @@
                 <h2>Paramètres du profil</h2>
                 <form method="post" action="/client/updateProfile">
                     <label for="nom">Nom :</label>
-                    <input type="text" id="nom" name="nom" th:value="${user.nom}" />
-
+                    <input type="text" id="nom" name="nom" th:value="${user?.nom}" />
+            
                     <label for="email">Email :</label>
-                    <input type="email" id="email" name="email" th:value="${user.email}" />
-
+                    <input type="email" id="email" name="email" th:value="${user?.email}" />
+            
                     <label for="telephone">Téléphone :</label>
-                    <input type="text" id="telephone" name="telephone" th:value="${user.telephone}" />
-
+                    <input type="text" id="telephone" name="telephone" th:value="${user?.telephone}" />
+            
                     <button class="btn-save" type="submit">Mettre à jour</button>
                 </form>
             </section>
