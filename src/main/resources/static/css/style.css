@@ -1,79 +1,321 @@
-/* Global */
 body {
-    background-color: #fafafa;
-    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #115b3a;
+    font-family: Arial, sans-serif; /* Default font */
 }
-
-/* Navbar */
-.navbar-brand img {
-    transition: transform 0.3s ease-in-out;
+header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    z-index: 10;
 }
-.navbar-brand img:hover {
-    transform: rotate(360deg); /* Effet fun lors du survol du logo */
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
 }
-
-/* Header */
-h1 {
-    font-size: 3rem;
-    color: #4CAF50;
-    font-weight: 700;
-    text-transform: uppercase;
-    animation: bounce 2s infinite;
+nav ul li {
+    margin-left: 20px;
 }
-p {
-    font-size: 1.2rem;
-    color: #333;
+nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
 }
-button.btn-dark {
-    background-color: #FF5722;
+nav ul li a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+}
+.side-text {
+    position: absolute;
+    top: 11%;
+    left: 67%;
+    transform: translateX(-50%);
+    text-align: center;
+    padding: 10px;
+    z-index: 10;
+    width: 60%;
+}
+.button {
+    background-color: #19a155;
+    color: white;
     border: none;
-    padding: 0.7rem 1.5rem;
-    font-size: 1.1rem;
-    transition: background-color 0.3s ease-in-out;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 20px;
+    transition: background-color 0.3s;
 }
-button.btn-dark:hover {
-    background-color: #FF9800;
-    transform: scale(1.05);
+.button:hover {
+    background-color: darkgreen;
 }
-
-/* Carousel */
-.carousel-item img {
-    height: 500px;
-    object-fit: cover;
-    animation: fadeIn 1.5s ease-in-out;
+.gifts-title {
+    font-size: 50px;
+    margin: 20px 0; /* Space above and below */
+    text-align: center;
+    font-family: fantasy;
 }
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
-
-/* Cards */
-.card-body img {
-    transition: transform 0.3s ease;
+.card-container ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: center;
 }
-.card-body img:hover {
-    transform: scale(1.1);
+.card-container li {
+    background: rgb(246 185 68);
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    text-align: center;
+    transition: background 0.3s;
+    margin: 10px;
+    font-family: cursive;
 }
-
-/* Footer */
-footer {
-    background-color: #4CAF50;
-    color: white;
+.card-container li:hover {
+    background: #976505;
 }
-footer p, footer a {
-    color: white;
+.tiptop-title {
+    color: #19a155; font-size: 70px; font-family: fantasy;
+    display: inline-block; /* Required for the animation effect */
+    animation: wave 5s infinite; /* Adjust duration for speed */
 }
-footer a:hover {
-    text-decoration: underline;
+.tiptop-subtitle {
+    font-size: 19px; font-family: fantasy;
 }
-
-/* Animations */
-@keyframes bounce {
-    0%, 100% {
-        transform: translateY(0);
+.subscription {
+    font-family: cursive;
+}
+.subscription-sub {
+    font-family: cursive;
+}
+@media (max-width: 1400px) {
+    .side-text {
+        position: absolute;
+        top: 2%;
+        left: 67%;
+        transform: translateX(-50%);
+        text-align: center;
+        padding: 10px;
+        z-index: 10;
+        width: 60%;
     }
-    50% {
-        transform: translateY(-15px);
+}
+@media (max-width: 1096px) {
+    .side-text {
+        position: absolute;
+        top: 2%;
+        left: 67%;
+        transform: translateX(-50%);
+        text-align: center;
+        padding: 10px;
+        z-index: 10;
+        width: 60%;
     }
+    .tiptop-title {
+        color: #19a155;
+        font-size: 38px;
+        font-family: fantasy;
+        
+    }
+
+    .tiptop-subtitle {
+        font-size: 13px;
+        font-family: fantasy;
+    }
+}
+/* Responsive Styles */
+@media (max-width: 812px) {
+    .gifts-title {
+        font-size: 40px; /* Adjust title size */
+    }
+    .side-text p {
+        font-size: 16px; /* Adjust paragraph size */
+    }
+    .card-container li {
+        width: 45%; /* Adjust card width */
+    }
+
+    .subscription-sub {
+        font-family: cursive;
+        margin-top: 32%;
+        margin-left: -187px;
+        color: white;
+    }
+    .container-gifts {
+        margin-top: 18%;
+    }
+}
+@media (max-width: 637px) {
+    .gifts-title {
+        font-size: 30px; /* Smaller title size */
+    }
+    .button {
+        width: 100%; /* Full width button */
+    }
+    .card-container li {
+        width: 80%; /* Adjust card width */
+    }
+
+    .subscription-sub {
+        font-family: cursive;
+        margin-top: 8%;
+        margin-left: -187px;
+        color: white;
+    }
+    .container-gifts {
+        margin-top: 28%;
+    }
+  
+}
+@media (max-width: 508px) {
+    .button {
+        width: 100%; /* Full width button */
+        margin-top: 120px;
+        margin-left: -152px;
+        background-color: #f6b944;
+    }
+
+    .button:hover {
+        background-color: rgb(172, 40, 17);
+    }
+
+    .subscription{
+        margin-left: -152px;
+    }
+
+    .container-gifts {
+        margin-top: 59%;
+    }
+}
+@media (max-width: 444px) {
+
+    .container-gifts {
+        margin-top: 78%;
+    }
+    .button:hover {
+        background-color: rgb(172, 40, 17);
+    }
+}
+@keyframes wave {
+    0% {
+        transform: translateY(0) rotate(0deg);
+    }
+    20% {
+        transform: translateY(-10px) rotate(-5deg);
+    }
+    40% {
+        transform: translateY(0) rotate(0deg);
+    }
+    60% {
+        transform: translateY(10px) rotate(5deg);
+    }
+    80% {
+        transform: translateY(0) rotate(0deg);
+    }
+    100% {
+        transform: translateY(-10px) rotate(-5deg);
+    }
+}
+.falling-leaves-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.falling-leaf {
+    position: absolute;
+    top: -10%;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+.countdown-container {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    color: #f6b944; /* Doré pour attirer l’attention */
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px 0;
+}
+
+#countdown {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+.card-container li {
+    background: rgb(246 185 68);
+    border-radius: 50%; /* Rend l'élément circulaire */
+    padding: 40px;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    transition: transform 0.3s;
+    margin: 10px;
+    font-family: cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative; /* Nécessaire pour positionner la modal */
+    cursor: pointer;
+}
+
+.card-container li:hover {
+    transform: scale(1.1); /* Agrandit légèrement l'élément au survol */
+}
+
+/* Style pour la fenêtre modale */
+.card-container li .modal {
+    display: none;
+    position: absolute;
+    bottom: 110%; /* Positionne la modal au-dessus de l'élément */
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 10px;
+    border-radius: 8px;
+    width: 200px;
+    text-align: center;
+    font-size: 14px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+/* Affiche la modal au survol */
+.card-container li:hover .modal {
+    display: block;
+    opacity: 1;
 }

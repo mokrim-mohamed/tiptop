@@ -1,254 +1,117 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thé Tip Top - Jeu-Concours</title>
-    <link rel="manifest" href="/manifest.json">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/rgbd.css"> <!-- Fichier CSS de la bannière RGPD -->
-    <link rel="icon" href="/img/icon.png" sizes="192x192">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Thé Tip Top - Jeu-Concours</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="/css/style.css">
+    </head>
+    <script>
+        const maxLeaves = 10; // Nombre maximum de feuilles visibles
+        let currentLeaves = 0; // Compteur de feuilles actives
     
-    <style>
-        /* Ajout d'une ombre légère aux images des cadeaux */
-        .card img {
-            transition: transform 0.3s; /* Transition douce pour l'effet hover */
+        function createFallingLeaf() {
+            if (currentLeaves < maxLeaves) {
+                const leaf = document.createElement("div");
+                leaf.classList.add("falling-leaf");
+                leaf.innerHTML = "🍃";
+                leaf.style.left = `${Math.random() * 100}vw`;
+                leaf.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                leaf.style.fontSize = `${Math.random() * 0.5 + 1.5}rem`;
+    
+                currentLeaves++;
+                document.querySelector(".falling-leaves-container").appendChild(leaf);
+    
+                leaf.addEventListener("animationend", () => {
+                    leaf.remove();
+                    currentLeaves--;
+                });
+            }
         }
-        .card img:hover {
-            transform: scale(1.05); /* Agrandissement léger à l'hover */
-        }
-        
-        /* Import Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
-
-        body {
-            font-family: 'Montserrat', sans-serif; /* Utilisation de la police moderne */
-        }
-
-        .header-section {
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
-            padding: 2rem 0; /* Espacement supérieur et inférieur */
-            border-radius: 15px; /* Coins arrondis */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre portée */
-        }
-
-        h1 {
-            font-size: 3rem; /* Taille du titre */
-            font-weight: bold; /* Texte en gras */
-            color: #28a745; /* Couleur verte */
-            margin-bottom: 1rem; /* Marges inférieure pour espacement */
-        }
-
-        p {
-            font-size: 1.5rem; /* Taille du texte du paragraphe */
-            color: #555; /* Couleur grise */
-            margin-bottom: 1.5rem; /* Marges inférieure pour espacement */
-        }
-
-        .btn-modern {
-            background-color: #28a745; /* Couleur de fond du bouton */
-            color: white; /* Couleur du texte du bouton */
-            border-radius: 25px; /* Coins arrondis */
-            padding: 10px 30px; /* Espacement interne */
-            transition: all 0.3s ease; /* Transition douce */
-        }
-
-        .btn-modern:hover {
-            background-color: #218838; /* Couleur au survol */
-            transform: scale(1.05); /* Zoom au survol */
-        }
-
-        .carousel-caption {
-            background-color: rgba(255, 255, 255, 0.7); /* Fond semi-transparent */
-            border-radius: 10px; /* Coins arrondis */
-            padding: 10px; /* Espacement interne */
-            backdrop-filter: blur(5px); /* Effet de flou d'arrière-plan */
-        }
-
-        .animated-caption {
-            color: #28a745; /* Couleur du texte */
-            font-weight: bold; /* Texte en gras */
-            animation: fadeInUp 1s ease; /* Animation d'apparition */
-        }
-
-        .smaller-image {
-            transition: transform 0.5s ease; /* Transition douce */
-            max-height: 400px; /* Hauteur maximale */
-            object-fit: cover; /* Rendre l'image bien ajustée */
-        }
-
-        .smaller-image:hover {
-            transform: scale(1.1); /* Zoom léger au survol */
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .contest-section {
-            background-color: #f9f9f9;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .contest-section h5 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #28a745;
-            margin-bottom: 1.5rem;
-        }
-
-        .contest-section p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 1rem;
-        }
-
-        .contest-section strong {
-            color: #dc3545; /* Couleur rouge pour attirer l'attention */
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .newsletter-input {
-            font-size: 1rem;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 25px;
-        }
-
-        .newsletter-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-        }
-
-        .newsletter-btn:hover {
-            background-color: #218838;
-        }
-    </style>
-</head>
-<body>
-
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="image/logo.png" alt="Thé Tip Top" style="height: 60px; margin-right: 15px;">
-        </a>
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">À propos</a>
-                </li>
-            </ul>
-            <ul class="nav-list">
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
-                <li th:if="${isAuthenticated}" class="nav-item">
-                    
-                    <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
-                    <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
-                    <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
-                    <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
-                </li>
-            </ul>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const authLinks = document.getElementById('auth-links');
-
-        // Vérifiez si l'utilisateur est connecté
-        const isLoggedIn = localStorage.getItem('token') !== null; // Changez cette ligne en fonction de votre logique d'authentification
-
-    });
-</script>
-
-<!-- Header Section -->
-<div class="container my-5 header-section">
-    <div class="row align-items-center">
-        <div class="col-md-6 text-center mb-4">
-            <h1 class="display-4">GAGNEZ AVEC NOUS</h1>
-            <p class="lead">Nous organisons un jeu-concours pour célébrer l'ouverture de notre 10<sup>e</sup> magasin</p>
-            <button class="btn btn-modern mx-auto">En savoir plus</button>
-        </div>
-        
-        <div class="col-md-6">
-            <div id="headerCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="image/slide/tea-1.jpeg" class="d-block w-100 smaller-image" alt="Promotion 1">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="animated-caption">Participez et gagnez des cadeaux exclusifs !</h5>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="image/slide/tea-2.jpeg" class="d-block w-100 smaller-image" alt="Promotion 2">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="animated-caption">Une année de thé à gagner !</h5>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="image/slide/tea-3.jpeg" class="d-block w-100 smaller-image" alt="Promotion 3">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="animated-caption">Des accessoires de thé gratuits !</h5>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#headerCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Précédent</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#headerCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Suivant</span>
-                </button>
+    
+        setInterval(createFallingLeaf, 2000);
+    </script>
+    <div class="falling-leaves-container"></div>
+    
+    <body>
+        <img src="/image/Home page empty.jpg" style="width: 100%; height: 80%;" alt="Background Image">
+        <header>
+            <div class="logo">
+                <img src="/image/logo.png" width="100px" alt="Logo" />
             </div>
-        </div>
-    </div>
-</div>
-
-<!-- Contest Section -->
-<div class="container contest-section my-5">
-    
-    <h5>Comment participer au jeu-concours ?</h5>
-    <p>Pour participer, <strong>inscrivez-vous à notre newsletter</strong> et partagez le lien du concours sur vos réseaux sociaux.</p>
-    <p>Les gagnants seront tirés au sort le <strong>1<sup>er</sup> janvier 2025</strong>.</p>
-    <p>Ne manquez pas cette chance de remporter des cadeaux incroyables !</p>
-
-    <div class="input-group mb-3">
-        <input type="text" class="form-control newsletter-input" placeholder="Votre email" aria-label="Votre email">
-        <button class="btn newsletter-btn" type="button">S'inscrire</button>
-    </div>
-</div>
-
-<!-- Footer -->
-<footer class="text-center bg-light py-4">
-    <div class="container">
-        <p>&copy; 2024 Thé Tip Top. Tous droits réservés.</p>
-        <a href="#">Mentions légales</a> | <a href="#">Politique de confidentialité</a>
-    </div>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+            <nav>
+                <ul class="nav-list">
+                    <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+                    <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+                    <li th:if="${isAuthenticated}" class="nav-item">
+                        
+                        <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+                        <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+                        <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+                        <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+        <section class="side-text">
+            <div>
+                <p class="tiptop-title">TIP TOP TEA TOMBOLA</p>
+                <p class="tiptop-subtitle">* Pour tout achat dès 49€, connectez-vous et tentez de gagner des cadeaux exceptionnels! *</p>
+                <div class="countdown-container">
+                    <p>Le jeu-concours se termine dans :</p>
+                    <div id="countdown"></div>
+                </div>
+                
+                <div>
+                    <button class="button">Participer maintenant</button>
+                   <!--  <p class="subscription"><a href="www.google.com">Pas encore de compte ? Inscrivez-vous maintenant</a></p> -->
+                   <p class="subscription">Pas encore de compte ? Inscrivez-vous maintenant</p> 
+                    <br><br>
+                    <p class="subscription-sub">🌟 Offrez-vous un moment de plaisir unique avec nos thés exquis et tentez de remporter un coffret premium ou une expérience exclusive.</p>
+                </div>
+            </div>
+        </section>
+        <section class="container-gifts">
+            <div class="gifts-title">🎁 Lots à gagner</div>
+            <div class="card-container">
+                <ul>
+                    <li data-description="Un infuseur élégant pour savourer votre thé.">Infuseur à thé</li>
+                    <li data-description="Une infusion detox pour votre bien-être.">Thé détox ou infusion</li>
+                    <li data-description="Notre thé signature, une expérience unique.">Thé signature</li>
+                    <li data-description="Un coffret découverte d'une valeur de 39€.">Coffret découverte 39€</li>
+                    <li data-description="Un coffret découverte d'une valeur de 69€.">Coffret découverte 69€</li>
+                </ul>
+            </div>
+        </section>        
+        <script>
+            // Définir la durée du jeu-concours en jours
+            const durationInDays = 30;
+            
+            // Calculer la date de fin en ajoutant 30 jours à la date actuelle
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + durationInDays);
+        
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const timeRemaining = endDate - now;
+        
+                if (timeRemaining > 0) {
+                    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+                    document.getElementById("countdown").innerHTML =
+                        `${days}j ${hours}h ${minutes}m ${seconds}s`;
+                } else {
+                    document.getElementById("countdown").innerHTML = "Le jeu-concours est terminé.";
+                }
+            }
+        
+            setInterval(updateCountdown, 1000);
+        </script>        
+    </body>
 </html>
