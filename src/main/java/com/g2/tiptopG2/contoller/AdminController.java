@@ -235,6 +235,14 @@ public class AdminController {
 
         return "usersWithGains";
     }
+    @GetMapping("admin/jeu-concours")
+    public String getJeuConcoursPage(Model model) {
+
+        return "admin/jeu-concours";
+    }
+  
+
+
 
     @PostMapping("/randomUserWithGain")
     @ResponseBody

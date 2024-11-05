@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu-concours</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Bouton burger pour afficher/cacher le menu sur mobile -->
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/user">Liste des utilisateurs</a></li>
+                <li><a href="/admin/jeu-concours" class="active">Jeu-concours</a></li>
+                <li><a href="/admin/parrametre" >parrametre</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <header>
+                <h1>Jeu-concours</h1>
+            </header>
+
+            <section class="game-section">
+                <h2>Afficher un gagnant aléatoire</h2>
+                <button id="showRandomUserBtn">Afficher un gagnant</button>
+
+                <div id="randomUserInfo" style="margin-top: 20px;">
+                    <!-- L'information de l'utilisateur sera affichée ici -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- JavaScript pour gérer le menu burger et l'AJAX -->
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Fonction pour afficher un gagnant aléatoire avec AJAX
+        $(document).ready(function() {
+            $('#showRandomUserBtn').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/randomUserWithGain",
+                    success: function(user) {
+                        if (user) {
+                            $('#randomUserInfo').html(
+                                `<p><strong>Nom :</strong> ${user.nom}</p>
+                                 <p><strong>Prénom :</strong> ${user.prenom}</p>
+                                 <p><strong>Email :</strong> ${user.email}</p>`
+                            );
+                        } else {
+                            $('#randomUserInfo').html("<p>Aucun gagnant trouvé.</p>");
+                        }
+                    },
+                    error: function() {
+                        $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
