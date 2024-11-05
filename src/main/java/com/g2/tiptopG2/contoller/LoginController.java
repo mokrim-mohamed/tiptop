@@ -20,6 +20,11 @@ public class LoginController {
         }
         return "login"; // Retourner la vue de login
     }
+    @GetMapping("/mp-oublie")
+    public String login() {
+
+        return "mp-oublie"; // Retourner la vue de login
+    }
 
     @GetMapping({"/", "/home", "/index"})
     public String index(Model model, Principal principal) {

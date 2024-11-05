@@ -72,11 +72,21 @@ public class ClientController {
         return "/client/participation";
     }
     
-    @GetMapping("/reset-password")
-    public String showResetPasswordForm() {
-        return "reset-password"; // Nom de la vue pour le formulaire
-    }
 
+    @PostMapping("/reset-password")
+    public String resetPassword(@RequestParam String email, Model model) {
+        UserDto user = userService.findByEmail(email);
+        if (user == null) {
+            model.addAttribute("errorMessage", "L'email n'existe pas.");
+            model.addAttribute("email", email); // Conserve l'email saisi
+            return "reset-password"; // Retourne à la page de saisie
+        } else {
+            // Appel de la méthode qui gère la mise à jour du mot de passe
+            userService.updateMdp(user);
+            model.addAttribute("successMessage", "Un e-mail de réinitialisation a été envoyé à " + email);
+            return "mp-oublie"; // Redirige vers la page de succès
+        }
+    }
 
     
 }
