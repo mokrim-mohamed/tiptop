@@ -5,76 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Profils</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
     <div class="main-wrapper">
+        <!-- Burger Menu -->
         <button class="burger-menu" id="burgerMenu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
 
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
             <div class="logo">
                 <img th:src="@{/image/logo.png}" alt="Logo">
             </div>
             <ul class="menu">
                 <li><a href="/admin/dashboard">Dashboard</a></li>
-                <li><a href="/admin/user" class="active">User</a></li>
-                <li><a href="/admin/historique-gains" >Historique des Gains</a></li>
-                <li><a href="/admin/parrametre" >Parrametre</a></li>
+                <li><a href="/admin/listeUser" class="active">Liste des utilisateurs </a></li>
+                <li><a href="/admin/parametre">Paramètre</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
-        </div>
+        </nav>
+
+        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Section de gestion des profils -->
+            <!-- Profile Management Section -->
             <section class="profile-section">
                 <h2>Gestion des Profils</h2>
+            </section>
 
+            <!-- User Creation Form Section -->
+            <section class="form-section">
+                <form th:action="@{/admin/user}" method="post" class="user-form">
+                    <div class="input-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" id="nom" placeholder="Entrer votre nom" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="prenom">Prénom</label>
+                        <input type="text" name="prenom" id="prenom" placeholder="Entrer votre prénom" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="sexe">Sexe</label>
+                        <select name="sexe" id="sexe" required>
+                            <option value="Homme">Homme</option>
+                            <option value="Femme">Femme</option>
+                            <option value="Autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="telephone">Téléphone</label>
+                        <input type="tel" name="telephone" id="telephone" placeholder="Entrer votre numéro de téléphone">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="Entrer votre email" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="motDePasse">Mot de passe</label>
+                        <input type="password" name="motDePasse" id="motDePasse" placeholder="Entrer un mot de passe" required>
+                    </div>
 
-
-            <!-- Section de la table des utilisateurs -->
-            <section class="table-section">
-                <h2>Liste des Utilisateurs</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID Utilisateur</th>
-                            <th>Nom</th>
-                            <th>Email</th>
-                            <th>Rôle</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Admin Name</td>
-                            <td>admin@example.com</td>
-                            <td>Administrateur</td>
-                            <td>
-                                <a href="#" class="action-btn">Modifier</a>
-                                <a href="#" class="action-btn">Supprimer</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>User Name</td>
-                            <td>user@example.com</td>
-                            <td>Utilisateur</td>
-                            <td>
-                                <a href="#" class="action-btn">Modifier</a>
-                                <a href="#" class="action-btn">Supprimer</a>
-                            </td>
-                        </tr>
-                        <!-- Utilisateurs supplémentaires -->
-                    </tbody>
-                </table>
+                    <button type="submit" class="action-btn">Créer Utilisateur</button>
+                </form>
             </section>
         </main>
     </div>
+
+    <!-- JavaScript for Burger Menu Toggle -->
     <script>
         const burgerMenu = document.getElementById('burgerMenu');
         const sidebar = document.getElementById('sidebar');

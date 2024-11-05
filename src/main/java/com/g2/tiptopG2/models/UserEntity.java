@@ -45,6 +45,9 @@ public class UserEntity implements Serializable {
     private String telephone;
 
     @Column()
+    private int age;
+
+    @Column()
     private String motDePasse;
 
     @ManyToOne

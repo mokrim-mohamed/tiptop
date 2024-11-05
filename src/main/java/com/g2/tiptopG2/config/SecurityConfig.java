@@ -26,7 +26,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeHttpRequests(request -> request.requestMatchers("/","reset-password","reset-password-success", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**").permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/","/mp-oublier","reset-password","reset-password-success", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin()
                         .loginPage("/login")
@@ -50,9 +50,10 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/login?logout=true") // Rediriger après une déconnexion réussie
                         .invalidateHttpSession(true) // Invalider la session HTTP
                         .clearAuthentication(true)  // Effacer les informations d'authentification
-                        .permitAll();
-                       
-                 
+                        .permitAll()
+                        .and() // Ajoutez cette ligne pour continuer la chaîne
+                    .exceptionHandling()
+                        .accessDeniedPage("/403"); // Spécifiez la page d'accès refusé
 
         return http.build();
     }

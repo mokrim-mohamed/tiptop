@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.security.auth.login.AccountNotFoundException;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.g2.tiptopG2.dao.IRoleDao;
 import java.security.SecureRandom;
@@ -20,11 +21,14 @@ public class UserServiceImp implements IUserService {
 	private ModelMapper modelmapper;
 	private IRoleDao roleDao;
 	private final EmailService emailService;
-	public UserServiceImp(IUserDao UserDao, ModelMapper modelmapper, EmailService emailService) {
+	private final PasswordEncoder passwordEncoder;
+	public UserServiceImp(IUserDao UserDao, ModelMapper modelmapper, EmailService emailService,PasswordEncoder passwordEncoder) {
 		super();
 		this.UserDao = UserDao;
 		this.modelmapper = modelmapper;
 		this.emailService = emailService;
+		this.passwordEncoder = passwordEncoder;
+
 	}
 
 
@@ -106,6 +110,16 @@ public class UserServiceImp implements IUserService {
 		}
 
 	@Override
+    public void updateUserProfile(UserDto userDto) {
+        UserEntity userEntity = UserDao.findByEmail(userDto.getEmail());
+        if (userEntity != null) {
+            userEntity.setNom(userDto.getNom());
+            userEntity.setTelephone(userDto.getTelephone());
+            UserDao.save(userEntity);  // Save updated user data
+        }
+    }
+	
+	@Override
 	public List<UserDto> getUsersWithGains() {
 		System.out.println("appel methode");
 		List<UserEntity> usersEntities = UserDao.findUsersWithAtLeastOneGain();
@@ -117,4 +131,36 @@ public class UserServiceImp implements IUserService {
 			return usersEntities.stream().map(el->modelmapper.map(el, UserDto.class)).collect(Collectors.toList());
 		}
 	}
+
+	@Override
+    public void updateUserPassword(UserDto userDto) {
+        UserEntity userEntity = UserDao.findByEmail(userDto.getEmail());
+        if (userEntity != null && userDto.getMotDePasse() != null) {
+            userEntity.setMotDePasse(passwordEncoder.encode(userDto.getMotDePasse()));
+            UserDao.save(userEntity);  // Save updated password
+        }
+    }
+
+	@Override
+	public void deleteUser(Integer id) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+	}
+
+	@Override
+	public UserDto saveEmployee (UserDto userDto) {
+	// Encoder le mot de passe avant de sauvegarder l'utilisateur
+		UserEntity existingUser = UserDao.findByEmail(userDto.getEmail());
+		 if (existingUser != null) {
+		throw new RuntimeException("Cet utilisateur avec cet email existe déjà !");
+		}
+		userDto.setRoleId(2);
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		userDto.setMotDePasse(passwordEncoder.encode(userDto.getMotDePasse()));
+		UserEntity userEntity = modelmapper.map(userDto, UserEntity.class);
+		//userEntity.setRole(roleDao.getById(3));
+		UserEntity saved = UserDao.save(userEntity);
+		return modelmapper.map(saved, UserDto.class);
+		}
+
 }

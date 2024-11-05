@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Profils</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Burger Menu -->
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/listeUser" class="active">Liste des utilisateurs </a></li>
+                <li><a href="/admin/parrametre">Paramètre</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Profile Management Section -->
+            <section class="profile-section">
+                <h2>Gestion des Profils</h2>
+            </section>
+
+            <!-- Button for Adding Employee -->
+            <div class="top-right">
+                <a href="/admin/user" class="add-employee-btn">Ajouter un Employé</a>
+            </div>
+
+            <!-- User Table Section -->
+            <section class="table-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID Utilisateur</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôle</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.id}">1</td>
+                            <td th:text="${user.nom}">Nom</td>
+                            <td th:text="${user.email}">email@example.com</td>
+                            <td>
+                                <!-- Dropdown for Role Selection -->
+                                <form th:action="@{/admin/user/updateRole}" method="post" th:object="${user}">
+                                    <select th:field="*{role.id}">
+                                        <option th:value="1" th:text="'Admin'"></option>
+                                        <option th:value="2" th:text="'Employé'"></option>
+                                        <option th:value="3" th:text="'Utilisateur'"></option>
+                                    </select>
+                                    <button type="submit" class="action-btn">Sauvegarder</button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="#" class="action-btn" th:href="@{/admin/user/edit/{id}(id=${user.id})}">Modifier</a>
+                                <a href="#" class="action-btn" th:href="@{/admin/user/delete/{id}(id=${user.id})}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">Supprimer</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+
+    <!-- JavaScript for Burger Menu Toggle -->
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

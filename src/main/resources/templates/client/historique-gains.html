@@ -45,19 +45,19 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Code</th>
                                 <th>Status</th>
-                                <th>Type</th>
+                                <th>Gain</th>
+                                <th>Dernier délai pour récupérer</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Boucle Thymeleaf pour afficher chaque gain -->
                             <tr th:each="gain : ${gains}">
-                                <td th:text="${gain.id}"></td>
                                 <td th:text="${gain.code}"></td>
-                                <td th:text="${gain.remis}"></td>
+                                <td th:text="${gain.remis ? 'Récupéré' : 'Non récupéré'}"></td>
                                 <td th:text="${gain.gainType.nom}"></td>
+                                <td th:text="12 - 12 - 2024"></td>
                             </tr>
                         </tbody>
                     </table>

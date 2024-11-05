@@ -23,7 +23,7 @@
             </div>
             <ul class="menu">
                 <li><a href="/client/participation">Participation</a></li>
-                <li><a href="/client/historique-gains" >Historique des Gains</a></li>
+                <li><a href="/client/historique-gains">Historique des Gains</a></li>
                 <li><a href="/client/parrametre" class="active">Parrametre</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
@@ -34,6 +34,11 @@
             <header>
                 <h1>Settings</h1>
             </header>
+
+            <!-- Success message block -->
+            <div th:if="${successMessage}" class="success-message">
+                <p th:text="${successMessage}"></p>
+            </div>
 
             <section class="settings-section">
                 <h2>Paramètres du profil</h2>

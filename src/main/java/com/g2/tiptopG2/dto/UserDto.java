@@ -15,6 +15,7 @@ public class UserDto {
     private String telephone;
     private Integer roleId; 
     private String motDePasse;
+    private int age;
 
 
 }
