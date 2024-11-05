@@ -109,15 +109,12 @@ public class UserServiceImp implements IUserService {
     	return modelmapper.map(saved, UserDto.class);
 		}
 
-	@Override
-    public void updateUserProfile(UserDto userDto) {
-        UserEntity userEntity = UserDao.findByEmail(userDto.getEmail());
-        if (userEntity != null) {
-            userEntity.setNom(userDto.getNom());
-            userEntity.setTelephone(userDto.getTelephone());
-            UserDao.save(userEntity);  // Save updated user data
-        }
-    }
+		@Override
+		public UserDto updateUserProfile(UserDto userDto) {
+			UserEntity userEntity = modelmapper.map(userDto, UserEntity.class);
+			UserEntity savedEntity = UserDao.save(userEntity);
+			return modelmapper.map(savedEntity, UserDto.class);
+		}
 	
 	@Override
 	public List<UserDto> getUsersWithGains() {

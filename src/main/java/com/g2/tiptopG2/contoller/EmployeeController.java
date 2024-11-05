@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.models.UserEntity;
 import com.g2.tiptopG2.service.IUserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.http.HttpStatus;
 
 @Controller
 public class EmployeeController {
@@ -53,7 +58,39 @@ public class EmployeeController {
             return "error";
         }
     
-}    // hadi lizdty nta 
-    
+    }
+
+    @PostMapping("/employee/updateProfile")
+    @ResponseBody
+    public ResponseEntity<String> updateProfile(@RequestBody UserDto updatedUserDto) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userEmail = null;
+
+        if (principal instanceof User) {
+            userEmail = ((User) principal).getUsername();
+        } else if (principal instanceof OAuth2User) {
+            userEmail = ((OAuth2User) principal).getAttribute("email");
+        }
+
+        if (userEmail == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur non authentifié.");
+        }
+
+        UserDto existingUser = userService.findByEmail(userEmail);
+        if (existingUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur introuvable.");
+        }
+
+        existingUser.setNom(updatedUserDto.getNom());
+        existingUser.setEmail(updatedUserDto.getEmail());
+        existingUser.setTelephone(updatedUserDto.getTelephone());
+        try {
+            userService.updateUserProfile(existingUser);
+            return ResponseEntity.ok("Profil mis à jour avec succès !");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la mise à jour du profil.");
+        }
+    }
 
 }

@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import org.springframework.http.HttpStatus;
 import java.util.stream.Collectors;
+import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,15 +17,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.g2.tiptopG2.dto.GainDto;
+import org.springframework.web.bind.annotation.RequestBody;
 import com.g2.tiptopG2.dto.GainTypeDto;
 import org.springframework.security.core.context.SecurityContextHolder;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IGainService;
-
+import org.springframework.web.bind.annotation.RestController;
 import com.g2.tiptopG2.service.IUserService;
 import com.g2.tiptopG2.models.UserEntity;
 import java.util.Random;
@@ -163,32 +166,7 @@ public class AdminController {
     
     }
     
-    @PostMapping("/admin/updateProfile")
-    public String updateProfile(@RequestParam String nom, @RequestParam String email, @RequestParam String telephone, Model model) {
-        try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-            boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
-            if (!hasUserRole) {
-                return "403";
-            }
-            String userEmail = ((User) authentication.getPrincipal()).getUsername();
-            UserDto userDto = userService.findByEmail(userEmail);
-
-            userDto.setNom(nom);
-            userDto.setEmail(email);
-            userDto.setTelephone(telephone);
-
-            userService.updateUserProfile(userDto);
-            model.addAttribute("user", userDto);
-            model.addAttribute("successMessage", "Profile updated successfully.");
-        } catch (Exception e) {
-            e.printStackTrace();
-            model.addAttribute("errorMessage", "Une erreur est survenue : " + e.getMessage());
-        }
-        return "/admin/parrametre";
-    }
-
+  
     @PostMapping("/admin/updatePassword")
     public String updatePassword(@RequestParam String currentPassword, @RequestParam String newPassword, Model model) {
         try {
@@ -268,5 +246,38 @@ public class AdminController {
             return usersWithGains.get(random.nextInt(usersWithGains.size()));
         }
         return null; // Retourner null si aucun utilisateur n'a de gain
+    }
+
+    @PostMapping("/admin/updateProfile")
+    @ResponseBody
+    public ResponseEntity<String> updateProfile(@RequestBody UserDto updatedUserDto) {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userEmail = null;
+
+        if (principal instanceof User) {
+            userEmail = ((User) principal).getUsername();
+        } else if (principal instanceof OAuth2User) {
+            userEmail = ((OAuth2User) principal).getAttribute("email");
+        }
+
+        if (userEmail == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Utilisateur non authentifié.");
+        }
+
+        UserDto existingUser = userService.findByEmail(userEmail);
+        if (existingUser == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Utilisateur introuvable.");
+        }
+
+        existingUser.setNom(updatedUserDto.getNom());
+        existingUser.setEmail(updatedUserDto.getEmail());
+        existingUser.setTelephone(updatedUserDto.getTelephone());
+        try {
+            userService.updateUserProfile(existingUser);
+            return ResponseEntity.ok("Profil mis à jour avec succès !");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de la mise à jour du profil.");
+        }
     }
 }
