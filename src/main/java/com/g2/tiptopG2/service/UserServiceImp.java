@@ -104,4 +104,17 @@ public class UserServiceImp implements IUserService {
     	UserEntity saved = UserDao.save(userEntity);
     	return modelmapper.map(saved, UserDto.class);
 		}
+
+	@Override
+	public List<UserDto> getUsersWithGains() {
+		System.out.println("appel methode");
+		List<UserEntity> usersEntities = UserDao.findUsersWithAtLeastOneGain();
+		if(usersEntities.isEmpty()){
+		System.out.println("null");
+			return null;
+		}else{
+			System.out.println("n est pas null");
+			return usersEntities.stream().map(el->modelmapper.map(el, UserDto.class)).collect(Collectors.toList());
+		}
+	}
 }
