@@ -32,7 +32,7 @@
         <!-- Main Content Area -->
         <main class="main-content">
             <section class="profile-section">
-                <h2>Liste des Employee</h2>
+                <h2>Liste des Clients</h2>
             </section>
 
             <!-- User Table Section -->
@@ -40,28 +40,19 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>ID Utilisateur</th>
                             <th>Nom</th>
                             <th>Email</th>
-                            <th>Actions</th> <!-- Ajout de la colonne Actions -->
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="client : ${clients}">
-                            <td th:text="${client.id}"></td>
-                            <td th:text="${client.nom}"></td>
-                            <td th:text="${client.email}"></td>
-                            <td>
-                                <!-- Bouton pour modifier l'utilisateur -->
-                                <a th:href="@{/modifier/{id}(id=${client.id})}" class="button-modifier">Modifier</a>
-                                <!-- Bouton pour supprimer l'utilisateur -->
-                                <form th:action="@{/supprimer/{id}(id=${client.id})}" method="post" style="display:inline;">
-                                    <button type="submit" class="button-supprimer">Supprimer</button>
-                                </form>
-                            </td>
+                            <td th:text="${client.id}">1</td>
+                            <td th:text="${client.nom}">Nom</td>
+                            <td th:text="${client.email}">email@example.com</td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(clients)}">
-                            <td colspan="4">Aucun client trouvé.</td>
+                            <td colspan="3">Aucun client trouvé.</td>
                         </tr>
                     </tbody>
                 </table>

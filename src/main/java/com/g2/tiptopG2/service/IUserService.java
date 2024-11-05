@@ -18,5 +18,5 @@ public interface IUserService {
 	UserDto updateMdp(UserDto user);	
 	UserDto saveClientAOuth(UserDto userDto);
 	List<UserDto> getUsersWithGains();
-
+	List<UserDto> getAllClients();
 }

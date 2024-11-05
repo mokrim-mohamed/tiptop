@@ -218,17 +218,7 @@ public class AdminController {
         return "redirect:/admin/user?success";
     }
 
-    @GetMapping("/admin/listeUser")
-    public String liste(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-                Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-                boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
-                if (!hasUserRole) {
-                    return "403";
-                }
-        
-        return "/admin/listeUser";
-    }
+
 
     @GetMapping("/users-with-gains")
     public String getUsersWithGains(Model model) {
@@ -287,5 +277,19 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erreur lors de la mise à jour du profil.");
         }
+    }
+
+
+    @GetMapping("/admin/listeUser")
+    public String getClients(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
+        if (!hasUserRole) {
+            return "403";
+        }
+        List<UserDto> clients = userService.getAllClients();
+        model.addAttribute("clients", clients);
+        return "admin/listeUser"; // Retourne la vue Thymeleaf pour afficher la liste
     }
 }

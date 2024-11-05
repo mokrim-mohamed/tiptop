@@ -12,9 +12,13 @@ import com.g2.tiptopG2.dao.IRoleDao;
 import java.security.SecureRandom;
 import com.g2.tiptopG2.dao.IUserDao;
 import com.g2.tiptopG2.dto.UserDto;
+import java.util.stream.Collectors;
 import com.g2.tiptopG2.dto.RoleDto;
+import com.g2.tiptopG2.models.RoleEntity;
+import com.g2.tiptopG2.models.RoleEntity;
 import com.g2.tiptopG2.models.UserEntity;
 import com.g2.tiptopG2.service.EmailService;
+import java.util.Collections;
 @Service()
 public class UserServiceImp implements IUserService {
 	private IUserDao UserDao;
@@ -22,12 +26,14 @@ public class UserServiceImp implements IUserService {
 	private IRoleDao roleDao;
 	private final EmailService emailService;
 	private final PasswordEncoder passwordEncoder;
-	public UserServiceImp(IUserDao UserDao, ModelMapper modelmapper, EmailService emailService,PasswordEncoder passwordEncoder) {
+	public UserServiceImp(IUserDao UserDao, ModelMapper modelmapper, EmailService emailService,PasswordEncoder passwordEncoder, IRoleDao roleDao) {
 		super();
 		this.UserDao = UserDao;
 		this.modelmapper = modelmapper;
 		this.emailService = emailService;
 		this.passwordEncoder = passwordEncoder;
+		this.roleDao=roleDao;
+
 
 	}
 
@@ -160,4 +166,27 @@ public class UserServiceImp implements IUserService {
 		return modelmapper.map(saved, UserDto.class);
 		}
 
-}
+		@Override
+		public List<UserDto> getAllClients() {
+			// Récupérer le rôle avec l'ID 3
+			RoleEntity role = roleDao.findById(2).orElse(null); 
+			if (role == null) {
+				return Collections.emptyList(); // Renvoie une liste vide si le rôle n'existe pas
+			}
+			
+			// Vérifiez si userDao.findByRole accepte un ID ou un autre type
+			List<UserEntity> clients = UserDao.findByRole(role); // Par exemple, utiliser l'ID du rôle
+			return clients.isEmpty() ? Collections.emptyList() : 
+				clients.stream()
+					   .map(userEntity -> {
+						   UserDto userDto = new UserDto();
+						   userDto.setId(userEntity.getId());
+						   userDto.setNom(userEntity.getNom());
+						   userDto.setEmail(userEntity.getEmail());
+						   // Copiez ici les autres champs nécessaires
+						   return userDto;
+					   })
+					   .collect(Collectors.toList());
+		}
+
+	}
