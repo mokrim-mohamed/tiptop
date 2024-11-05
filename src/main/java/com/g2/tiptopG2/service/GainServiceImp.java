@@ -36,6 +36,9 @@ public class GainServiceImp implements IGainService {
     @Override
     public GainDto findByCode(String code) {
         GainEntity gainEntity = gainDao.findByCode(code);
+        if(gainEntity == null){
+            return null;
+        }
         return modelMapper.map(gainEntity, GainDto.class);
     }
     @Override

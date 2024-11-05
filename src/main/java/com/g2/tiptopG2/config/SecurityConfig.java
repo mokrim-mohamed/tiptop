@@ -1,4 +1,7 @@
 package com.g2.tiptopG2.config;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import com.g2.tiptopG2.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -32,9 +35,15 @@ public class SecurityConfig {
                         .successHandler(customAuthenticationSuccessHandler())
                         .permitAll()
                         .and()
-                    .oauth2Login()  // Activer OAuth2 pour Google login
+                .oauth2Login()  // Activer OAuth2 pour Google login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/index", true)
+                        .userInfoEndpoint()
+                            .userAuthoritiesMapper(authorities -> Stream.concat(
+                                    authorities.stream(),
+                                    Stream.of(new SimpleGrantedAuthority("user"))
+                            ).collect(Collectors.toList())) // Ajouter le rôle "USER" aux utilisateurs Google
+                        .and()
+                        .defaultSuccessUrl("/client/participation", true)
                         .and()
                 .logout()
                         .logoutUrl("/logout")
