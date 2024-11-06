@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
-import com.g2.tiptopG2.models.UserEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;

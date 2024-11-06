@@ -4,24 +4,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.g2.tiptopG2.models.UserEntity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.http.HttpStatus;
-
-import javax.management.modelmbean.ModelMBean;
-
-import org.springframework.security.core.context.SecurityContextHolder;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IUserService;
 

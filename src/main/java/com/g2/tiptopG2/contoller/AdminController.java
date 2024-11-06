@@ -14,21 +14,18 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.g2.tiptopG2.dto.GainDto;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.g2.tiptopG2.dto.GainTypeDto;
-import org.springframework.security.core.context.SecurityContextHolder;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IGainService;
-import org.springframework.web.bind.annotation.RestController;
 import com.g2.tiptopG2.service.IUserService;
-import com.g2.tiptopG2.models.UserEntity;
 import java.util.Random;
 import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
@@ -220,10 +217,15 @@ public class AdminController {
 
 
 
-    @GetMapping("/users-with-gains")
-    public String getUsersWithGains(Model model) {
-
-        return "usersWithGains";
+    @GetMapping("/admin/ajouterEmploye")
+    public String createEmp(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
+        if (!hasUserRole) {
+            return "403";
+        }
+        return "admin/createEmp";
     }
     @GetMapping("admin/jeu-concours")
     public String getJeuConcoursPage(Model model) {
@@ -297,4 +299,19 @@ public class AdminController {
         model.addAttribute("clients", clients);
         return "admin/listeUser"; // Retourne la vue Thymeleaf pour afficher la liste
     }
+    
+    @PostMapping("/admin/ajouterEmploye")
+    public String addEmployee(@ModelAttribute("userDto") UserDto userDto, Model model) {
+        try {
+            // Enregistre l'utilisateur via le service
+            userService.saveEmployee(userDto);
+            return "redirect:/admin/listeUser"; // Redirige vers la liste des utilisateurs en cas de succès
+        } catch (Exception e) {
+            // En cas d'erreur, ajoute un message d'erreur au modèle et retourne le formulaire
+            model.addAttribute("errorMessage", "Erreur lors de l'ajout de l'employé. Veuillez réessayer.");
+            return "ajouterEmploye";
+        }
+    }
+
+
 }

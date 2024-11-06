@@ -4,8 +4,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
 import com.g2.tiptopG2.dto.GainDto;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IGainService;
