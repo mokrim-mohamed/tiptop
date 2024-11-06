@@ -6,6 +6,9 @@
     <title>Liste des Clients</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+    
+    <!-- Inclure la bibliothèque SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 </head>
 <body>
     <div class="main-wrapper">
@@ -22,7 +25,7 @@
             <ul class="menu">
                 <li><a href="/admin/dashboard">Dashboard</a></li>
                 <li><a href="/admin/listeEmp" >Liste des employés</a></li>
-                <li><a href="/admin/listeClients"class="active">Liste des clients</a></li>
+                <li><a href="/admin/listeClients" class="active">Liste des clients</a></li>
                 <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
                 <li><a href="/admin/parrametre">Paramètres</a></li>
                 <li><a href="/logout">Logout</a></li>
@@ -34,9 +37,14 @@
                 <h1>Liste des Clients</h1>
             </header>
 
-            <!-- Section Tableau des Employés -->
+            <!-- Section pour le bouton de téléchargement Excel -->
+            <section class="download-section" style="margin-bottom: 20px;">
+                <button id="downloadExcelBtn" class="button-ajouter">Importer la liste de clients</button>
+            </section>
+
+            <!-- Section Tableau des Clients -->
             <section class="employee-list-section">
-                <table>
+                <table id="clientsTable">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -46,7 +54,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Boucle Thymeleaf pour afficher chaque employé -->
+                        <!-- Boucle Thymeleaf pour afficher chaque client -->
                         <tr th:each="client : ${clients}">
                             <td th:text="${client.id}">ID</td>
                             <td th:text="${client.nom}">Nom</td>
@@ -65,6 +73,13 @@
 
         burgerMenu.addEventListener('click', () => {
             sidebar.classList.toggle('active');
+        });
+
+        // Fonction pour télécharger le tableau sous forme de fichier Excel
+        document.getElementById("downloadExcelBtn").addEventListener("click", function () {
+            const table = document.getElementById("clientsTable"); // Récupère le tableau
+            const wb = XLSX.utils.table_to_book(table, {sheet: "Clients"}); // Convertir le tableau en livre Excel
+            XLSX.writeFile(wb, "liste_clients.xlsx"); // Télécharger le fichier Excel
         });
     </script>
 </body>
