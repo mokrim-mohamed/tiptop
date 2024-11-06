@@ -21,18 +21,21 @@
                 <img th:src="@{/image/logo.png}" alt="Logo">
             </div>
             <ul class="menu">
-                <li><a href="/admin/dashboard">Dashboard</a></li>
-                <li><a href="/admin/listeUser">Liste des utilisateurs</a></li>
-                <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
-                <li><a href="/admin/parrametre">Paramètre</a></li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
+                <ul class="menu">
+                    <li><a href="/admin/dashboard">Dashboard</a></li>
+                    <li><a href="/admin/listeEmp" class="active">Liste des employés</a></li>
+                    <li><a href="/admin/listeClients">Liste des clients</a></li>
+                    <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
+                    <li><a href="/admin/parrametre">Paramètres</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
         </div>
 
         <!-- Main Content Area -->
-        <main class="main-content">
-            <section class="profile-section">
-                <h2>Ajouter un Employé</h2>
+        <div class="main-content">
+            <header>
+                <h1>Ajouter un Employé</h1>
+            </header>
             </section>
             <div th:if="${errorMessage}" style="color: red; margin-bottom: 15px;">
                 <p th:text="${errorMessage}"></p>

@@ -153,21 +153,18 @@ public class UserServiceImp implements IUserService {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		userDto.setMotDePasse(passwordEncoder.encode(userDto.getMotDePasse()));
 		UserEntity userEntity = modelmapper.map(userDto, UserEntity.class);
-		//userEntity.setRole(roleDao.getById(3));
 		UserEntity saved = UserDao.save(userEntity);
 		return modelmapper.map(saved, UserDto.class);
 		}
 
 		@Override
-		public List<UserDto> getAllClients() {
-			// Récupérer le rôle avec l'ID 3
+		public List<UserDto> getAllEmp() {
 			RoleEntity role = roleDao.findById(2).orElse(null); 
 			if (role == null) {
-				return Collections.emptyList(); // Renvoie une liste vide si le rôle n'existe pas
+				return Collections.emptyList(); 
 			}
 			
-			// Vérifiez si userDao.findByRole accepte un ID ou un autre type
-			List<UserEntity> clients = UserDao.findByRole(role); // Par exemple, utiliser l'ID du rôle
+			List<UserEntity> clients = UserDao.findByRole(role); 
 			return clients.isEmpty() ? Collections.emptyList() : 
 				clients.stream()
 					   .map(userEntity -> {
@@ -175,7 +172,25 @@ public class UserServiceImp implements IUserService {
 						   userDto.setId(userEntity.getId());
 						   userDto.setNom(userEntity.getNom());
 						   userDto.setEmail(userEntity.getEmail());
-						   // Copiez ici les autres champs nécessaires
+						   return userDto;
+					   })
+					   .collect(Collectors.toList());
+		}
+		
+		@Override
+		public List<UserDto> getAllClients() {
+			RoleEntity role = roleDao.findById(3).orElse(null); 
+			if (role == null) {
+				return Collections.emptyList(); 
+			}
+			List<UserEntity> clients = UserDao.findByRole(role); 
+			return clients.isEmpty() ? Collections.emptyList() : 
+				clients.stream()
+					   .map(userEntity -> {
+						   UserDto userDto = new UserDto();
+						   userDto.setId(userEntity.getId());
+						   userDto.setNom(userEntity.getNom());
+						   userDto.setEmail(userEntity.getEmail());
 						   return userDto;
 					   })
 					   .collect(Collectors.toList());

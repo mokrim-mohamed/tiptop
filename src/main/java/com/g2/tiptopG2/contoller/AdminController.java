@@ -287,7 +287,32 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin/listeUser")
+    @GetMapping("/admin/listeEmp")
+    public String getEmp(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
+        if (!hasUserRole) {
+            return "403";
+        }
+        List<UserDto> clients = userService.getAllEmp();
+        model.addAttribute("clients", clients);
+        return "admin/listeEmp"; // Retourne la vue Thymeleaf pour afficher la liste
+    }
+    
+    @PostMapping("/admin/ajouterEmploye")
+    public String addEmployee(@ModelAttribute("userDto") UserDto userDto, Model model) {
+        try {
+            // Enregistre l'utilisateur via le service
+            userService.saveEmployee(userDto);
+            return "redirect:/admin/listeEmp"; // Redirige vers la liste des utilisateurs en cas de succès
+        } catch (Exception e) {
+            // En cas d'erreur, ajoute un message d'erreur au modèle et retourne le formulaire
+            model.addAttribute("errorMessage", "Erreur lors de l'ajout de l'employé. Veuillez réessayer.");
+            return "ajouterEmploye";
+        }
+    }
+    @GetMapping("/admin/listeClients")
     public String getClients(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -297,21 +322,7 @@ public class AdminController {
         }
         List<UserDto> clients = userService.getAllClients();
         model.addAttribute("clients", clients);
-        return "admin/listeUser"; // Retourne la vue Thymeleaf pour afficher la liste
+        return "admin/listeClients"; // Retourne la vue Thymeleaf pour afficher la liste
     }
-    
-    @PostMapping("/admin/ajouterEmploye")
-    public String addEmployee(@ModelAttribute("userDto") UserDto userDto, Model model) {
-        try {
-            // Enregistre l'utilisateur via le service
-            userService.saveEmployee(userDto);
-            return "redirect:/admin/listeUser"; // Redirige vers la liste des utilisateurs en cas de succès
-        } catch (Exception e) {
-            // En cas d'erreur, ajoute un message d'erreur au modèle et retourne le formulaire
-            model.addAttribute("errorMessage", "Erreur lors de l'ajout de l'employé. Veuillez réessayer.");
-            return "ajouterEmploye";
-        }
-    }
-
 
 }

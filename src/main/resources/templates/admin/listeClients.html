@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Clients</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/listeEmp" >Liste des employés</a></li>
+                <li><a href="/admin/listeClients"class="active">Liste des clients</a></li>
+                <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
+                <li><a href="/admin/parrametre">Paramètres</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <h1>Liste des Clients</h1>
+            </header>
+
+            <!-- Section Tableau des Employés -->
+            <section class="employee-list-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Boucle Thymeleaf pour afficher chaque employé -->
+                        <tr th:each="client : ${clients}">
+                            <td th:text="${client.id}">ID</td>
+                            <td th:text="${client.nom}">Nom</td>
+                            <td th:text="${client.email}">Email</td>
+                            <td th:text="${client.telephone}">Téléphone</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

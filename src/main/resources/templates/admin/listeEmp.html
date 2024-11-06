@@ -3,75 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liste des Clients</title>
+    <title>Liste des Employés</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/parrametre.css}">
 </head>
 <body>
     <div class="main-wrapper">
-        <!-- Burger Menu -->
         <button class="burger-menu" id="burgerMenu">
             <span class="bar"></span>
             <span class="bar"></span>
             <span class="bar"></span>
         </button>
 
-        <!-- Sidebar Navigation -->
         <div class="sidebar" id="sidebar">
             <div class="logo">
                 <img th:src="@{/image/logo.png}" alt="Logo">
             </div>
             <ul class="menu">
                 <li><a href="/admin/dashboard">Dashboard</a></li>
-                <li><a href="/admin/listeUser" class="active">Liste des utilisateurs </a></li>
-                <li><a href="/admin/jeu-concours" >Jeu-concours</a></li>
-                <li><a href="/admin/parrametre" >Parrametre</a></li>
+                <li><a href="/admin/listeEmp" class="active">Liste des employés</a></li>
+                <li><a href="/admin/listeClients">Liste des clients</a></li>
+                <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
+                <li><a href="/admin/parametre">Paramètres</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
 
-        <!-- Main Content Area -->
-        <section class="profile-section">
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2>Liste des Employés</h2>
-                <a href="/admin/ajouterEmploye" class="button-ajouter">Ajouter un employé</a>
-            </div>
-        </section>
+        <div class="main-content">
+            <header>
+                <h1>Liste des Employés</h1>
+            </header>
 
-            <!-- User Table Section -->
-            <section class="table-section">
+            <!-- Section du bouton "Ajouter un employé" en haut à droite -->
+            <section class="profile-section" style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+                <a href="/admin/ajouterEmploye" class="button-ajouter">Ajouter un employé</a>
+            </section>
+
+            <!-- Section Tableau des Employés -->
+            <section class="employee-list-section">
                 <table>
                     <thead>
                         <tr>
                             <th>ID</th>
                             <th>Nom</th>
                             <th>Email</th>
-                            <th>Actions</th> <!-- Ajout de la colonne Actions -->
+                            <th>Téléphone</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <!-- Boucle Thymeleaf pour afficher chaque employé -->
                         <tr th:each="client : ${clients}">
-                            <td th:text="${client.id}"></td>
-                            <td th:text="${client.nom}"></td>
-                            <td th:text="${client.email}"></td>
+                            <td th:text="${client.id}">ID</td>
+                            <td th:text="${client.nom}">Nom</td>
+                            <td th:text="${client.email}">Email</td>
+                            <td th:text="${client.telephone}">Téléphone</td>
                             <td>
-                                <!-- Bouton pour modifier l'utilisateur -->
                                 <a th:href="@{/modifier/{id}(id=${client.id})}" class="button-modifier">Modifier</a>
-                                <!-- Bouton pour supprimer l'utilisateur -->
                                 <form th:action="@{/supprimer/{id}(id=${client.id})}" method="post" style="display:inline;">
                                     <button type="submit" class="button-supprimer">Supprimer</button>
                                 </form>
                             </td>
                         </tr>
                         <tr th:if="${#lists.isEmpty(clients)}">
-                            <td colspan="4">Aucun client trouvé.</td>
+                            <td colspan="5">Aucun client trouvé.</td>
                         </tr>
                     </tbody>
                 </table>
             </section>
-        </main>
+        </div>
     </div>
 
-    <!-- JavaScript for Burger Menu Toggle -->
     <script>
         const burgerMenu = document.getElementById('burgerMenu');
         const sidebar = document.getElementById('sidebar');
