@@ -324,5 +324,9 @@ public class AdminController {
         model.addAttribute("clients", clients);
         return "admin/listeClients"; // Retourne la vue Thymeleaf pour afficher la liste
     }
-
+    @GetMapping("/test")
+    public String test(Model model) {
+        model.addAttribute("percent", 50); 
+        return "test"; // Retourne la vue Thymeleaf
+    }
 }
