@@ -227,7 +227,12 @@ public class AdminController {
     }
     @GetMapping("admin/jeu-concours")
     public String getJeuConcoursPage(Model model) {
-
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
+        if (!hasUserRole) {
+            return "403";
+        }
         return "admin/jeu-concours";
     }
   

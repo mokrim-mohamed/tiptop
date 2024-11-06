@@ -16,24 +16,26 @@
         </button>
 
         <!-- Sidebar Navigation -->
-        <nav class="sidebar" id="sidebar">
+        <div class="sidebar" id="sidebar">
             <div class="logo">
                 <img th:src="@{/image/logo.png}" alt="Logo">
             </div>
             <ul class="menu">
                 <li><a href="/admin/dashboard">Dashboard</a></li>
-                <li><a href="/admin/listeClients" class="active">Liste des Clients</a></li>
-                <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
-                <li><a href="/admin/parrametre">Paramètre</a></li>
+                <li><a href="/admin/listeUser" class="active">Liste des utilisateurs </a></li>
+                <li><a href="/admin/jeu-concours" >Jeu-concours</a></li>
+                <li><a href="/admin/parrametre" >Parrametre</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
-        </nav>
+        </div>
 
         <!-- Main Content Area -->
-        <main class="main-content">
-            <section class="profile-section">
-                <h2>Liste des Employee</h2>
-            </section>
+        <section class="profile-section">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2>Liste des Employés</h2>
+                <a href="/admin/ajouterEmploye" class="button-ajouter">Ajouter un employé</a>
+            </div>
+        </section>
 
             <!-- User Table Section -->
             <section class="table-section">

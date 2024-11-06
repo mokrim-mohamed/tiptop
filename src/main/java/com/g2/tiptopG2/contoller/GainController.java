@@ -1,4 +1,4 @@
-package com.g2.tiptopG2.controller;
+package com.g2.tiptopG2.contoller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
