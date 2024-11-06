@@ -1,23 +1,15 @@
 package com.g2.tiptopG2.service;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import javax.security.auth.login.AccountNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.g2.tiptopG2.dao.IRoleDao;
-import java.security.SecureRandom;
 import com.g2.tiptopG2.dao.IUserDao;
 import com.g2.tiptopG2.dto.UserDto;
-import java.util.stream.Collectors;
-import com.g2.tiptopG2.dto.RoleDto;
-import com.g2.tiptopG2.models.RoleEntity;
 import com.g2.tiptopG2.models.RoleEntity;
 import com.g2.tiptopG2.models.UserEntity;
-import com.g2.tiptopG2.service.EmailService;
 import java.util.Collections;
 @Service()
 public class UserServiceImp implements IUserService {

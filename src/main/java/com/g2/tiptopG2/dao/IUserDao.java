@@ -1,7 +1,6 @@
 package com.g2.tiptopG2.dao;
 import java.util.List; // Import nécessaire
 
-import javax.management.relation.Role;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -3,7 +3,6 @@ package com.g2.tiptopG2.service;
 import java.util.List;
 
 import com.g2.tiptopG2.dto.RoleDto;
-import com.g2.tiptopG2.dto.RoleDto;
 
 public interface IRoleService {
     RoleDto findById(Integer id);
