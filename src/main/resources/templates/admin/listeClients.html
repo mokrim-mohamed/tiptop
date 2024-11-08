@@ -6,9 +6,63 @@
     <title>Liste des Clients</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
     
     <!-- Inclure la bibliothèque SheetJS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+
+    <style>
+        /* Style général pour la barre de recherche */
+        .search-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            max-width: 400px; /* Limite la largeur pour les grands écrans */
+            padding: 6px 10px; /* Réduit la hauteur en diminuant le padding */
+            font-size: 14px; /* Optionnel : Ajuste la taille de la police pour la rendre plus petite */
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #searchInput:focus {
+            border-color: #007bff; /* Change la couleur de la bordure au focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Ombre au focus */
+        }
+
+        /* Optionnel : Ajout d'un texte d'aide */
+        #searchInput::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination button {
+            padding: 6px 12px;
+            margin: 0 5px;
+            font-size: 14px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .pagination button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
     <div class="main-wrapper">
@@ -39,7 +93,12 @@
 
             <!-- Section pour le bouton de téléchargement Excel -->
             <section class="download-section" style="margin-bottom: 20px;">
-                <button id="downloadExcelBtn" class="button-ajouter">Importer la liste de clients</button>
+                <button id="downloadExcelBtn" class="button-ajouter">Exporter la liste de clients</button>
+            </section>
+
+            <!-- Barre de recherche -->
+            <section class="search-section" style="margin-bottom: 20px;">
+                <input type="text" id="searchInput" placeholder="Rechercher par nom ou email..." onkeyup="filterTable()">
             </section>
 
             <!-- Section Tableau des Clients -->
@@ -51,6 +110,7 @@
                             <th>Nom</th>
                             <th>Email</th>
                             <th>Téléphone</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,9 +120,26 @@
                             <td th:text="${client.nom}">Nom</td>
                             <td th:text="${client.email}">Email</td>
                             <td th:text="${client.telephone}">Téléphone</td>
+                            <td>
+                                <!-- Icône Modifier -->
+                                <a th:href="@{/modifier/{id}(id=${client.id})}" title="Modifier" style="margin-right: 10px; text-decoration: none; color: #007bff;">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            
+                                <!-- Icône Supprimer -->
+                                <form th:action="@{/supprimer/{id}(id=${client.id})}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')">
+                                    <button type="submit" title="Supprimer" style="background: none; border: none; cursor: pointer; text-decoration: none; color: #dc3545;">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
+            </section>
+            <section class="pagination">
+                <button id="prevButton" onclick="paginate(-1)" disabled>Précédent</button>
+                <button id="nextButton" onclick="paginate(1)">Suivant</button>
             </section>
         </div>
     </div>
@@ -81,6 +158,53 @@
             const wb = XLSX.utils.table_to_book(table, {sheet: "Clients"}); // Convertir le tableau en livre Excel
             XLSX.writeFile(wb, "liste_clients.xlsx"); // Télécharger le fichier Excel
         });
+
+        // Fonction de filtrage des clients
+        function filterTable() {
+            const searchValue = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("#clientsTable tbody tr");
+
+            rows.forEach(row => {
+                const nameCell = row.cells[1].textContent.toLowerCase();
+                const emailCell = row.cells[2].textContent.toLowerCase();
+
+                if (nameCell.includes(searchValue) || emailCell.includes(searchValue)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+
+        const clients = document.querySelectorAll("#clientsTable tbody tr");
+        const clientsPerPage = 20;
+        let currentPage = 0;
+
+        // Fonction pour paginer les clients
+        function paginate(direction) {
+            currentPage += direction;
+
+            // Calcul de la plage des clients à afficher
+            const start = currentPage * clientsPerPage;
+            const end = start + clientsPerPage;
+
+            // Affichage des clients dans la plage spécifiée
+            clients.forEach((client, index) => {
+                if (index >= start && index < end) {
+                    client.style.display = "";
+                } else {
+                    client.style.display = "none";
+                }
+            });
+
+            // Gestion de la visibilité des boutons "Précédent" et "Suivant"
+            document.getElementById("prevButton").disabled = currentPage === 0;
+            document.getElementById("nextButton").disabled = end >= clients.length;
+        }
+
+        // Initialisation de l'affichage initial (20 premiers clients)
+        paginate(0);
     </script>
 </body>
 </html>

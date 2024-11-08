@@ -116,3 +116,24 @@ form input:focus {
         transform: none;
     }
 }
+.action-icons {
+    display: flex;
+    gap: 10px; /* Espace entre les icônes */
+    align-items: center;
+}
+
+.icon-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: none; /* Supprime le soulignement */
+    font-size: 20px;
+    color: #007bff; /* Couleur des icônes */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-button:hover {
+    color: #ff5733; /* Couleur au survol */
+}

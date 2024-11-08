@@ -7,6 +7,69 @@
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/parrametre.css}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        /* Style pour la carte */
+        .winner-card {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .winner-card h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .winner-card p {
+            font-size: 16px;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .inform-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .inform-button:hover {
+            background-color: #218838;
+        }
+
+        /* Style pour la section du jeu */
+        .game-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Style pour le bouton */
+        #showRandomUserBtn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #showRandomUserBtn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
     <div class="main-wrapper">
@@ -24,10 +87,10 @@
             </div>
             <ul class="menu">
                 <li><a href="/admin/dashboard">Dashboard</a></li>
-                <li><a href="/admin/listeEmp">Liste des employee</a></li>
+                <li><a href="/admin/listeEmp">Liste des employés</a></li>
                 <li><a href="/admin/listeClients">Liste des clients</a></li>
                 <li><a href="/admin/jeu-concours" class="active">Jeu-concours</a></li>
-                <li><a href="/admin/parrametre" >Parrametre</a></li>
+                <li><a href="/admin/parrametre">Paramètres</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -42,8 +105,9 @@
                 <h2>Lancer le tirage au sort</h2>
                 <button id="showRandomUserBtn">Afficher le gagnant</button>
 
+                <!-- Section pour afficher le gagnant dans une carte -->
                 <div id="randomUserInfo" style="margin-top: 20px;">
-                    <!-- L'information de l'utilisateur sera affichée ici -->
+                    <!-- Informations du gagnant seront affichées ici dans une carte -->
                 </div>
             </section>
         </div>
@@ -63,13 +127,17 @@
             $('#showRandomUserBtn').click(function() {
                 $.ajax({
                     type: "POST",
-                    url: "/randomUserWithGain",
+                    url: "/randomUserWithGain", // URL de ton endpoint pour obtenir un gagnant
                     success: function(user) {
                         if (user) {
                             $('#randomUserInfo').html(
-                                `<p><strong>Nom :</strong> ${user.nom}</p>
-                                 <p><strong>Prénom :</strong> ${user.prenom}</p>
-                                 <p><strong>Email :</strong> ${user.email}</p>`
+                                `<div class="winner-card">
+                                    <h3>Félicitations, ${user.nom} ${user.prenom} !</h3>
+                                    <p><strong>Nom :</strong> ${user.nom}</p>
+                                    <p><strong>Prénom :</strong> ${user.prenom}</p>
+                                    <p><strong>Email :</strong> ${user.email}</p>
+                                    <button class="inform-button" onclick="informByEmail('${user.email}')">Informer par mail</button>
+                                 </div>`
                             );
                         } else {
                             $('#randomUserInfo').html("<p>Aucun gagnant trouvé.</p>");
@@ -81,6 +149,21 @@
                 });
             });
         });
+
+        // Fonction pour envoyer un e-mail au gagnant
+        function informByEmail(email) {
+            $.ajax({
+                type: "POST",
+                url: "/informWinnerByEmail", // Endpoint pour informer par email
+                data: { email: email },
+                success: function(response) {
+                    alert("E-mail envoyé au gagnant !");
+                },
+                error: function() {
+                    alert("Erreur lors de l'envoi de l'email.");
+                }
+            });
+        }
     </script>
 </body>
 </html>
