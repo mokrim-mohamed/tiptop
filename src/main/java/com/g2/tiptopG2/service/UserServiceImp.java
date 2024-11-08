@@ -183,6 +183,8 @@ public class UserServiceImp implements IUserService {
 						   userDto.setId(userEntity.getId());
 						   userDto.setNom(userEntity.getNom());
 						   userDto.setEmail(userEntity.getEmail());
+						   userDto.setTelephone(userEntity.getTelephone());
+						   userDto.setPrenom(userEntity.getPrenom());
 						   return userDto;
 					   })
 					   .collect(Collectors.toList());
@@ -202,6 +204,8 @@ public class UserServiceImp implements IUserService {
 						   userDto.setId(userEntity.getId());
 						   userDto.setNom(userEntity.getNom());
 						   userDto.setEmail(userEntity.getEmail());
+						   userDto.setTelephone(userEntity.getTelephone());
+						   userDto.setPrenom(userEntity.getPrenom());
 						   return userDto;
 					   })
 					   .collect(Collectors.toList());
