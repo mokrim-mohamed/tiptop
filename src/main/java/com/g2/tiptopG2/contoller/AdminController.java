@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,8 +27,12 @@ import com.g2.tiptopG2.dto.GainTypeDto;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IGainService;
 import com.g2.tiptopG2.service.IUserService;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import java.util.Random;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class AdminController {
     @Autowired
@@ -328,5 +333,25 @@ public class AdminController {
     public String test(Model model) {
         model.addAttribute("percent", 50); 
         return "test"; // Retourne la vue Thymeleaf
+    }
+    @PostMapping("/supprimer/client/{id}")
+    public String deleteClient(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            userService.deleteUser(id);  // Appel à votre service de suppression
+            redirectAttributes.addFlashAttribute("successMessage", "Client supprimé avec succès.");
+        } catch (EntityNotFoundException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/admin/listeClients";  // Redirection vers la page de liste des clients
+    }
+    @PostMapping("/supprimer/Emp/{id}")
+    public String deleteEmp(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
+        try {
+            userService.deleteUser(id);  // Appel à votre service de suppression
+            redirectAttributes.addFlashAttribute("successMessage", "Client supprimé avec succès.");
+        } catch (EntityNotFoundException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
+        return "redirect:/admin/listeEmp";  // Redirection vers la page de liste des clients
     }
 }

@@ -10,6 +10,10 @@ import com.g2.tiptopG2.dao.IUserDao;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.models.RoleEntity;
 import com.g2.tiptopG2.models.UserEntity;
+import java.util.Optional;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import java.util.Collections;
 @Service()
 public class UserServiceImp implements IUserService {
@@ -138,9 +142,16 @@ public class UserServiceImp implements IUserService {
 
 	@Override
 	public void deleteUser(Integer id) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deleteUser'");
+		Optional<UserEntity> userEntityOptional = UserDao.findById(id);
+		if (userEntityOptional.isPresent()) {
+			UserEntity userEntity = userEntityOptional.get();
+			UserDao.delete(userEntity);
+		} else {
+			// Lancer une exception ou gérer l'absence de l'utilisateur
+			throw new EntityNotFoundException("L'utilisateur avec l'ID " + id + " n'existe pas.");
+		}
 	}
+
 
 	@Override
 	public UserDto saveEmployee (UserDto userDto) {
