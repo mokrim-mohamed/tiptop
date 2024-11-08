@@ -182,8 +182,6 @@ public class AdminController {
                 model.addAttribute("errorMessage", "Le mot de passe actuel est incorrect.");
                 return "/admin/parrametre";
             }
-
-            // Update password
             userDto.setMotDePasse(newPassword);
             userService.updateUserPassword(userDto);
             model.addAttribute("successMessage", "Mot de passe mis à jour avec succès.");
@@ -203,7 +201,7 @@ public class AdminController {
                     return "403";
                 }
         model.addAttribute("user", new UserDto());
-        return "/admin/user";  // Nom de la page HTML
+        return "/admin/user";  
     }
 
     @PostMapping("/admin/user")
@@ -215,7 +213,6 @@ public class AdminController {
                     return "403";
                 }
         userService.saveEmployee(userDto);
-        // Redirection après enregistrement
         return "redirect:/admin/user?success";
     }
 
@@ -250,11 +247,10 @@ public class AdminController {
     public UserDto getRandomUserWithGain() {
         List<UserDto> usersWithGains = userService.getUsersWithGains();
         if (usersWithGains != null && !usersWithGains.isEmpty()) {
-            // Sélectionner un utilisateur aléatoire
             Random random = new Random();
             return usersWithGains.get(random.nextInt(usersWithGains.size()));
         }
-        return null; // Retourner null si aucun utilisateur n'a de gain
+        return null; 
     }
 
     @PostMapping("/admin/updateProfile")
@@ -301,17 +297,15 @@ public class AdminController {
         }
         List<UserDto> clients = userService.getAllEmp();
         model.addAttribute("clients", clients);
-        return "admin/listeEmp"; // Retourne la vue Thymeleaf pour afficher la liste
+        return "admin/listeEmp"; 
     }
     
     @PostMapping("/admin/ajouterEmploye")
     public String addEmployee(@ModelAttribute("userDto") UserDto userDto, Model model) {
         try {
-            // Enregistre l'utilisateur via le service
             userService.saveEmployee(userDto);
-            return "redirect:/admin/listeEmp"; // Redirige vers la liste des utilisateurs en cas de succès
+            return "redirect:/admin/listeEmp"; 
         } catch (Exception e) {
-            // En cas d'erreur, ajoute un message d'erreur au modèle et retourne le formulaire
             model.addAttribute("errorMessage", "Erreur lors de l'ajout de l'employé. Veuillez réessayer.");
             return "ajouterEmploye";
         }
@@ -326,31 +320,71 @@ public class AdminController {
         }
         List<UserDto> clients = userService.getAllClients();
         model.addAttribute("clients", clients);
-        return "admin/listeClients"; // Retourne la vue Thymeleaf pour afficher la liste
+        return "admin/listeClients"; 
     }
     @GetMapping("/test")
     public String test(Model model) {
         model.addAttribute("percent", 50); 
-        return "test"; // Retourne la vue Thymeleaf
+        return "test"; 
     }
     @PostMapping("/supprimer/client/{id}")
     public String deleteClient(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
-            userService.deleteUser(id);  // Appel à votre service de suppression
+            userService.deleteUser(id);  
             redirectAttributes.addFlashAttribute("successMessage", "Client supprimé avec succès.");
         } catch (EntityNotFoundException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
-        return "redirect:/admin/listeClients";  // Redirection vers la page de liste des clients
+        return "redirect:/admin/listeClients";  
     }
     @PostMapping("/supprimer/Emp/{id}")
     public String deleteEmp(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         try {
-            userService.deleteUser(id);  // Appel à votre service de suppression
+            userService.deleteUser(id);  
             redirectAttributes.addFlashAttribute("successMessage", "Client supprimé avec succès.");
         } catch (EntityNotFoundException e) {
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
         }
         return "redirect:/admin/listeEmp";  // Redirection vers la page de liste des clients
     }
+
+    @GetMapping("/modifier/{type}/{id}")
+    public String afficherModifierUtilisateur(@PathVariable String type, @PathVariable Integer id, Model model) {
+        UserDto utilisateur = userService.findById(id);
+        
+        if (utilisateur != null) {
+            model.addAttribute("client", utilisateur);
+            if ("employe".equals(type)) {
+                return "admin/modifierEmploye";
+            } else if ("client".equals(type)) {
+                return "admin/modifierClient";
+            } else {
+                return "redirect:/admin/listeEmp";
+            }
+        } else {
+            return "redirect:/admin/listeEmp";
+        }
+    }
+
+    @PostMapping("/modifier/{type}")
+    public String modifierUtilisateur(@PathVariable String type, @ModelAttribute("client") UserDto utilisateur, RedirectAttributes redirectAttributes) {
+        UserDto user = userService.findById(utilisateur.getId());
+        user.setEmail(utilisateur.getEmail());
+        user.setNom(utilisateur.getNom());
+        user.setPrenom(utilisateur.getPrenom());
+        user.setTelephone(utilisateur.getTelephone());
+        userService.updateUserProfile(user);
+        
+        redirectAttributes.addFlashAttribute("message", "Mise à jour réussie !");
+        
+        // Redirection selon le type
+        if ("employe".equals(type)) {
+            return "redirect:/admin/listeEmp";
+        } else if ("client".equals(type)) {
+            return "redirect:/admin/listeClients";
+        } else {
+            return "redirect:/admin/listeEmp";
+        }
+    }
+
 }
