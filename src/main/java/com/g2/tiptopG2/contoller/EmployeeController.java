@@ -23,9 +23,8 @@ public class EmployeeController {
     public EmployeeController(IUserService userService) {
         this.userService=userService;
     }
-
-
-    @GetMapping("/employee/historique-gains")
+    
+    @GetMapping("employee/historique-gains")
     public String histoGain() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -33,10 +32,10 @@ public class EmployeeController {
         if (!hasUserRole) {
             return "403";
         }
-        return "/employee/historique-gains";
+        return "employee/historique-gains";
     }
 
-    @GetMapping("/employee/parrametre")
+    @GetMapping("employee/parrametre")
     public String showSettingsPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();

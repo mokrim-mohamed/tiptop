@@ -25,7 +25,7 @@ public class ClientController {
     }
 
 
-    @GetMapping("/client/parrametre")
+    @GetMapping("client/parrametre")
     public String showSettingsPage(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -58,7 +58,7 @@ public class ClientController {
 
 
     
-    @GetMapping("/client/participation")
+    @GetMapping("client/participation")
     public String histoGains() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -66,7 +66,7 @@ public class ClientController {
         if (!hasUserRole) {
             return "403";
         }
-        return "/client/participation";
+        return "client/participation";
     }
     
 
