@@ -44,7 +44,7 @@ public class AdminController {
     }
 
 
-    @GetMapping("/admin/dashboard")
+    @GetMapping("admin/dashboard")
     public String getGainsWithClientIdNotNull(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
                 Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
@@ -148,7 +148,7 @@ public class AdminController {
         model.addAttribute("ageLabels", ageLabels); // Add age labels
         model.addAttribute("ageCounts", ageCounts); // Add age counts
         // Return the dashboard view
-        return "/admin/dashboard";
+        return "admin/dashboard";
     }
 
     @GetMapping("/admin/parrametre")
