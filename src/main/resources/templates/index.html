@@ -104,8 +104,16 @@
                     document.getElementById("countdown").innerHTML = "Le jeu-concours est terminé.";
                 }
             }
-        
             setInterval(updateCountdown, 1000);
-        </script>        
+        </script>   
+        <div id="cookie-banner" class="cookie-banner">
+            <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant, vous acceptez notre <a href="#">politique de confidentialité</a>.</p>
+            <div class="button-container">
+              <button onclick="acceptCookies()">Accepter</button>
+              <button onclick="rejectCookies()">Rejeter</button>
+            </div>
+          </div>
+          
+          
     </body>
 </html>
