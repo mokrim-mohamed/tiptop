@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erreur 403 - Accès Refusé</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>   
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="error-section">
+                <h2>Erreur 404 - Introuvable</h2>
+                <p>Désolé, cette page n'existe pas.</p>
+                <a href="/index" class="btn-return">Retour a l'accueil</a>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu'); 
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            document.querySelector('.main-content').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

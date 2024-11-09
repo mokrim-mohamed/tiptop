@@ -6,7 +6,6 @@ import java.util.List;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,22 +28,25 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column()
     private String nom;
 
-    @Column(nullable = false)
+    @Column()
     private String prenom;
 
-    @Column(nullable = false)
+    @Column()
     private String sexe;
 
     @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
+    @Column()
     private String telephone;
 
-    @Column(nullable = false)
+    @Column()
+    private int age;
+
+    @Column()
     private String motDePasse;
 
     @ManyToOne

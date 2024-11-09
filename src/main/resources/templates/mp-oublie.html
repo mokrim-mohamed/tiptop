@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mot de passe oublié - Tea Brand</title>
+    <link rel="stylesheet" th:href="@{/css/mp-oublier.css}">
+    <script th:src="@{/js/mp-oublier.js}" defer></script>
+</head>
+<body>
+    <div class="background-container">
+        <div class="forgot-password-container">
+            <div class="forgot-password-box">
+                <h2>Réinitialiser le mot de passe</h2>
+                <p th:if="${successMessage == null}" >Entrez votre email pour recevoir votre nouveau mot de passe :</p>
+
+                <!-- Vérifie si le message de succès est présent -->
+                <div th:if="${successMessage}">
+                    <p class="success-message" th:text="${successMessage}"></p>
+                    <a th:href="@{/login}" class="back-to-login-button">Revenir à la page de connexion</a>
+                </div>
+
+                <!-- Formulaire de saisie affiché uniquement si le message de succès n'existe pas -->
+                <form th:if="${successMessage == null}" th:action="@{/reset-password}" method="post">
+                    <div class="input-group">
+                        <label for="email">Email</label>
+                        <input type="email" name="email" id="email" placeholder="Entrer votre email" required
+                               th:value="${email}">
+                    </div>
+                    
+                    <div th:if="${errorMessage}" class="error-message" th:text="${errorMessage}"></div>
+
+                    <button type="submit">Envoyer</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

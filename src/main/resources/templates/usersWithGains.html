@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gagnant Aléatoire</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Afficher un gagnant aléatoire</h1>
+
+    <button id="showRandomUserBtn">Afficher un gagnant</button>
+
+    <div id="randomUserInfo" style="margin-top: 20px;">
+        <!-- L'information de l'utilisateur sera affichée ici -->
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#showRandomUserBtn').click(function() {
+                // Envoi de la requête AJAX
+                $.ajax({
+                    type: "POST",
+                    url: "/randomUserWithGain",
+                    success: function(user) {
+                        if (user) {
+                            $('#randomUserInfo').html(
+                                `<p><strong>Nom :</strong> ${user.nom}</p>
+                                 <p><strong>Prénom :</strong> ${user.prenom}</p>
+                                 <p><strong>Email :</strong> ${user.email}</p>`
+                            );
+                        } else {
+                            $('#randomUserInfo').html("<p>Aucun gagnant trouvé.</p>");
+                        }
+                    },
+                    error: function() {
+                        $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Gains with Client ID</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Liste des gains avec un client associé</h1>
+
+        <!-- Bouton pour charger les gains -->
+        <button id="loadGains" class="btn btn-primary">Afficher les gains</button>
+        <form action="#" th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+        <!-- Tableau pour afficher les gains -->
+        <table id="gainsTable" class="table table-bordered table-striped" style="display: none;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Utilisateur ID</th>
+                    <th>Type de Gain ID</th>
+                </tr>
+            </thead>
+            <tbody id="gainsBody">
+                <!-- Les données seront injectées ici via AJAX -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fonction pour récupérer les gains via AJAX
+        $(document).ready(function() {
+            $('#loadGains').click(function() {
+                $.ajax({
+                    url: '/gain/data',
+                    type: 'GET',
+                    success: function(data) {
+                        // Afficher le tableau si les données sont reçues
+                        $('#gainsTable').show();
+                        $('#gainsBody').empty(); // Vider le tableau avant d'ajouter les nouvelles données
+
+                        // Boucler sur les gains et les ajouter dans le tableau
+                        data.forEach(function(gain) {
+                            $('#gainsBody').append(
+                                '<tr>' +
+                                    '<td>' + gain.id + '</td>' +
+                                    '<td>' + gain.code + '</td>' +
+                                    '<td>' + gain.userId + '</td>' +
+                                    '<td>' + gain.gainTypeId + '</td>' +
+                                '</tr>'
+                            );
+                        });
+                    },
+                    error: function(error) {
+                        alert('Une erreur est survenue lors de la récupération des gains.');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

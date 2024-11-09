@@ -29,6 +29,9 @@ public class GainEntity implements Serializable {
     @Column(nullable = false)
     private String code;
 
+    @Column(name = "remis", nullable = false)
+    private boolean remis = false; 
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;

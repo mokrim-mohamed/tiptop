@@ -1,0 +1,521 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f8f5; /* Fond très clair avec une touche de vert */
+    color: #333;
+    height: 100%;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #81c784; /* Vert clair et doux pour la sidebar */
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    transition: transform 0.3s ease; /* Smooth transition for sidebar */
+}
+
+.logo img {
+    width: 100px;
+    margin-bottom: 30px;
+}
+
+.menu {
+    list-style: none;
+    width: 100%;
+    padding: 0;
+}
+
+.menu li {
+    width: 100%;
+    text-align: center;
+}
+
+.menu li a {
+    display: block;
+    padding: 15px 0;
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.menu li a:hover,
+.menu li a.active {
+    background-color: #66bb6a; /* Vert plus foncé au survol */
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: margin-left 0.3s ease; /* Smooth transition for main content */
+}
+
+header {
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 28px;
+    font-weight: 500;
+    color: #388e3c; /* Titre en vert plus foncé */
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.stat-box {
+    background-color: #ffffff;
+    width: calc(33.333% - 20px); /* Responsive width with spacing */
+    padding: 20px;
+    text-align: center;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px; /* Space below each stat box */
+}
+
+.stat-box h2 {
+    font-size: 36px;
+    color: #66bb6a; /* Couleur verte pour les chiffres */
+}
+
+.stat-box p {
+    color: #777;
+    margin-top: 10px;
+}
+
+.details {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #388e3c; /* Vert foncé pour les titres */
+}
+
+
+
+
+
+
+.btn-new-participation {
+    background-color: #66bb6a;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-new-participation:hover {
+    background-color: #388e3c;
+}
+
+.tickets-section,
+.dashboard-section {
+    margin: 20px 0;
+}
+
+.tickets-section h2,
+.dashboard-section h2 {
+    color: #388e3c;
+    margin-bottom: 15px;
+}
+
+/* Styles des cards pour les dashboards */
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+}
+
+.dashboard-card {
+    flex: 1;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 300px; /* Minimum width for cards */
+    margin-bottom: 20px; /* Space below each card */
+}
+
+.dashboard-card h3 {
+    font-size: 24px;
+    color: #66bb6a;
+    margin-bottom: 10px;
+}
+
+.dashboard-card p {
+    font-size: 16px;
+    color: #777;
+}
+
+/* Mise en page pour deux graphiques par ligne */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.chart-container {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.chart-container {
+    background-color: #ffffff; /* Couleur de fond blanche pour le conteneur */
+    padding: 20px; /* Espace autour du graphique */
+    border-radius: 12px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    margin-bottom: 20px; /* Espacement entre les conteneurs */
+    width: 100%; /* Utilise toute la largeur disponible */
+    height: auto; /* Permet au conteneur de s'ajuster à son contenu */
+}
+
+canvas {
+    max-height: 400px; /* Limite la hauteur pour garder la lisibilité */
+    width: 100%; /* Utilise toute la largeur disponible */
+}
+/* Tableau */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+}
+
+table th {
+    background-color: #81c784;
+    color: white;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f0f8f5;
+}
+
+table tbody tr:hover {
+    background-color: #dcedc8;
+}
+
+.details-btn {
+    background-color: #66bb6a;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.details-btn:hover {
+    background-color: #388e3c;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 200px; /* Slightly narrower sidebar for tablets */
+    }
+
+    .main-content {
+        margin-left: 200px; /* Adjust margin for sidebar */
+    }
+
+    .stat-box {
+        width: calc(50% - 10px); /* Two boxes per row on tablets */
+    }
+
+    .dashboard-card {
+        min-width: 220px; /* Smaller minimum width for cards */
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 250px;
+        transform: translateX(-100%);
+        z-index: 999;
+    }
+
+    /* Afficher la sidebar quand elle est active */
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Masquer le menu sur mobile tant qu'il n'est pas ouvert */
+    .main-content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .main-content.active {
+        margin-left: 250px;
+    }
+
+    /* Styles du bouton burger */
+    .burger-menu {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 24px;
+        width: 30px;
+        z-index: 1000;
+    }
+
+    .burger-menu .bar {
+        height: 4px;
+        width: 100%;
+        background-color: #333;
+        border-radius: 4px;
+    }
+}
+
+/* Affichage de la sidebar sur les écrans larges */
+@media (min-width: 769px) {
+    .burger-menu {
+        display: none;
+    }
+
+    .sidebar {
+        transform: none;
+    }
+}
+.error-section {
+    text-align: center;
+    margin-top: 50px; /* Espace au-dessus de la section d'erreur */
+}
+
+.error-section h2 {
+    color: #388e3c; /* Couleur verte pour le titre */
+    font-size: 36px; /* Taille de police pour le titre */
+}
+
+.error-section p {
+    color: #777; /* Couleur pour le texte du message */
+    font-size: 18px; /* Taille de police pour le texte */
+    margin: 20px 0; /* Espacement au-dessus et en dessous du texte */
+}
+
+.btn-return {
+    background-color: #66bb6a; /* Couleur verte pour le bouton */
+    color: white; /* Couleur du texte en blanc */
+    padding: 10px 20px; /* Espacement à l'intérieur du bouton */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille de police pour le bouton */
+    text-decoration: none; /* Pas de soulignement */
+    transition: background-color 0.3s; /* Transition pour le survol */
+}
+
+.btn-return:hover {
+    background-color: #388e3c; /* Couleur du bouton au survol */
+}
+.profile-section, .form-section {
+    margin-bottom: 20px;
+}
+.user-form .input-group {
+    margin-bottom: 15px;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2e7d32; /* Dark green button */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.action-btn:hover {
+    background-color: #66bb6a; /* Lighter green for hover */
+}
+.user-form input, .user-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.profile-section h2, .form-section h2 {
+    margin-bottom: 20px;
+    color: #2e7d32; /* Dark green */
+}
+
+.top-right {
+    text-align: right; /* Alignement à droite */
+    margin: 20px 0; /* Marge au-dessus et en dessous */
+}
+
+.add-employee-btn {
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    text-decoration: none; /* Pas de soulignement */
+    cursor: pointer; /* Changer le curseur au survol */
+    display: inline-block; /* Pour appliquer les marges */
+}
+
+.table-section {
+    margin-top: 20px; /* Espace au-dessus du tableau */
+}
+
+table {
+    width: 100%; /* Largeur du tableau */
+    border-collapse: collapse; /* Évite les espaces entre les cellules */
+}
+
+th, td {
+    padding: 10px; /* Espacement interne des cellules */
+    border: 1px solid #ddd; /* Bordure des cellules */
+    text-align: left; /* Alignement du texte */
+}
+/* Style de base pour le formulaire */
+.employee-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style des champs de formulaire */
+.employee-form .form-group {
+    margin-bottom: 15px;
+}
+
+.employee-form label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.employee-form input[type="text"],
+.employee-form input[type="email"],
+.employee-form input[type="password"],
+.employee-form input[type="tel"],
+.employee-form input[type="number"],
+.employee-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Style du bouton */
+.employee-form .form-actions button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.employee-form .form-actions button:hover {
+    background-color: #45a049;
+}
+
+/* Conteneur pour le message d'erreur */
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+/* Centrer le tableau */
+
+
+/* Styliser le bouton "Ajouter un employé" */
+.button-ajouter {
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Supprime la bordure */
+    border-radius: 5px; /* Coins arrondis */
+    text-decoration: none; /* Supprime le soulignement */
+    font-size: 16px; /* Taille de la police */
+    cursor: pointer; /* Change le curseur en pointeur */
+    transition: background-color 0.3s ease; /* Effet de transition */
+}
+
+.button-ajouter:hover {
+    background-color: #45a049; /* Couleur au survol */
+}
+
+/* Style général pour la barre de recherche */
+.search-section {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#searchInput {
+    width: 100%;
+    max-width: 400px; /* Limite la largeur pour les grands écrans */
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#searchInput:focus {
+    border-color: #007bff; /* Change la couleur de la bordure au focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Ombre au focus */
+}
+
+/* Optionnel : Ajout d'un texte d'aide */
+#searchInput::placeholder {
+    color: #888;
+    font-style: italic;
+}

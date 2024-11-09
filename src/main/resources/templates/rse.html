@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsabilité Sociétale des Entreprises (RSE)</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+        header {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 2em 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        main {
+            padding: 2em;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h2 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+        .section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3em;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        .section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        .section-content {
+            padding: 20px;
+            text-align: center;
+        }
+        .section img {
+            width: 100%;
+            height: auto;
+            max-width: 600px;
+            border-bottom: 2px solid #4CAF50;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        @media (min-width: 768px) {
+            .section {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+            .section-content {
+                text-align: left;
+                padding: 20px;
+            }
+            .section img {
+                margin-right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Notre Engagement RSE</h1>
+</header>
+
+<main>
+    <section class="section">
+        <img th:src="@{/image/emp.jpg}" alt="Image sur l'engagement environnemental">
+        <div class="section-content">
+            <h2>Environnement</h2>
+            <p>Nous réduisons notre empreinte carbone en utilisant des énergies renouvelables et en optimisant notre consommation d'énergie dans tous nos bureaux et sites de production.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <img th:src="@{/image/emp.jpg}" alt="Image sur l'éthique et la gouvernance">
+        <div class="section-content">
+            <h2>Éthique et gouvernance</h2>
+            <p>Nous nous engageons à respecter les standards les plus élevés en matière de gouvernance d'entreprise, en garantissant la transparence et l'intégrité dans toutes nos activités.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <img th:src="@{/image/emp.jpg}" alt="Image sur le soutien aux communautés">
+        <div class="section-content">
+            <h2>Soutien aux communautés</h2>
+            <p>Nous investissons dans des programmes communautaires et encourageons nos employés à s'impliquer dans des actions bénévoles pour soutenir les communautés locales.</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <img th:src="@{/image/emp.jpg}" alt="Image sur le bien-être des employés">
+        <div class="section-content">
+            <h2>Bien-être des employés</h2>
+            <p>Notre entreprise valorise la diversité, l'égalité des chances et le développement personnel de chaque collaborateur, tout en assurant des conditions de travail sécurisées et motivantes.</p>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 - Entreprise Responsable - Tous droits réservés.</p>
+</footer>
+
+</body>
+</html>
