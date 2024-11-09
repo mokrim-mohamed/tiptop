@@ -319,3 +319,132 @@ nav ul li a:hover {
     display: block;
     opacity: 1;
 }
+.gifts-title {
+    font-size: 60px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: fantasy;
+    color: #f6b944;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.card-container li {
+    background: linear-gradient(145deg, #f6b944, #976505);
+    border-radius: 50%;
+    padding: 50px;
+    width: 160px;
+    height: 160px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin: 15px;
+    font-family: cursive;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+    color: #fff;
+    font-size: 18px;
+}
+
+.card-container li:hover {
+    transform: scale(1.15);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-container li .modal {
+    display: none;
+    position: absolute;
+    bottom: 130%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 15px;
+    border-radius: 10px;
+    width: 220px;
+    text-align: center;
+    font-size: 14px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.card-container li:hover .modal {
+    display: block;
+    opacity: 1;
+}
+.gifts-title {
+    font-size: 60px;
+    margin: 20px 0;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    color: #f6b944;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-family: 'Playfair Display', serif; /* Choisissez une police élégante */
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeInOut 5s ease-in-out infinite; /* Durée de 5s, boucle infinie */
+}
+
+/* Animation fade */
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0; /* Transparent au début et à la fin */
+        transform: translateY(-20px); /* Légère translation vers le haut */
+    }
+    50% {
+        opacity: 1; /* Visible au milieu */
+        transform: translateY(0); /* Retour à la position de départ */
+    }
+}
+/* Base pour les lots */
+.lot {
+    opacity: 0; /* Invisibles au début */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.lot-center {
+    opacity: 1; /* Visible dès le début */
+    transform: translateY(0);
+}
+
+/* Animation pour les lots venant de la droite */
+.lot-right {
+    transform: translateX(100%); /* Hors de l'écran à droite */
+    animation: slideInRight 1s ease forwards;
+    animation-delay: 0.5s; /* Délai pour synchroniser les animations */
+}
+
+/* Animation pour les lots venant de la gauche */
+.lot-left {
+    transform: translateX(-100%); /* Hors de l'écran à gauche */
+    animation: slideInLeft 1s ease forwards;
+    animation-delay: 0.5s;
+}
+
+/* Définition des animations */
+@keyframes slideInRight {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInLeft {
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+
