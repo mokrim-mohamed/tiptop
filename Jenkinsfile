@@ -37,6 +37,7 @@ pipeline {
                     def dockerTag = "nano-${env.BUILD_ID}"
 
                     // Construire l'image Docker avec le tag dynamique
+                    sh 'mvn test'
                     sh 'mvn clean package'
                     sh "docker build -t mokrim/test:${dockerTag} ."
                     echo "Image a été créée avec le tag: ${dockerTag}"
