@@ -73,7 +73,7 @@ pipeline {
                             gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
                             gcloud config set project "$CLOUDSDK_CORE_PROJECT"
                             gcloud compute instances list
-                            gcloud compute ssh --zone="europe-west9-c" "env-test" -- "
+                            gcloud compute ssh --zone="europe-west9-c" "env-preprod" -- "
                             docker stop my_container || true
                             docker rm my_container || true
                             docker pull mokrim/test:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
