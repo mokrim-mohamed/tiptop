@@ -13,8 +13,6 @@ import com.g2.tiptopG2.models.UserEntity;
 import java.util.Optional;
 
 import jakarta.persistence.EntityNotFoundException;
-
-import java.util.Collections;
 @Service()
 public class UserServiceImp implements IUserService {
 	private IUserDao UserDao;
