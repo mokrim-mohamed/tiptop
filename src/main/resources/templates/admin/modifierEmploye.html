@@ -37,7 +37,7 @@
 
             <div class="form-container">
                 <h2>Modifier l'Employé</h2>
-                <form th:action="@{/modifier/employe}" th:object="${employe}" method="post">
+                <form th:action="@{/modifier/employe}" th:object="${client}" method="post">
                     <!-- Champ caché pour l'ID -->
                     <input type="hidden" th:field="*{id}">
                     
