@@ -14,12 +14,7 @@ pipeline {
             }
         }
 
-        stage('Echo Message') {
-            steps {
-                // Exemple de commande pour afficher un message
-                sh 'echo "Le code a été récupéré avec succès et le pipeline est en cours d\'exécution."'
-            }
-        }
+    
 
         stage('Check Docker') {
             steps {
@@ -33,16 +28,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Générer un tag basé sur le timestamp
-                    def dockerTag = "nano-${env.BUILD_ID}"
+                    def dockerTag = "${env.BUILD_ID}"
 
-                    // Construire l'image Docker avec le tag dynamique
                     sh 'mvn test'
                     sh 'mvn clean package'
                     sh "docker build -t mokrim/test:${dockerTag} ."
                     echo "Image a été créée avec le tag: ${dockerTag}"
                     
-                    // Stocker le tag dans une variable d'environnement pour le réutiliser
                     env.DOCKER_TAG = dockerTag
                 }
             }

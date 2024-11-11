@@ -59,7 +59,7 @@
         #showRandomUserBtn {
             padding: 10px 20px;
             font-size: 18px;
-            background-color: #007bff;
+            background-color: #29a11b;
             color: white;
             border: none;
             border-radius: 5px;
@@ -102,7 +102,7 @@
             </header>
 
             <section class="game-section">
-                <h2>Lancer le tirage au sort</h2>
+                <h2>Client gagné :</h2>
                 
                 <!-- Si un gagnant existe, afficher les informations du gagnant -->
                 <div th:if="${hasWinner}">
@@ -118,7 +118,7 @@
                 
                 <!-- Si aucun gagnant, afficher le bouton pour lancer le tirage -->
                 <div th:if="${!hasWinner}">
-                    <button id="showRandomUserBtn">Afficher le gagnant</button>
+                    <button class="inform-button" id="showRandomUserBtn">Démarrer le Tirage</button>
                 </div>
 
                 <!-- Section pour afficher le gagnant dans une carte -->
@@ -180,6 +180,62 @@
                 }
             });
         }
+    </script>
+    <script>
+        // Variables pour la modal et la case à cocher
+        const modal = document.getElementById('confirmationModal');
+        const closeModal = document.querySelector('.close-modal');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const confirmCheckbox = document.getElementById('confirmCheckbox');
+
+        // Ouvrir la modal lors du clic sur le bouton de tirage
+        $('#showRandomUserBtn').click(function() {
+            modal.style.display = 'block';
+        });
+
+        // Fermer la modal si l'utilisateur clique sur 'X'
+        closeModal.onclick = function() {
+            modal.style.display = 'none';
+            confirmCheckbox.checked = false;
+            confirmBtn.disabled = true;
+        };
+
+        // Activer le bouton de confirmation si la case est cochée
+        confirmCheckbox.addEventListener('change', function() {
+            confirmBtn.disabled = !this.checked;
+        });
+
+        // Confirmer et lancer le tirage lorsqu'on clique sur le bouton de confirmation
+        confirmBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            $.ajax({
+                type: "POST",
+                url: "/randomUserWithGain",
+                success: function(user) {
+                    $('#randomUserInfo').html(user ? `
+                        <div class="winner-card">
+                            <h3>Félicitations, ${user.nom} ${user.prenom} !</h3>
+                            <p><strong>Nom :</strong> ${user.nom}</p>
+                            <p><strong>Prénom :</strong> ${user.prenom}</p>
+                            <p><strong>Email :</strong> ${user.email}</p>
+                            <button class="inform-button" onclick="informByEmail('${user.email}')">Informer par mail</button>
+                        </div>
+                    ` : "<p>Aucun gagnant trouvé.</p>");
+                },
+                error: function() {
+                    $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
+                }
+            });
+        });
+
+        // Fermer la modal si l'utilisateur clique en dehors du contenu
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                confirmCheckbox.checked = false;
+                confirmBtn.disabled = true;
+            }
+        };
     </script>
 </body>
 </html>
