@@ -21,6 +21,7 @@ body, html {
     align-items: center;
     padding: 20px 0;
     transition: transform 0.3s ease; /* Smooth transition for sidebar */
+    box-shadow: none; /* Retirer la bordure visible */
 }
 
 .logo img {
@@ -509,4 +510,72 @@ th, td {
 
 .button-ajouter:hover {
     background-color: #45a049; /* Couleur au survol */
+}
+
+
+ /* Appliquer un modèle de mise en page flexbox à la page principale */
+ body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Assurez-vous que le corps prend toute la hauteur de la fenêtre */
+    margin: 0;
+}
+
+/* Main wrapper pour gérer le contenu principal */
+.main-wrapper {
+    flex: 1; /* Cette propriété permet au contenu principal de prendre tout l'espace disponible */
+}
+
+.footer {
+    background-color: #81c784; /* Même couleur que la sidebar pour une harmonie visuelle */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: none; /* Retirer l'ombre pour ne pas avoir de séparation visible */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #dcedc8; /* Couleur plus claire au survol pour une meilleure lisibilité */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
 }
