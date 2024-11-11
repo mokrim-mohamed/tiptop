@@ -3,4 +3,4 @@ Disallow: /admin/*
 Disallow: /client/*
 Disallow: /employee/*
 Allow: /*
-Sitemap: http://http://34.1.13.155:8080/sitemap.xml
+Sitemap: http://34.1.13.155:8080/sitemap.xml
