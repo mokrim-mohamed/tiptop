@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /admin/*
+Disallow: /client/*
+Disallow: /employee/*
+Allow: /*
+Sitemap: http://www.dsp5-archi-o23-15m-g2.fr/sitemap.xml
