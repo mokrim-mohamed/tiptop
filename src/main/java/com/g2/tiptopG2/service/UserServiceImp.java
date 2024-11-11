@@ -107,6 +107,7 @@ public class UserServiceImp implements IUserService {
 		String subject = "Félicitations ! Vous êtes le gagnant de notre jeu-concours 🎉";
 		String body ="Bonjour"+Gagnant.nom+"\n\n" +
 					"Nous avons le plaisir de vous annoncer que vous êtes le grand gagnant de notre jeu-concours ! 🏆\n\n" +
+					"Vous avez gagné un qn de thé grqtuit d'une valeur de 360 euro ! 🏆\n\n" +
 					"Nous vous félicitons pour votre victoire ! \n\n " +
 					" Si vous avez des questions ou si vous souhaitez plus d'informations, n'hésitez pas à nous contacter. : \n\n\n"+
 					"Equipe Tip Top";
