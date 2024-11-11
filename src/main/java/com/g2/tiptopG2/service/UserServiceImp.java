@@ -225,5 +225,9 @@ public class UserServiceImp implements IUserService {
 					   })
 					   .collect(Collectors.toList());
 		}
+		@Override
+		public void contactezNous(String subject, String body){
 
+			emailService.sendEmail("mohamed.nonka@gmail.com", subject, body);
+		}
 	}

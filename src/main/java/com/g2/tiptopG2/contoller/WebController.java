@@ -3,10 +3,15 @@ import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.g2.tiptopG2.service.IUserService;
+import org.springframework.security.core.GrantedAuthority;
+import java.security.Principal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.g2.tiptopG2.dto.UserDto;
+import java.util.Collection;
 @Controller
 public class WebController {
  
@@ -48,6 +53,32 @@ public class WebController {
     public String getMlPage() {
         return "mentionsLegals";
     }
+    @GetMapping("/contacteznous")
+    public String getContactPage(Model model, Principal principal) {
+        boolean isAuthenticated = principal != null;
+        // Initialiser les rôles
+        boolean isAdmin = false;
+        boolean isEmployee = false;
+        boolean isUser = false;
 
-  
+        if (isAuthenticated) {
+            // Obtenir l'authentification actuelle
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+
+            // Vérifier les rôles
+            isAdmin = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
+            isEmployee = authorities.stream().anyMatch(a -> a.getAuthority().equals("employee"));
+            isUser = authorities.stream().anyMatch(a -> a.getAuthority().equals("user"));
+        }
+
+        // Ajouter les informations au modèle
+        model.addAttribute("isAuthenticated", isAuthenticated);
+        model.addAttribute("isAdmin", isAdmin);
+        model.addAttribute("isEmployee", isEmployee);
+        model.addAttribute("isUser", isUser);
+
+        return "contacteznous";
+    }
+    
 }

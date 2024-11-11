@@ -419,4 +419,14 @@ public class AdminController {
         }
     }
 
+
+
+    @PostMapping("/contacteznous")
+    public ResponseEntity<String> contactezNous(@RequestParam String objet, @RequestParam String body) {
+        userService.contactezNous(objet, body);
+        return ResponseEntity.ok("Message envoyé avec succès !");
+    }
+    
+    
+
 }
