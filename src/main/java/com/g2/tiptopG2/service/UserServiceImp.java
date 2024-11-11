@@ -134,8 +134,8 @@ public class UserServiceImp implements IUserService {
 	@Override
     public void updateUserPassword(UserDto userDto) {
         UserEntity userEntity = UserDao.findByEmail(userDto.getEmail());
-        if (userEntity != null && userDto.getMotDePasse() != null) {
-            userEntity.setMotDePasse(passwordEncoder.encode(userDto.getMotDePasse()));
+        if (userEntity != null && userEntity.getMotDePasse() != null) {
+            userEntity.setMotDePasse(userDto.getMotDePasse());
             UserDao.save(userEntity);  // Save updated password
         }
     }
