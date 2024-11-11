@@ -103,7 +103,23 @@
 
             <section class="game-section">
                 <h2>Lancer le tirage au sort</h2>
-                <button id="showRandomUserBtn">Afficher le gagnant</button>
+                
+                <!-- Si un gagnant existe, afficher les informations du gagnant -->
+                <div th:if="${hasWinner}">
+                    <div class="winner-card">
+                        <h3>Le gagnant est : <span th:text="${winnerNom}"></span> </span> !</h3>
+                        <p><strong>Nom :</strong> <span th:text="${winnerNom}"></span></p>
+                        <p><strong>Prénom :</strong> <span th:text="${winnerPrenom}"></span></p>
+                        <p><strong>Email :</strong> <span th:text="${winnerEmail}"></span></p>
+                        <p><strong>Téléphone :</strong> <span th:text="${winnerTelephone}"></span></p>
+                        <button class="inform-button" onclick="informByEmail('${winnerEmail}')">Informer par mail</button>
+                    </div>
+                </div>
+                
+                <!-- Si aucun gagnant, afficher le bouton pour lancer le tirage -->
+                <div th:if="${!hasWinner}">
+                    <button id="showRandomUserBtn">Afficher le gagnant</button>
+                </div>
 
                 <!-- Section pour afficher le gagnant dans une carte -->
                 <div id="randomUserInfo" style="margin-top: 20px;">

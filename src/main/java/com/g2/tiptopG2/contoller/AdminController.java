@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.g2.tiptopG2.dto.GainDto;
+import com.g2.tiptopG2.dto.Gagnant;
 import org.springframework.web.bind.annotation.RequestBody;
 import com.g2.tiptopG2.dto.GainTypeDto;
 import com.g2.tiptopG2.dto.UserDto;
@@ -228,16 +229,25 @@ public class AdminController {
         }
         return "admin/createEmp";
     }
+    
     @GetMapping("admin/jeu-concours")
     public String getJeuConcoursPage(Model model) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
-        if (!hasUserRole) {
-            return "403";
+        // Vérifier si un gagnant existe
+        boolean hasWinner = Gagnant.email != null;
+        
+        // Si un gagnant existe, transmettre ses informations à la vue
+        if (hasWinner) {
+            model.addAttribute("winnerNom", Gagnant.nom);
+            model.addAttribute("winnerPrenom", Gagnant.prenom);
+            model.addAttribute("winnerEmail", Gagnant.email);
+            model.addAttribute("winnerTelephone", Gagnant.telephone);
         }
+    
+        // Transmettre l'état de l'existence d'un gagnant
+        model.addAttribute("hasWinner", hasWinner);
         return "admin/jeu-concours";
     }
+    
   
 
 
@@ -245,13 +255,29 @@ public class AdminController {
     @PostMapping("/randomUserWithGain")
     @ResponseBody
     public UserDto getRandomUserWithGain() {
+        if (Gagnant.email != null) {
+            UserDto gagnant = new UserDto();
+            gagnant.setEmail(Gagnant.email);
+            gagnant.setNom(Gagnant.nom);
+            gagnant.setPrenom(Gagnant.prenom);
+            gagnant.setTelephone(Gagnant.telephone);
+            return gagnant;
+        }
+    
         List<UserDto> usersWithGains = userService.getUsersWithGains();
         if (usersWithGains != null && !usersWithGains.isEmpty()) {
             Random random = new Random();
-            return usersWithGains.get(random.nextInt(usersWithGains.size()));
-        }
-        return null; 
+            UserDto gagnant = usersWithGains.get(random.nextInt(usersWithGains.size()));
+            Gagnant.nom = gagnant.getNom();
+            Gagnant.prenom = gagnant.getPrenom();
+            Gagnant.email = gagnant.getEmail();
+            Gagnant.telephone = gagnant.getTelephone();
+    
+            return gagnant;
+        }    
+        return null;
     }
+    
 
     @PostMapping("/admin/updateProfile")
     @ResponseBody
