@@ -229,10 +229,16 @@ public class AdminController {
         }
         return "admin/createEmp";
     }
-    
+
     @GetMapping("admin/jeu-concours")
     public String getJeuConcoursPage(Model model) {
         // Vérifier si un gagnant existe
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        boolean hasUserRole = authorities.stream().anyMatch(a -> a.getAuthority().equals("admin"));
+        if (!hasUserRole) {
+            return "403";
+        }
         boolean hasWinner = Gagnant.email != null;
         
         // Si un gagnant existe, transmettre ses informations à la vue

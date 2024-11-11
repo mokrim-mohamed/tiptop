@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.g2.tiptopG2.dao.IRoleDao;
 import com.g2.tiptopG2.dao.IUserDao;
+import com.g2.tiptopG2.dto.Gagnant;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.models.RoleEntity;
 import com.g2.tiptopG2.models.UserEntity;
@@ -91,12 +92,26 @@ public class UserServiceImp implements IUserService {
 
 		String subject = "Réinitialisation de votre mot de passe";
 		String body = "Réinitialisation de votre mot de passe\n\n" +
-					"Voici votre code de réinitialisation : " + mdp + "\n\n" +
+					"Voici votre nouveau mot de passe : " + mdp + "\n\n" +
 					"Merci !";
 
 		// Appel à la méthode sendEmail
 		emailService.sendEmail(user.getEmail(), subject, body);
 		return modelmapper.map(saved, UserDto.class);
+	}
+	
+	@Override
+	public void informeGagnant(){
+		if(Gagnant.email !=null){
+		
+		String subject = "Félicitations ! Vous êtes le gagnant de notre jeu-concours 🎉";
+		String body ="Bonjour"+Gagnant.nom+"\n\n" +
+					"Nous avons le plaisir de vous annoncer que vous êtes le grand gagnant de notre jeu-concours ! 🏆\n\n" +
+					"Nous vous félicitons pour votre victoire ! \n\n " +
+					" Si vous avez des questions ou si vous souhaitez plus d'informations, n'hésitez pas à nous contacter. : \n\n\n"+
+					"Equipe Tip Top";
+		emailService.sendEmail(Gagnant.email, subject, body);
+	}
 	}
 	@Override
 	public UserDto saveClientAOuth(UserDto userDto) {

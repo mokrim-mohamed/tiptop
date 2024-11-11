@@ -18,4 +18,5 @@ public interface IUserService {
 	List<UserDto> getUsersWithGains();
 	List<UserDto> getAllEmp();
 	List<UserDto> getAllClients();
+	public void informeGagnant();
 }
