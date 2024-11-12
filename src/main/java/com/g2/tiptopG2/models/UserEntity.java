@@ -49,9 +49,6 @@ public class UserEntity implements Serializable {
     @Column()
     private String motDePasse;
     
-    @Column(nullable = false)
-    private int age;
-
     @ManyToOne
     @JoinColumn(name = "role_id")
     private RoleEntity role;
