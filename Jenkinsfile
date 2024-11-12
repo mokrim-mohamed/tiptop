@@ -32,7 +32,7 @@ pipeline {
 
                     sh 'mvn test'
                     sh 'mvn clean package'
-                    sh "docker build -t mokrim/test:${dockerTag} ."
+                    sh "docker build -t mokrim/prod:${dockerTag} ."
                     echo "Image a été créée avec le tag: ${dockerTag}"
                     
                     env.DOCKER_TAG = dockerTag
@@ -53,7 +53,7 @@ pipeline {
         stage('Push') {
             steps {
                 // Pousser l'image Docker sur Docker Hub avec le tag dynamique
-                sh "docker push mokrim/test:${env.DOCKER_TAG}"
+                sh "docker push mokrim/prod:${env.DOCKER_TAG}"
             }
         }
 
@@ -69,11 +69,11 @@ pipeline {
                             gcloud compute ssh --zone="europe-west9-c" "env-prod" -- "
                             docker stop my_container || true
                             docker rm my_container || true
-                            docker pull mokrim/pord:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
+                            docker pull mokrim/prod:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
                                 -e SPRING_DATASOURCE_URL=jdbc:mysql://34.1.13.155/test \
                                 -e SPRING_DATASOURCE_USERNAME=admin \
                                 -e SPRING_DATASOURCE_PASSWORD=Admin123! \
-                                --name my_container mokrim/test:${env.DOCKER_TAG}"
+                                --name my_container mokrim/prod:${env.DOCKER_TAG}"
                         """
                     }
                 }
