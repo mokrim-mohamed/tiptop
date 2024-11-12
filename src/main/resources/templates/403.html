@@ -14,26 +14,13 @@
             <span class="bar"></span>
         </button>
 
-        <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="logo">
-                <img th:src="@{/image/logo.png}" alt="Logo">
-            </div>
-            <ul class="menu">
-                <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
-                <li><a href="/admin/user">User</a></li>
-                <li><a href="/admin/historique-gains">Historique des Gains</a></li>
-                <li><a href="/admin/parrametre">Parrametre</a></li>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
-        </div>
 
         <!-- Main Content -->
         <main class="main-content">
             <section class="error-section">
                 <h2>Erreur 403 - Accès Refusé</h2>
                 <p>Désolé, vous n'avez pas l'autorisation d'accéder à cette page.</p>
-                <a href="/index" class="btn-return">Retour a l'accueil</a>
+                <a href="/" class="btn-return">Retour a l'accueil</a>
             </section>
         </main>
     </div>

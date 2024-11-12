@@ -38,9 +38,10 @@
             </div>
             <ul class="menu">
                 <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
-                <li><a href="/admin/user">User</a></li>
-                <li><a href="/admin/historique-gains" >Historique des Gains</a></li>
-                <li><a href="/admin/parrametre" >Parrametre</a></li>
+                <li><a href="/admin/listeEmp">Liste des employés</a></li>
+                <li><a href="/admin/listeClients">Liste des clients</a></li>
+                <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
+                <li><a href="/admin/parrametre" >Paramètres</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -59,7 +60,7 @@
                 
                     <!-- Carte 2 : Tickets utilisés -->
                     <div class="dashboard-card">
-                        <h3>Tickets Récuperer</h3>
+                        <h3>Tickets à récuperer</h3>
                         <p th:text="${countRemis} ">0%</p>
                     </div>
                 
@@ -91,40 +92,6 @@
                 </div>
             </section>
 
-            <!-- Historique des tickets -->
-            <section class="tickets-section">
-                <h2>Historique des tickets</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>N° ticket</th>
-                            <th>Gain obtenu</th>
-                            <th>Date de récupération</th>
-                            <th>Statut du gain</th>
-                            <th>Détails</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12345</td>
-                            <td>Lot A</td>
-                            <td>01/10/2024</td>
-                            <td>Livré</td>
-                            <td><a href="#" class="details-btn">Voir détails</a></td>
-                        </tr>
-                        <tr>
-                            <td>12346</td>
-                            <td>Lot B</td>
-                            <td>02/10/2024</td>
-                            <td>En attente</td>
-                            <td><a href="#" class="details-btn">Voir détails</a></td>
-                        </tr>
-                        <!-- Contenu dynamique -->
-                    </tbody>
-                </table>
-            </section>
-        </main>
-    </div>
 
     <script>
         
@@ -136,5 +103,18 @@
             document.querySelector('.main-content').classList.toggle('active');
         });
     </script>
+     <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

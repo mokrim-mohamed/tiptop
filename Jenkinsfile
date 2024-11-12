@@ -14,12 +14,7 @@ pipeline {
             }
         }
 
-        stage('Echo Message') {
-            steps {
-                // Exemple de commande pour afficher un message
-                sh 'echo "Le code a été récupéré avec succès et le pipeline est en cours d\'exécution."'
-            }
-        }
+    
 
         stage('Check Docker') {
             steps {
@@ -33,15 +28,13 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Générer un tag basé sur le timestamp
-                    def dockerTag = "nano-${env.BUILD_ID}"
+                    def dockerTag = "${env.BUILD_ID}"
 
-                    // Construire l'image Docker avec le tag dynamique
+                    sh 'mvn test'
                     sh 'mvn clean package'
                     sh "docker build -t mokrim/test:${dockerTag} ."
                     echo "Image a été créée avec le tag: ${dockerTag}"
                     
-                    // Stocker le tag dans une variable d'environnement pour le réutiliser
                     env.DOCKER_TAG = dockerTag
                 }
             }
@@ -77,7 +70,7 @@ pipeline {
                             docker stop my_container || true
                             docker rm my_container || true
                             docker pull mokrim/test:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
-                                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.155.105.62/test \
+                                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.1.9.181/test \
                                 -e SPRING_DATASOURCE_USERNAME=mokrim \
                                 -e SPRING_DATASOURCE_PASSWORD=Mokrim123! \
                                 --name my_container mokrim/test:${env.DOCKER_TAG}"

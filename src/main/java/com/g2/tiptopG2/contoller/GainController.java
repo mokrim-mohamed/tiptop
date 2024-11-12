@@ -1,29 +1,29 @@
 package com.g2.tiptopG2.contoller;
 
-import java.util.List;
-
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.g2.tiptopG2.dto.GainDto;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IGainService;
 import com.g2.tiptopG2.service.IUserService;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.List;
+import org.springframework.security.oauth2.core.user.OAuth2User;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping()
 public class GainController {
+
     private final IGainService gainService;
     private final IUserService userService;
     public GainController(IGainService gainService,IUserService userService) {
@@ -59,9 +59,7 @@ public class GainController {
         return ResponseEntity.ok(gains);
     }
     // hadi lizdty nta 
-
     @GetMapping("/admin/historique-gains")
-    @PreAuthorize("hasRole('admin')")
     public String histoGain() {
         return "/admin/historique-gains";
     }
@@ -70,20 +68,41 @@ public class GainController {
     public ResponseEntity<GainDto> updateGainUser(@RequestParam String gainCode) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            String userEmail;
+            UserDto userDto=new UserDto();
+    
             if (principal instanceof User) {
-            String userEmail = ((User) principal).getUsername();  // Récupérer l'email de l'utilisateur connecté
-            UserDto userDto = userService.findByEmail(userEmail);  // Assurez-vous que la méthode existe dans IUserService
-            GainDto updatedGain = gainService.updateUser(gainCode, userDto.getId());
-            
-            return ResponseEntity.ok(updatedGain);
+                // Utilisateur authentifié via une méthode classique
+                userEmail = ((User) principal).getUsername();
+                userDto = userService.findByEmail(userEmail);
+            } else if (principal instanceof OAuth2User) {
+                OAuth2User oauthUser = (OAuth2User) principal;
+                userEmail = oauthUser.getAttribute("email");
+                String name = oauthUser.getAttribute("name");
+                userDto=userService.findByEmail(userEmail);
+                if(userDto==null){
+                userDto = new UserDto();                   
+                userDto.setEmail(userEmail);
+                userDto.setNom(name);
+                userDto.setRoleId(3);
+                userDto=userService.saveClientAOuth(userDto);   
+            }             
             } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
             }
+    
+            if(gainService.findByCodeAndUserIsNull(gainCode)==null){
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+            GainDto updatedGain = gainService.updateUser(gainCode, userDto.getId());
+            return ResponseEntity.ok(updatedGain);
+            
         } catch (Exception e) {
-        e.printStackTrace();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
+
     @PostMapping("/getUserGains")
     public ResponseEntity<List<GainDto>> getUserGains(@RequestParam("email") String email) {
         UserDto userDto = userService.findByEmail(email);
@@ -106,32 +125,43 @@ public class GainController {
 
 
     @GetMapping("/client/historique-gains")
-    @PreAuthorize("hasRole('user')")
     public String getHistoriqueByUserId(Model model) {
         try {
             Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            List<GainDto> updatedGain = new ArrayList<>(); // Liste vide par défaut
+            UserDto userDto=null;
             if (principal instanceof User) {
                 String userEmail = ((User) principal).getUsername();  
-                UserDto userDto = userService.findByEmail(userEmail);
+                userDto = userService.findByEmail(userEmail);
                 
                 if (userDto != null) {
-                    List<GainDto> updatedGain = gainService.findByUserId(userDto.getId());
-                    model.addAttribute("gains", updatedGain);
-                    return "client/historique-gains";  // Affiche la page historique avec les gains
+                    updatedGain = gainService.findByUserId(userDto.getId());
                 } else {
                     model.addAttribute("errorMessage", "Utilisateur non trouvé");
-                    return "error";
+                }
+            } else if (principal instanceof OAuth2User) {
+                OAuth2User oauthUser = (OAuth2User) principal;
+                String userEmail = oauthUser.getAttribute("email");
+                userDto = userService.findByEmail(userEmail);
+                if (userDto != null) {
+                    updatedGain = gainService.findByUserId(userDto.getId());
+                } else {
+                    model.addAttribute("errorMessage", "Utilisateur non trouvé");
                 }
             } else {
                 return "redirect:/login";  // Redirige vers la page de login si l'utilisateur n'est pas authentifié
-            }   
+            }
+    
+            // Ajoute la liste des gains (vide ou remplie)
+            model.addAttribute("gains", updatedGain);
+            return "client/historique-gains";  // Affiche la page historique avec les gains
+            
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "Une erreur est survenue : " + e.getMessage());
             return "error";
         }
     }
-
     @PostMapping("/employee/setRemis")
     public ResponseEntity<GainDto> getUserGains(@RequestParam("gainId") Integer id) {
         GainDto gainDto = gainService.findById(id);

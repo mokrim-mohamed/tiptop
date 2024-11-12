@@ -28,10 +28,10 @@ public class UserEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column()
     private String nom;
 
-    @Column(nullable = false)
+    @Column()
     private String prenom;
 
     @Column()
@@ -43,7 +43,10 @@ public class UserEntity implements Serializable {
     @Column()
     private String telephone;
 
-    @Column(nullable = false)
+    @Column()
+    private int age;
+
+    @Column()
     private String motDePasse;
     
     @Column(nullable = false)

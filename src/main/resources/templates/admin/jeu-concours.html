@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu-concours</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        /* Style pour la carte */
+        .winner-card {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .winner-card h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .winner-card p {
+            font-size: 16px;
+            color: #555;
+            margin: 5px 0;
+        }
+
+        .inform-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .inform-button:hover {
+            background-color: #218838;
+        }
+
+        /* Style pour la section du jeu */
+        .game-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        /* Style pour le bouton */
+        #showRandomUserBtn {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #29a11b;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #showRandomUserBtn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <!-- Bouton burger pour afficher/cacher le menu sur mobile -->
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/listeEmp">Liste des employés</a></li>
+                <li><a href="/admin/listeClients">Liste des clients</a></li>
+                <li><a href="/admin/jeu-concours" class="active">Jeu-concours</a></li>
+                <li><a href="/admin/parrametre">Paramètres</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="main-content">
+            <header>
+                <h1>Jeu-concours</h1>
+            </header>
+
+            <section class="game-section">
+                <h2>Client gagné :</h2>
+                
+                <!-- Si un gagnant existe, afficher les informations du gagnant -->
+                <div th:if="${hasWinner}">
+                    <div class="winner-card">
+                        <h3>Le gagnant est : <span th:text="${winnerNom}"></span> </span> !</h3>
+                        <p><strong>Nom :</strong> <span th:text="${winnerNom}"></span></p>
+                        <p><strong>Prénom :</strong> <span th:text="${winnerPrenom}"></span></p>
+                        <p><strong>Email :</strong> <span th:text="${winnerEmail}"></span></p>
+                        <p><strong>Téléphone :</strong> <span th:text="${winnerTelephone}"></span></p>
+                        <button class="inform-button" onclick="informByEmail('${winnerEmail}')">Informer par mail</button>
+                    </div>
+                </div>
+                
+                <!-- Si aucun gagnant, afficher le bouton pour lancer le tirage -->
+                <div th:if="${!hasWinner}">
+                    <button class="inform-button" id="showRandomUserBtn">Démarrer le Tirage</button>
+                </div>
+
+                <!-- Section pour afficher le gagnant dans une carte -->
+                <div id="randomUserInfo" style="margin-top: 20px;">
+                    <!-- Informations du gagnant seront affichées ici dans une carte -->
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- JavaScript pour gérer le menu burger et l'AJAX -->
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Fonction pour afficher un gagnant aléatoire avec AJAX
+        $(document).ready(function() {
+            $('#showRandomUserBtn').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/randomUserWithGain", // URL de ton endpoint pour obtenir un gagnant
+                    success: function(user) {
+                        if (user) {
+                            $('#randomUserInfo').html(
+                                `<div class="winner-card">
+                                    <h3>Félicitations, ${user.nom} ${user.prenom} !</h3>
+                                    <p><strong>Nom :</strong> ${user.nom}</p>
+                                    <p><strong>Prénom :</strong> ${user.prenom}</p>
+                                    <p><strong>Email :</strong> ${user.email}</p>
+                                    <button class="inform-button" onclick="informByEmail('${user.email}')">Informer par mail</button>
+                                 </div>`
+                            );
+                        } else {
+                            $('#randomUserInfo').html("<p>Aucun gagnant trouvé.</p>");
+                        }
+                    },
+                    error: function() {
+                        $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
+                    }
+                });
+            });
+        });
+
+        // Fonction pour envoyer un e-mail au gagnant
+        function informByEmail(email) {
+            $.ajax({
+                type: "POST",
+                url: "/informWinnerByEmail", // Endpoint pour informer par email
+                data: { email: email },
+                success: function(response) {
+                    alert("E-mail envoyé au gagnant !");
+                },
+                error: function() {
+                    alert("Erreur lors de l'envoi de l'email.");
+                }
+            });
+        }
+    </script>
+    <script>
+        // Variables pour la modal et la case à cocher
+        const modal = document.getElementById('confirmationModal');
+        const closeModal = document.querySelector('.close-modal');
+        const confirmBtn = document.getElementById('confirmBtn');
+        const confirmCheckbox = document.getElementById('confirmCheckbox');
+
+        // Ouvrir la modal lors du clic sur le bouton de tirage
+        $('#showRandomUserBtn').click(function() {
+            modal.style.display = 'block';
+        });
+
+        // Fermer la modal si l'utilisateur clique sur 'X'
+        closeModal.onclick = function() {
+            modal.style.display = 'none';
+            confirmCheckbox.checked = false;
+            confirmBtn.disabled = true;
+        };
+
+        // Activer le bouton de confirmation si la case est cochée
+        confirmCheckbox.addEventListener('change', function() {
+            confirmBtn.disabled = !this.checked;
+        });
+
+        // Confirmer et lancer le tirage lorsqu'on clique sur le bouton de confirmation
+        confirmBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            $.ajax({
+                type: "POST",
+                url: "/randomUserWithGain",
+                success: function(user) {
+                    $('#randomUserInfo').html(user ? `
+                        <div class="winner-card">
+                            <h3>Félicitations, ${user.nom} ${user.prenom} !</h3>
+                            <p><strong>Nom :</strong> ${user.nom}</p>
+                            <p><strong>Prénom :</strong> ${user.prenom}</p>
+                            <p><strong>Email :</strong> ${user.email}</p>
+                            <button class="inform-button" onclick="informByEmail('${user.email}')">Informer par mail</button>
+                        </div>
+                    ` : "<p>Aucun gagnant trouvé.</p>");
+                },
+                error: function() {
+                    $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
+                }
+            });
+        });
+
+        // Fermer la modal si l'utilisateur clique en dehors du contenu
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                confirmCheckbox.checked = false;
+                confirmBtn.disabled = true;
+            }
+        };
+    </script>
+     <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

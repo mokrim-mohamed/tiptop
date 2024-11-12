@@ -22,9 +22,8 @@
                 <img th:src="@{/image/logo.png}" alt="Logo">
             </div>
             <ul class="menu">
-
-                <li><a href="/employee/historique-gains" >Historique des Gains</a></li>
-                <li><a href="/employee/parrametre" class="active">Parrametre</a></li>
+                <li><a href="/employee/historique-gains">Historique des Gains</a></li>
+                <li><a href="/employee/parrametre" class="active">Paramètres</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -37,7 +36,7 @@
 
             <section class="settings-section">
                 <h2>Paramètres du profil</h2>
-                <form method="post" action="/employee/updateProfile">
+                <form id="updateProfileForm">
                     <label for="nom">Nom :</label>
                     <input type="text" id="nom" name="nom" th:value="${user.nom}" />
 
@@ -47,24 +46,28 @@
                     <label for="telephone">Téléphone :</label>
                     <input type="text" id="telephone" name="telephone" th:value="${user.telephone}" />
 
-                    <button class="btn-save" type="submit">Mettre à jour</button>
+                    <button class="btn-save" type="button" onclick="updateProfile()">Mettre à jour</button>
                 </form>
+                <div id="profileMessage"></div>
             </section>
 
             <section class="settings-section">
                 <h2>Changer le mot de passe</h2>
-                <form method="post" action="/employee/updatePassword">
+                <form id="passwordForm">
                     <label for="currentPassword">Mot de passe actuel :</label>
-                    <input type="password" id="currentPassword" name="currentPassword" />
-
+                    <input type="password" id="currentPassword" name="currentPassword" required />
+            
                     <label for="newPassword">Nouveau mot de passe :</label>
-                    <input type="password" id="newPassword" name="newPassword" />
-
+                    <input type="password" id="newPassword" name="newPassword" required />
+            
                     <label for="confirmPassword">Confirmer le mot de passe :</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" />
-
+                    <input type="password" id="confirmPassword" name="confirmPassword" required />
+            
                     <button class="btn-save" type="submit">Changer le mot de passe</button>
                 </form>
+            
+                <!-- Affichage des messages d'erreur ou de succès -->
+                <div id="passwordMessage" style="color: red;"></div>
             </section>
         </div>
     </div>
@@ -77,6 +80,78 @@
         burgerMenu.addEventListener('click', () => {
             sidebar.classList.toggle('active');
         });
+
+        // Fonction pour envoyer une requête AJAX pour mettre à jour le profil
+        function updateProfile() {
+            const nom = document.getElementById('nom').value;
+            const email = document.getElementById('email').value;
+            const telephone = document.getElementById('telephone').value;
+
+            fetch('/employee/updateProfile', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nom, email, telephone })
+            })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('profileMessage').innerText = data;
+                document.getElementById('profileMessage').style.color = "green"; // Message de succès
+            })
+            .catch(error => {
+                document.getElementById('profileMessage').innerText = "Erreur lors de la mise à jour du profil.";
+                document.getElementById('profileMessage').style.color = "red"; // Message d'erreur
+            });
+        }
     </script>
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêcher la soumission par défaut du formulaire
+    
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+    
+            // Appel AJAX pour mettre à jour le mot de passe
+            fetch('/updatePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword,
+                    confirmPassword: confirmPassword
+                })
+            })
+            .then(response => response.json()) // Récupérer la réponse au format JSON
+            .then(data => {
+                const messageElement = document.getElementById('passwordMessage');
+                if (data.status === 'success') {
+                    messageElement.style.color = 'green';
+                } else {
+                    messageElement.style.color = 'red';
+                }
+                messageElement.textContent = data.message; // Afficher le message
+            })
+            .catch(error => {
+                document.getElementById('passwordMessage').textContent = 'Une erreur est survenue.';
+            });
+        });
+    </script>
+     <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

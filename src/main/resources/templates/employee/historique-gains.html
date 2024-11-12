@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historique des Gains</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/historique.css}">
     <link rel="stylesheet" th:href="@{/css/historique-gains.css}">
     <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
@@ -154,6 +155,61 @@
     </script>
 
     <style>
+
+.footer {
+    background-color: #81c784; /* Même couleur que la sidebar pour une harmonie visuelle */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: none; /* Retirer l'ombre pour ne pas avoir de séparation visible */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #dcedc8; /* Couleur plus claire au survol pour une meilleure lisibilité */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
         /* Input Section */
         .input-section {
             text-align: center;
@@ -218,5 +274,18 @@
 
         /* Style table remains as is */
     </style>
+     <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

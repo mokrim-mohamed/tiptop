@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Employés</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Style général pour la barre de recherche */
+        .search-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            width: 100%;
+            max-width: 400px; /* Limite la largeur pour les grands écrans */
+            padding: 6px 10px;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #searchInput:focus {
+            border-color: #007bff; /* Change la couleur de la bordure au focus */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Ombre au focus */
+        }
+
+        /* Optionnel : Ajout d'un texte d'aide */
+        #searchInput::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/listeEmp" class="active">Liste des employés</a></li>
+                <li><a href="/admin/listeClients">Liste des clients</a></li>
+                <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
+                <li><a href="/admin/parametre">Paramètres</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <h1>Liste des Employés</h1>
+            </header>
+
+            <!-- Section du bouton "Ajouter un employé" en haut à droite -->
+            <section class="profile-section" style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+                <a href="/admin/ajouterEmploye" class="button-ajouter">Ajouter un employé</a>
+            </section>
+
+            <!-- Barre de recherche -->
+            <section class="search-section" style="margin-bottom: 20px;">
+                <input type="text" id="searchInput" placeholder="Rechercher par nom ou email..." onkeyup="filterTable()">
+            </section>
+
+            <!-- Section Tableau des Employés -->
+            <section class="employee-list-section">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>Téléphone</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Boucle Thymeleaf pour afficher chaque employé -->
+                        <tr th:each="client : ${clients}">
+                            <td th:text="${client.id}">ID</td>
+                            <td th:text="${client.nom}">Nom</td>
+                            <td th:text="${client.prenom}">Prénom</td>
+                            <td th:text="${client.email}">Email</td>
+                            <td th:text="${client.telephone}">Téléphone</td>
+                            <td>
+                                <!-- Icône Modifier -->
+                                <a th:href="@{/modifier/employe/{id}(id=${client.id})}" title="Modifier" style="margin-right: 10px; text-decoration: none; color: #007bff;">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <!-- Icône Supprimer -->
+                                <form th:action="@{/supprimer/Emp/{id}(id=${client.id})}" method="post" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet employé ?')">
+                                    <button type="submit" title="Supprimer" style="background: none; border: none; cursor: pointer; text-decoration: none; color: #dc3545;">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        <tr th:if="${#lists.isEmpty(clients)}">
+                            <td colspan="5">Aucun client trouvé.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        // Fonction de filtrage
+        function filterTable() {
+            const searchValue = document.getElementById("searchInput").value.toLowerCase();
+            const rows = document.querySelectorAll("table tbody tr");
+
+            rows.forEach(row => {
+                const nameCell = row.cells[1].textContent.toLowerCase();
+                const emailCell = row.cells[2].textContent.toLowerCase();
+
+                if (nameCell.includes(searchValue) || emailCell.includes(searchValue)) {
+                    row.style.display = "";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+    </script>
+     <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,7 +1,6 @@
 package com.g2.tiptopG2.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -36,6 +35,9 @@ public class GainServiceImp implements IGainService {
     @Override
     public GainDto findByCode(String code) {
         GainEntity gainEntity = gainDao.findByCode(code);
+        if(gainEntity == null){
+            return null;
+        }
         return modelMapper.map(gainEntity, GainDto.class);
     }
     @Override
@@ -79,6 +81,11 @@ public class GainServiceImp implements IGainService {
         GainEntity updatedGain = gainDao.save(gainEntity);
         return modelMapper.map(updatedGain, GainDto.class);
     }
-
-    
+    @Override
+    public GainDto findByCodeAndUserIsNull(String code){
+        GainEntity gainEntity = gainDao.findByCodeAndUserIsNull(code);
+        if (gainEntity == null) {
+            return null; }
+        return modelMapper.map(gainEntity, GainDto.class);
+    }
 }

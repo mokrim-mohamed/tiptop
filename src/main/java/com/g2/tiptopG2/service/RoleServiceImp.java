@@ -1,14 +1,12 @@
 package com.g2.tiptopG2.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.g2.tiptopG2.dao.IRoleDao; // Assurez-vous que cette interface existe
-import com.g2.tiptopG2.dto.RoleDto;
 import com.g2.tiptopG2.dto.RoleDto;
 import com.g2.tiptopG2.models.RoleEntity;
 

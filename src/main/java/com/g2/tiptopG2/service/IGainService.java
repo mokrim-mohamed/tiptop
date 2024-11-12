@@ -3,7 +3,6 @@ package com.g2.tiptopG2.service;
 import java.util.List;
 
 import com.g2.tiptopG2.dto.GainDto;
-import com.g2.tiptopG2.dto.GainDto;
 
 public interface IGainService {
     GainDto findById(Integer id);
@@ -12,6 +11,7 @@ public interface IGainService {
     GainDto updateUser(String gainCode, Integer userId);
     List<GainDto> findByUserId(Integer Id);
     GainDto updateRemis(Integer Id);
+    GainDto findByCodeAndUserIsNull(String code);
 
 
 
