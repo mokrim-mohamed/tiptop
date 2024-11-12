@@ -1,34 +1,26 @@
 pipeline {
-    agent any  // Utiliser n'importe quel agent disponible
+    agent any
 
     environment {
         DOCKERHUB_CREDENTIALS = credentials('id_token_prv')
-        CLOUDSDK_CORE_PROJECT = 'protean-depot-430512-d1'
+        CLOUDSDK_CORE_PROJECT = 'g2-archi-o23'
     }
 
     stages {
         stage('Checkout') {
             steps {
                 // Récupérer le code source depuis le repository
-                git url: 'https://github.com/mokrim-mohamed/projetArchi', branch: 'developper'
+                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'preprod'
             }
         }
 
-        stage('Echo Message') {
-            steps {
-                // Exemple de commande pour afficher un message
-                sh 'echo "Le code a été récupéré avec succès et le pipeline est en cours d\'exécution."'
-            }
-        }
+    
 
         stage('Check Docker') {
             steps {
                 script {
                     // Vérifier que Docker est accessible et obtenir la version
                     sh 'docker --version'
-
-                    // Optionnel : Exécuter un conteneur Docker basique pour vérifier que Docker fonctionne correctement
-                   // sh 'docker run --rm hello-world'
                 }
             }
         }
@@ -36,11 +28,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Construire l'image Docker
+                    def dockerTag = "prod-${env.BUILD_ID}"
+
+                    sh 'mvn test'
                     sh 'mvn clean package'
-                   
-                    sh 'docker build -t mokrim/test:latest .'
-                    echo 'Image a été créée.'
+                    sh "docker build -t mokrim/preprod:${dockerTag} ."
+                    echo "Image a été créée avec le tag: ${dockerTag}"
+                    
+                    env.DOCKER_TAG = dockerTag
                 }
             }
         }
@@ -57,28 +52,29 @@ pipeline {
 
         stage('Push') {
             steps {
-                // Pousser l'image Docker sur Docker Hub
-                sh 'docker push mokrim/test:latest'
+                // Pousser l'image Docker sur Docker Hub avec le tag dynamique
+                sh "docker push mokrim/preprod:${env.DOCKER_TAG}"
             }
         }
 
         stage('Deploy to GCP') {
             steps {
                 script {
-                    // Authentifier avec Google Cloud Platform en utilisant le fichier de clé GCP
+                    // Authentifier avec Google Cloud Platform et déployer l'image avec le tag dynamique
                     withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCP_KEY_FILE')]) {
-                        sh '''
+                        sh """
                             gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
                             gcloud config set project "$CLOUDSDK_CORE_PROJECT"
                             gcloud compute instances list
-                             docker stop my_container || true
-                                docker rm my_container || true
-                            gcloud compute ssh --zone="us-central1-b" "instance-20240727-201048" -- "
-                            docker stop my_container || true 
-                            docker rm my_container || true 
-                            docker pull mokrim/test:latest && docker run -d -p 8080:8080 --name my_container mokrim/test:latest"
-
-                        '''
+                            gcloud compute ssh --zone="europe-west9-c" "env-preprodprod" -- "
+                            docker stop my_container || true
+                            docker rm my_container || true
+                            docker pull mokrim/preprod:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
+                                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.1.13.155/test \
+                                -e SPRING_DATASOURCE_USERNAME=admin \
+                                -e SPRING_DATASOURCE_PASSWORD=Admin123! \
+                                --name my_container mokrim/preprod:${env.DOCKER_TAG}"
+                        """
                     }
                 }
             }
