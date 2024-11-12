@@ -5,17 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels</title>
     <meta name="description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
-    
+    <meta name="keywords" content="Tip Top, Jeu-Concours, Thé bio de luxe, Thé fait main, Thé artisanal, Thé haut de gamme, Jeu-concours thé bio, Concours thé de luxe, Gagner du thé bio, Thé biologique exclusif, Marque de thé de luxe, Thé premium bio, Thé bio éthique, Thé biologique fait main, Concours spécial thé bio, Produits artisanaux de thé, Thé bien-être luxe, Thé bio et éthique, Thé vert bio de qualité, Cadeaux concours thé, Thé de luxe pour connaisseurs, Offres spéciales thé bio">
+
     <!-- Open Graph tags pour le partage sur les réseaux sociaux -->
     <meta property="og:title" content="Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels">
     <meta property="og:description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
     <meta property="og:image" content="http://www.dsp5-archi-o23-15m-g2.fr/image/logo.png">
     <meta property="og:url" content="http://www.dsp5-archi-o23-15m-g2.fr/index">
     <meta property="og:type" content="website">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
+    <link rel="manifest" href="/manifest.json">
+
 </head>
 <style>
     /* Style pour le conteneur de feuilles */
@@ -124,8 +128,8 @@ window.addEventListener("load", () => {
                         Tout accepter
                     </button>
                     <button id="rejectAllCookies"
-                        class="px-6 py-2 text-emerald-600 bg-transparent hover:bg-emerald-50 rounded-full text-sm font-medium border border-emerald-200 transition-colors">
-                        Tout refuser
+                    class="px-6 py-2 text-white bg-emerald-600 hover:bg-emerald-700 rounded-full text-sm font-medium transition-colors">
+                    Tout refuser
                     </button>
                 </div>
             </div>
@@ -393,10 +397,12 @@ window.addEventListener("load", () => {
                                 en magasin ou en ligne.
                             </p>
                         </div>
-                        <button type="submit" 
-                                class="w-full py-4 bg-gradient-to-r from-emerald-600 to-green-500 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
-                            Participer maintenant
-                        </button>
+                        <button 
+                        type="button"
+                        onclick="window.location.href='/client/participation'"
+                        class="w-full py-4 bg-gradient-to-r from-emerald-600 to-green-500 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                        Participer maintenant
+                    </button>
                     </form>
     
                     <!-- See Prizes Link -->
@@ -425,7 +431,6 @@ window.addEventListener("load", () => {
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
             <div class="text-center">
                 <span class="inline-block px-4 py-1 bg-emerald-100 rounded-full text-emerald-700 text-sm font-semibold mb-4">
-                    Lots à Gagner
                 </span>
                 <h2 class="text-5xl md:text-6xl font-bold text-emerald-800 mb-6">
                     <span class="inline-block animate-bounce-slow">🎁</span>
@@ -933,6 +938,18 @@ window.addEventListener("load", () => {
         createWheel();
     </script>
     <div class="falling-leaves-container"></div>
+    <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then((registration) => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              }, (err) => {
+                console.log('ServiceWorker registration failed: ', err);
+              });
+          });
+        }
+      </script>
 
 </body>
 </html>
