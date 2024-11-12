@@ -1,18 +1,19 @@
 package com.g2.tiptopG2.config;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -21,7 +22,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeHttpRequests(request -> request.requestMatchers("/","/mp-oublie","reset-password","reset-password-success", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**","faq","cgu","mentionslegales","rse","404").permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/","sitemap.xml","robots.txt","contacteznous","/mp-oublie","reset-password","reset-password-success", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**","faq","cgu","mentionslegales","rse","404","politiquedeconfidentialite").permitAll()
                         .anyRequest().authenticated())
                 .formLogin()
                         .loginPage("/login")

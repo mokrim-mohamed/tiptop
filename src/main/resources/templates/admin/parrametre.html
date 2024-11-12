@@ -26,7 +26,7 @@
                 <li><a href="/admin/listeEmp">Liste des employee</a></li>
                 <li><a href="/admin/listeClients">Liste des clients</a></li>
                 <li><a href="/admin/jeu-concours" >Jeu-concours</a></li>
-                <li><a href="/admin/parrametre" class="active">Parrametre</a></li>
+                <li><a href="/admin/parrametre" class="active">Paramètres</a></li>
                 <li><a href="/logout">Logout</a></li>
             </ul>
         </div>
@@ -56,18 +56,21 @@
 
             <section class="settings-section">
                 <h2>Changer le mot de passe</h2>
-                <form method="post" action="/admin/updatePassword">
+                <form id="passwordForm">
                     <label for="currentPassword">Mot de passe actuel :</label>
-                    <input type="password" id="currentPassword" name="currentPassword" />
-
+                    <input type="password" id="currentPassword" name="currentPassword" required />
+            
                     <label for="newPassword">Nouveau mot de passe :</label>
-                    <input type="password" id="newPassword" name="newPassword" />
-
+                    <input type="password" id="newPassword" name="newPassword" required />
+            
                     <label for="confirmPassword">Confirmer le mot de passe :</label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" />
-
+                    <input type="password" id="confirmPassword" name="confirmPassword" required />
+            
                     <button class="btn-save" type="submit">Changer le mot de passe</button>
                 </form>
+            
+                <!-- Affichage des messages d'erreur ou de succès -->
+                <div id="passwordMessage" style="color: red;"></div>
             </section>
         </div>
     </div>
@@ -105,5 +108,53 @@
             });
         }
     </script>
+    <script>
+        document.getElementById('passwordForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Empêcher la soumission par défaut du formulaire
+    
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+    
+            // Appel AJAX pour mettre à jour le mot de passe
+            fetch('/updatePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    currentPassword: currentPassword,
+                    newPassword: newPassword,
+                    confirmPassword: confirmPassword
+                })
+            })
+            .then(response => response.json()) // Récupérer la réponse au format JSON
+            .then(data => {
+                const messageElement = document.getElementById('passwordMessage');
+                if (data.status === 'success') {
+                    messageElement.style.color = 'green';
+                } else {
+                    messageElement.style.color = 'red';
+                }
+                messageElement.textContent = data.message; // Afficher le message
+            })
+            .catch(error => {
+                document.getElementById('passwordMessage').textContent = 'Une erreur est survenue.';
+            });
+        });
+    </script>
+     <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
 </body>
 </html>

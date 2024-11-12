@@ -4,94 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <title>Responsabilité Sociétale des Entreprises (RSE) - Thé Tip Top</title>
-    <meta name="description" content="Découvrez l'engagement de Thé Tip Top en matière de RSE. Nos actions pour l'environnement, l'éthique, le soutien aux communautés et le bien-être de nos employés.">
-
-    <!-- Open Graph tags pour le partage sur les réseaux sociaux -->
-    <meta property="og:title" content="Responsabilité Sociétale des Entreprises (RSE) - Thé Tip Top">
-    <meta property="og:description" content="Découvrez l'engagement de Thé Tip Top en matière de RSE. Nos actions pour l'environnement, l'éthique, le soutien aux communautés et le bien-être de nos employés.">
-    <meta property="og:image" content="http://www.dsp5-archi-o23-15m-g2.fr/image/emp.jpg">
-    <meta property="og:url" content="http://www.dsp5-archi-o23-15m-g2.fr/rse">
-    <meta property="og:type" content="website">
     <link rel="stylesheet" href="/css/style.css">
-    <title>Responsabilité Sociétale des Entreprises (RSE)</title>
+    <title>Contact</title>
 
 </head>
 <style>
-    body {
-        font-family: 'Arial', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f4f4f9;
-        color: #333;
+    /* Style du titre principal identique à la FAQ */
+    .contact-heading {
+        text-align: center;
+        color: #166534;
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        font-weight: bold;
     }
 
-    h1 {
-        margin: 0;
-        font-size: 2.5em;
+    /* Container principal avec style similaire à la FAQ */
+    .contact-container {
+        max-width: 800px;
+        margin: 40px auto;
+        padding: 2rem;
+        background-color: #f9fafb;
     }
-    main {
-        padding: 2em;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    h2 {
-        color: #4CAF50;
-        margin-top: 0;
-    }
-    .section {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-bottom: 3em;
-        border: 1px solid #ddd;
-        border-radius: 10px;
+
+    /* Style info contact similaire aux items FAQ */
+    .contact-info {
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        background: white;
         overflow: hidden;
-        transition: transform 0.2s;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        padding: 1.25rem;
+        margin-bottom: 2rem;
+        transition: box-shadow 0.3s ease;
     }
-    .section:hover {
-        transform: scale(1.02);
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+
+    .contact-info:hover {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     }
-    .section-content {
-        padding: 20px;
-        text-align: center;
+
+    .contact-info h3 {
+        color: #166534;
+        font-size: 1.25rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
     }
-    .section img {
+
+    .contact-info p {
+        color: #4b5563;
+        margin-bottom: 0.5rem;
+        line-height: 1.6;
+    }
+
+    /* Style du formulaire */
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+        display: block;
+        color: #1f2937;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-input, 
+    .form-textarea {
         width: 100%;
-        height: auto;
-        max-width: 600px;
-        border-bottom: 2px solid #4CAF50;
+        padding: 1.25rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        background: white;
+        transition: all 0.3s ease;
     }
-    footer {
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 1em;
-        position: relative;
-        bottom: 0;
+
+    .form-textarea {
+        min-height: 150px;
+        resize: vertical;
+    }
+
+    .form-input:hover,
+    .form-textarea:hover {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+        outline: none;
+        border-color: #166534;
+        background-color: #f0fdf4;
+    }
+
+    /* Style du bouton */
+    .submit-button {
+        background-color: #166534;
+        color: white;
+        padding: 1.25rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
         width: 100%;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
     }
-    @media (min-width: 768px) {
-        .section {
-            flex-direction: row;
-            align-items: flex-start;
+
+    .submit-button:hover {
+        background-color: #047857;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    @media (max-width: 768px) {
+        .contact-container {
+            margin: 1rem;
+            padding: 1rem;
         }
-        .section-content {
-            text-align: left;
-            padding: 20px;
+
+        .contact-heading {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
         }
-        .section img {
-            margin-right: 20px;
+
+        .form-input,
+        .form-textarea,
+        .submit-button {
+            padding: 1rem;
         }
     }
 </style>
 <body>
     <header>
         <div class="logo">
-            <a href="/index">
-                <img src="/image/logo.png" alt="Logo" />
-            </a>        </div>
+            <img src="/image/logo.png" alt="Logo" />
+        </div>
         <nav>
             <ul class="nav-list">
                 <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
@@ -105,40 +149,53 @@
             </ul>
         </nav>
     </header>
+    <h1 class="contact-heading">Contactez-nous</h1>
 
-<main>
-    <section class="section">
-        <img th:src="@{/image/RSE3.jpeg}" alt="Image sur l'engagement environnemental">
-        <div class="section-content">
-            <h2>Environnement</h2>
-            <p>Nous réduisons notre empreinte carbone en utilisant des énergies renouvelables et en optimisant notre consommation d'énergie dans tous nos bureaux et sites de production.</p>
-        </div>
-    </section>
+<div class="contact-container">
+    <div class="contact-info">
+        <h3>Nos coordonnées</h3>
+        <p>
+            <i class="fas fa-map-marker-alt"></i>
+            123 Rue du Thé, 75001 Paris, France
+        </p>
+        <p>
+            <i class="fas fa-phone"></i>
+            01 23 45 67 89
+        </p>
+        <p>
+            <i class="fas fa-envelope"></i>
+            contact@tiptop.fr
+        </p>
+    </div>
 
-    <section class="section">
-        <img th:src="@{/image/RSE4.jpeg}" alt="Image sur l'éthique et la gouvernance">
-        <div class="section-content">
-            <h2>Éthique et gouvernance</h2>
-            <p>Nous nous engageons à respecter les standards les plus élevés en matière de gouvernance d'entreprise, en garantissant la transparence et l'intégrité dans toutes nos activités.</p>
+    <form id="contactForm">
+        <div id="message"></div>
+        <div class="form-group">
+            <label class="form-label" for="name">Nom complet *</label>
+            <input type="text" id="name" name="name" class="form-input" required>
         </div>
-    </section>
 
-    <section class="section">
-        <img th:src="@{/image/RSE2.jpeg}" alt="Image sur le soutien aux communautés">
-        <div class="section-content">
-            <h2>Soutien aux communautés</h2>
-            <p>Nous investissons dans des programmes communautaires et encourageons nos employés à s'impliquer dans des actions bénévoles pour soutenir les communautés locales.</p>
+        <div class="form-group">
+            <label class="form-label" for="email">Adresse email *</label>
+            <input type="email" id="email" name="email" class="form-input" required>
         </div>
-    </section>
 
-    <section class="section">
-        <img th:src="@{/image/RSE1.jpeg}" alt="Image sur le bien-être des employés">
-        <div class="section-content">
-            <h2>Bien-être des employés</h2>
-            <p>Notre entreprise valorise la diversité, l'égalité des chances et le développement personnel de chaque collaborateur, tout en assurant des conditions de travail sécurisées et motivantes.</p>
+        <div class="form-group">
+            <label class="form-label" for="subject">Objet *</label>
+            <input type="text" id="subject" name="subject" class="form-input" required>
         </div>
-    </section>
-</main>
+
+        <div class="form-group">
+            <label class="form-label" for="message">Message *</label>
+            <textarea id="message" name="message" class="form-textarea" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-button">
+            Envoyer le message
+        </button>
+    </form>
+</div>
+
 <footer class="bg-gradient-to-b from-green-600 to-green-700 text-white py-12">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -243,10 +300,37 @@
 
         <!-- Copyright -->
         <div class="pt-8 mt-8 border-t border-green-500/30 text-center">
-            <p class="text-green-100">© 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
+            <p class="text-green-100">© 2024 Tiptop. Tous droits réservés.</p>
         </div>
     </div>
 </footer>
+<script>
+    document.getElementById('contactForm').addEventListener('submit', async function(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
 
+        // Récupérer les valeurs du formulaire
+        const objet = document.getElementById('subject').value;
+        const body = document.getElementById('message').value;
+
+        try {
+            // Envoyer la requête POST au serveur
+            const response = await fetch('/contacteznous', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ objet, body })
+            });
+
+            // Vérifier si la requête a été réussie
+            const message = await response.text();
+            if (response.ok) {
+                document.getElementById('message').textContent = message;
+            } else {
+                document.getElementById('message').textContent = "Une erreur s'est produite.";
+            }
+        } catch (error) {
+            document.getElementById('message').textContent = "Erreur lors de l'envoi du formulaire.";
+        }
+    });
+</script>
 </body>
 </html>
