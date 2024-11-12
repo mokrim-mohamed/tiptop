@@ -28,11 +28,11 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    def dockerTag = "${env.BUILD_ID}"
+                    def dockerTag = "prod-${env.BUILD_ID}"
 
                     sh 'mvn test'
                     sh 'mvn clean package'
-                    sh "docker build -t mokrim/prod:${dockerTag} ."
+                    sh "docker build -t mokrim/test:${dockerTag} ."
                     echo "Image a été créée avec le tag: ${dockerTag}"
                     
                     env.DOCKER_TAG = dockerTag
@@ -53,7 +53,7 @@ pipeline {
         stage('Push') {
             steps {
                 // Pousser l'image Docker sur Docker Hub avec le tag dynamique
-                sh "docker push mokrim/prod:${env.DOCKER_TAG}"
+                sh "docker push mokrim/test:${env.DOCKER_TAG}"
             }
         }
 
@@ -73,7 +73,7 @@ pipeline {
                                 -e SPRING_DATASOURCE_URL=jdbc:mysql://34.1.13.155/test \
                                 -e SPRING_DATASOURCE_USERNAME=admin \
                                 -e SPRING_DATASOURCE_PASSWORD=Admin123! \
-                                --name my_container mokrim/prod:${env.DOCKER_TAG}"
+                                --name my_container mokrim/test:${env.DOCKER_TAG}"
                         """
                     }
                 }
