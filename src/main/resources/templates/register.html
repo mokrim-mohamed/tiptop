@@ -15,6 +15,8 @@
                 <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo">
                 <h2>Inscription</h2>
                 <form th:action="@{/register}" method="post">
+                    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${error}">
+                    </div>
                     <div class="input-group">
                         <label for="nom">Nom</label>
                         <input type="text" name="nom" id="nom" placeholder="Entrer votre nom" required>

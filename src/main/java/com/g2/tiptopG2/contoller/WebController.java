@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.g2.tiptopG2.dto.UserDto;
 import java.util.Collection;
 @Controller
@@ -25,15 +27,16 @@ public class WebController {
         model.addAttribute("user", new UserDto());
         return "register";  // Nom de la page HTML
     }
-
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("user") UserDto userDto) {
-        // Sauvegarder l'utilisateur en base de données
-        userService.save(userDto);
-        // Redirection après enregistrement
-        return "redirect:/register?success";
+    public String registerUser(@ModelAttribute("user") UserDto userDto, Model model) {
+        try {
+            userService.save(userDto);
+            return "redirect:/login";
+        } catch (RuntimeException e) {
+            model.addAttribute("errorMessage", e.getMessage());
+            return "registre"; // Assurez-vous que "registre" correspond au nom de la vue de votre page d'inscription
+        }
     }
-
     @GetMapping("/rse")
     public String getRsePage(Model model, Principal principal) {
         boolean isAuthenticated = principal != null;
