@@ -17,7 +17,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.eclipse.angus.mail.iap.Response;
 import org.springframework.http.HttpStatus;
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IUserService;
