@@ -105,13 +105,15 @@ window.addEventListener("load", () => {
         <div class="falling-leaves-container"></div>
 
 <body class="font-sans bg-gray-50">
-    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-emerald-100 transform translate-y-full transition-transform duration-500 shadow-lg z-50">
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white backdrop-blur-md border-t border-emerald-100 transform translate-y-full transition-transform duration-500 shadow-lg z-50">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div class="flex-1">
                     <h3 class="text-lg font-semibold text-emerald-800 mb-2">🍪 Gestion des cookies</h3>
                     <p class="text-emerald-600 text-sm md:text-base">
-                        Nous utilisons des cookies pour améliorer votre expérience sur notre site. Ils nous permettent d'analyser l'utilisation du site, de personnaliser votre expérience et d'afficher du contenu pertinent. Vous pouvez gérer vos préférences à tout moment.
+                        Nous utilisons des cookies pour améliorer votre expérience sur notre site. Ils nous permettent d'analyser l'utilisation du site, de personnaliser votre expérience et d'afficher du contenu pertinent. Pour en savoir plus, consultez notre 
+                        <a href="/politiquedeconfidentialite" class="text-emerald-700 underline hover:text-emerald-800">politique de confidentialité</a> et nos 
+                        <a href="/mentionslegals" class="text-emerald-700 underline hover:text-emerald-800">mentions légales</a>.
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 min-w-fit">
@@ -124,14 +126,13 @@ window.addEventListener("load", () => {
                         Tout accepter
                     </button>
                     <button id="rejectAllCookies"
-                        class="px-6 py-2 text-emerald-600 bg-transparent hover:bg-emerald-50 rounded-full text-sm font-medium border border-emerald-200 transition-colors">
-                        Tout refuser
+                        class="px-6 py-2 text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-full text-sm font-medium transition-colors">
+                        Rejeter
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    
     <!-- Modal de personnalisation -->
     <div id="cookieModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
         <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6">
@@ -201,6 +202,7 @@ window.addEventListener("load", () => {
             this.cookieModal = document.getElementById('cookieModal');
             this.setupEventListeners();
             this.checkCookieConsent();
+            
         }
     
         setupEventListeners() {
@@ -323,17 +325,18 @@ window.addEventListener("load", () => {
                 <img src="/image/logo.png" alt="Logo" />
             </a>        </div>
         <nav>
-            <ul class="nav-list">
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
-                <li th:if="${isAuthenticated}">
-                    <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
-                    <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
-                    <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
-                    <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
-                </li>
-            </ul>
-        </nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
     </header>
     <!-- Hero Section -->
     <section class="relative flex flex-col md:flex-row items-center justify-between p-8 md:p-16 pb-0 bg-emerald-50" id="hero">        <!-- Left Column with Wheel -->
