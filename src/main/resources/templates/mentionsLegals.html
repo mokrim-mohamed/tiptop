@@ -17,35 +17,33 @@
     <link rel="stylesheet" href="/css/style.css">  
 </head>
 <style>
+    
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white; /* Changé de #f4f4f9 à white */
+    color: #333;
+}
     /* Style spécifique pour la section des mentions légales */
     .mentions-legales-heading {
-        text-align: center;
-        color: #166534;
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin: 2rem auto;
-        padding: 0 1rem 1rem;
-        border-bottom: 3px solid #166534;
-        max-width: 1000px;
-    }
-
-    .mentions-legales-container {
-        max-width: 1000px;
-        margin: 2rem auto;
-        padding: 2rem;
-        background-color: white;
-        border-radius: 8px;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .mentions-legales-container h2 {
-        color: #166534;
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin: 2rem 0 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #e5e7eb;
-    }
+    text-align: center;
+    color: #166534;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+.mentions-legales-container {
+    max-width: 800px;  /* Même largeur que la politique */
+    margin: 40px auto;
+    padding: 2rem;
+}
+.mentions-legales-container h2 {
+    color: #166534;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+}
 
     .mentions-legales-container p {
         margin-bottom: 1rem;
@@ -113,6 +111,45 @@
             transform: translateY(0);
         }
     }
+    .section-content {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.section-content:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Style des liens */
+.mentions-legales-container a {
+    color: #166534;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.mentions-legales-container a:hover {
+    color: #047857;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mentions-legales-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .mentions-legales-heading {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+}
 </style>
 
 <body>

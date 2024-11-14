@@ -5,21 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels</title>
     <meta name="description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
-    <meta name="keywords" content="Tip Top, Jeu-Concours, Thé bio de luxe, Thé fait main, Thé artisanal, Thé haut de gamme, Jeu-concours thé bio, Concours thé de luxe, Gagner du thé bio, Thé biologique exclusif, Marque de thé de luxe, Thé premium bio, Thé bio éthique, Thé biologique fait main, Concours spécial thé bio, Produits artisanaux de thé, Thé bien-être luxe, Thé bio et éthique, Thé vert bio de qualité, Cadeaux concours thé, Thé de luxe pour connaisseurs, Offres spéciales thé bio">
-
+    
     <!-- Open Graph tags pour le partage sur les réseaux sociaux -->
     <meta property="og:title" content="Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels">
     <meta property="og:description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
     <meta property="og:image" content="http://www.dsp5-archi-o23-15m-g2.fr/image/logo.png">
     <meta property="og:url" content="http://www.dsp5-archi-o23-15m-g2.fr/index">
     <meta property="og:type" content="website">
-    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
 
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
-    <link rel="manifest" href="/manifest.json">
-
 </head>
 <style>
     /* Style pour le conteneur de feuilles */
@@ -128,8 +124,8 @@ window.addEventListener("load", () => {
                         Tout accepter
                     </button>
                     <button id="rejectAllCookies"
-                    class="px-6 py-2 text-white bg-emerald-600 hover:bg-emerald-700 rounded-full text-sm font-medium transition-colors">
-                    Tout refuser
+                        class="px-6 py-2 text-emerald-600 bg-transparent hover:bg-emerald-50 rounded-full text-sm font-medium border border-emerald-200 transition-colors">
+                        Tout refuser
                     </button>
                 </div>
             </div>
@@ -340,7 +336,7 @@ window.addEventListener("load", () => {
         </nav>
     </header>
     <!-- Hero Section -->
-    <section class="relative flex flex-col md:flex-row items-center justify-between p-8 md:p-16 pb-0 bg-gradient-to-br from-green-50 to-emerald-100" id="hero">        <!-- Left Column with Wheel -->
+    <section class="relative flex flex-col md:flex-row items-center justify-between p-8 md:p-16 pb-0 bg-emerald-50" id="hero">        <!-- Left Column with Wheel -->
         <div class="flex-1 max-w-[600px] transform hover:scale-105 transition-all duration-500">
             <div class="relative p-8">
                 <!-- Decorative background elements -->
@@ -355,7 +351,7 @@ window.addEventListener("load", () => {
                         <div class="center-circle bg-emerald-600 border-4 border-white shadow-lg"></div>
                     </div>
                     <button onclick="spinWheel()" id="spinBtn" 
-                        class="mt-8 w-full py-4 px-6 bg-gradient-to-r from-emerald-600 to-green-500 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                        class="mt-8 w-full py-4 px-6 bg-emerald-600 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
                         Tourner la roue ✨
                     </button>
                 </div>
@@ -383,9 +379,26 @@ window.addEventListener("load", () => {
                     <!-- Countdown -->
                     <div class="text-center relative">
                         <div class="absolute inset-0 bg-gradient-to-r from-red-500/20 to-pink-500/20 blur-xl"></div>
-                        <h3 class="text-2xl font-bold text-emerald-800 mb-4">Le concours se termine le</h3>
-                        <div id="countdown" 
-                             class="relative z-10 inline-block px-8 py-4 bg-gradient-to-r from-red-500 to-pink-500 text-white text-3xl md:text-4xl font-bold rounded-xl shadow-lg">
+                        <div class="countdown-container">
+                            <h2 class="countdown-title">Fin du concours dans</h2>
+                            <div class="countdown-grid">
+                                <div class="countdown-item">
+                                    <div id="days" class="countdown-number">--</div>
+                                    <div class="countdown-label">Jours</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div id="hours" class="countdown-number">--</div>
+                                    <div class="countdown-label">Heures</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div id="minutes" class="countdown-number">--</div>
+                                    <div class="countdown-label">Minutes</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div id="seconds" class="countdown-number">--</div>
+                                    <div class="countdown-label">Secondes</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
     
@@ -397,12 +410,10 @@ window.addEventListener("load", () => {
                                 en magasin ou en ligne.
                             </p>
                         </div>
-                        <button 
-                        type="button"
-                        onclick="window.location.href='/client/participation'"
-                        class="w-full py-4 bg-gradient-to-r from-emerald-600 to-green-500 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
-                        Participer maintenant
-                    </button>
+                        <button type="submit" 
+                                class="w-full py-4 bg-emerald-600 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                            Participer maintenant
+                        </button>
                     </form>
     
                     <!-- See Prizes Link -->
@@ -431,6 +442,7 @@ window.addEventListener("load", () => {
         <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
             <div class="text-center">
                 <span class="inline-block px-4 py-1 bg-emerald-100 rounded-full text-emerald-700 text-sm font-semibold mb-4">
+                    Lots à Gagner
                 </span>
                 <h2 class="text-5xl md:text-6xl font-bold text-emerald-800 mb-6">
                     <span class="inline-block animate-bounce-slow">🎁</span>
@@ -448,7 +460,7 @@ window.addEventListener("load", () => {
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
                 <!-- Gain Card 1 - Infuseur -->
                 <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <!-- Badge pourcentage -->
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
@@ -473,7 +485,7 @@ window.addEventListener("load", () => {
                             <!-- Progress bar -->
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
-                                    <div class="h-full w-[60%] bg-gradient-to-r from-emerald-500 to-green-500 rounded-full 
+                                    <div class="h-full w-[60%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[60%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
@@ -486,7 +498,7 @@ window.addEventListener("load", () => {
     
                 <!-- Gain Card 2 - Thé Détox -->
                 <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
                             <span class="text-emerald-700 font-semibold">20%</span>
@@ -507,7 +519,7 @@ window.addEventListener("load", () => {
                             
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
-                                    <div class="h-full w-[20%] bg-gradient-to-r from-emerald-500 to-green-500 rounded-full 
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
@@ -521,7 +533,7 @@ window.addEventListener("load", () => {
                 <!-- Répéter le même pattern pour les autres cartes... -->
                 <!-- Gain Card 3 - Thé Signature -->
                 <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
                             <span class="text-emerald-700 font-semibold">20%</span>
@@ -542,7 +554,7 @@ window.addEventListener("load", () => {
                             
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
-                                    <div class="h-full w-[20%] bg-gradient-to-r from-emerald-500 to-green-500 rounded-full 
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
@@ -555,7 +567,7 @@ window.addEventListener("load", () => {
     
                 <!-- Gain Card 4 - Coffret 39€ -->
                 <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
                             <span class="text-emerald-700 font-semibold">20%</span>
@@ -576,7 +588,7 @@ window.addEventListener("load", () => {
                             
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
-                                    <div class="h-full w-[20%] bg-gradient-to-r from-emerald-500 to-green-500 rounded-full 
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
@@ -589,7 +601,7 @@ window.addEventListener("load", () => {
     
                 <!-- Gain Card 5 - Coffret 69€ -->
                 <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
                             <span class="text-emerald-700 font-semibold">20%</span>
@@ -610,7 +622,7 @@ window.addEventListener("load", () => {
                             
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
-                                    <div class="h-full w-[20%] bg-gradient-to-r from-emerald-500 to-green-500 rounded-full 
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
@@ -695,7 +707,7 @@ window.addEventListener("load", () => {
 
     </section>
     <!-- Footer -->
-    <footer class="bg-gradient-to-b from-green-600 to-green-700 text-white py-12">
+    <footer class="bg-green-600 text-white py-12">
     <div class="container mx-auto px-4">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- À propos -->
@@ -808,24 +820,60 @@ window.addEventListener("load", () => {
     <script>
         
         // JavaScript for countdown
-        const countdown = document.getElementById('countdown');
-        const endDate = new Date('December 12, 2024 23:59:59').getTime();
-
         function updateCountdown() {
-            const now = new Date().getTime();
-            const distance = endDate - now;
+            // Définir la date de fin au 13 décembre 2024 à minuit
+            const endDate = new Date('2024-12-13T23:59:59').getTime();
+            
+            function update() {
+                const now = new Date().getTime();
+                const timeLeft = endDate - now;
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                if (timeLeft <= 0) {
+                    // Le compte à rebours est terminé
+                    document.querySelector('.countdown-grid').innerHTML = `
+                        <div class="countdown-item" style="grid-column: span 4;">
+                            <div class="countdown-number" style="font-size: 2rem;">
+                                Le concours est terminé !
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
 
-            countdown.innerHTML = `${days}j ${hours}h ${minutes}m ${seconds}s`;
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-            if (distance < 0) {
-                countdown.innerHTML = "Le concours est terminé";
+                function updateElement(id, value, previousValue) {
+                    const element = document.getElementById(id);
+                    const currentValue = element.textContent;
+                    if (currentValue !== '--' && value !== parseInt(currentValue)) {
+                        element.classList.remove('changing');
+                        void element.offsetWidth; // Force reflow
+                        element.classList.add('changing');
+                    }
+                    element.textContent = value.toString().padStart(2, '0');
+                }
+
+                updateElement('days', days);
+                updateElement('hours', hours);
+                updateElement('minutes', minutes);
+                updateElement('seconds', seconds);
             }
+
+            // Mise à jour initiale
+            update();
+            
+            // Mise à jour toutes les secondes
+            const timerInterval = setInterval(update, 1000);
+
+            // Nettoyage de l'intervalle quand nécessaire
+            return () => clearInterval(timerInterval);
         }
+
+        // Démarrer le compte à rebours quand le DOM est chargé
+        document.addEventListener('DOMContentLoaded', updateCountdown);
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
@@ -938,18 +986,6 @@ window.addEventListener("load", () => {
         createWheel();
     </script>
     <div class="falling-leaves-container"></div>
-    <script>
-        if ('serviceWorker' in navigator) {
-          window.addEventListener('load', () => {
-            navigator.serviceWorker.register('/service-worker.js')
-              .then((registration) => {
-                console.log('ServiceWorker registration successful with scope: ', registration.scope);
-              }, (err) => {
-                console.log('ServiceWorker registration failed: ', err);
-              });
-          });
-        }
-      </script>
 
 </body>
 </html>
