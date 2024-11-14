@@ -260,29 +260,36 @@ public class AdminController {
 
     @PostMapping("/randomUserWithGain")
     @ResponseBody
-    public UserDto getRandomUserWithGain() {
+    public ResponseEntity<UserDto> getRandomUserWithGain() {
+        // Vérification si un gagnant est déjà sélectionné
         if (Gagnant.email != null) {
             UserDto gagnant = new UserDto();
             gagnant.setEmail(Gagnant.email);
             gagnant.setNom(Gagnant.nom);
             gagnant.setPrenom(Gagnant.prenom);
             gagnant.setTelephone(Gagnant.telephone);
-            return gagnant;
+            return ResponseEntity.ok(gagnant);
         }
     
+        // Obtenir la liste des utilisateurs avec gains
         List<UserDto> usersWithGains = userService.getUsersWithGains();
         if (usersWithGains != null && !usersWithGains.isEmpty()) {
             Random random = new Random();
             UserDto gagnant = usersWithGains.get(random.nextInt(usersWithGains.size()));
+            
+            // Mettre à jour les informations du gagnant
             Gagnant.nom = gagnant.getNom();
             Gagnant.prenom = gagnant.getPrenom();
             Gagnant.email = gagnant.getEmail();
             Gagnant.telephone = gagnant.getTelephone();
     
-            return gagnant;
-        }    
-        return null;
+            return ResponseEntity.ok(gagnant);
+        }
+    
+        // Gestion du cas où aucun gagnant n'est trouvé
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
+    
     
 
     @PostMapping("/admin/updateProfile")
@@ -428,5 +435,10 @@ public class AdminController {
     }
     
     
-
+    @PostMapping("/informGagnant")
+    @ResponseBody
+    public String informGagnant() {
+        userService.informeGagnant();
+        return "E-mail de notification envoyé au gagnant !";
+    }
 }
