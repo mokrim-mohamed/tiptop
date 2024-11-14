@@ -3,10 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mettre à jour l'utilisateur d'un Gain</title>
+    <title>Vous avez un code ?</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
-    <link rel="stylesheet" th:href="@{/css/participation.css}">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+    <!-- Ajouter FontAwesome pour les icônes -->
 </head>
+<style>
+    .wheel-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    position: relative;
+    transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    background: #fff;
+    box-shadow: 
+        0 0 0 2px var(--primary-light),
+        0 0 15px rgba(5, 150, 105, 0.2),
+        0 0 30px rgba(5, 150, 105, 0.1);
+    transform-style: preserve-3d;
+    transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+
+}
+
+.center-circle {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    box-shadow: 
+        inset 0 2px 4px 0 rgb(255 255 255 / 0.3),
+        0 0 15px rgba(5, 150, 105, 0.2);
+}
+
+.pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: #059669;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    z-index: 20;
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07));
+}
+
+/* Media queries pour la responsivité */
+@media (max-width: 768px) {
+    .wheel-container {
+        width: 280px;
+        height: 280px;
+    }
+}
+
+@media (max-width: 640px) {
+    .wheel-container {
+        width: 240px;
+        height: 240px;
+    }
+}
+</style>
 <body>
     <div class="main-wrapper">
         <button class="burger-menu" id="burgerMenu">
@@ -21,10 +92,10 @@
                 <img th:src="@{/image/logo.png}" alt="Logo">
             </div>
             <ul class="menu">
-                <li><a href="/client/participation">Participation</a></li>
-                <li><a href="/client/historique-gains">Historique des Gains</a></li>
-                <li><a href="/client/parametre">Paramètre</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/client/participation"class="active">Participation</a></li>
+                <li><a href="/client/historique-gains">Mes Gains</a></li>
+                <li><a href="/client/parrametre">Paramètres</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
             </ul>
         </div>
 
@@ -32,10 +103,17 @@
         <main class="main-content">
             <section class="participation-section">
                 <h2>Mettre à jour l'utilisateur d'un Gain</h2>
+                <div class="container relative z-10 max-w-md mx-auto my-8">
+                    <div class="wheel-container transform hover:scale-105 transition-all duration-500">
+                        <div class="pointer before:border-emerald-600"></div>
+                        <div class="wheel border-4 border-emerald-600 shadow-[0_0_30px_rgba(5,150,105,0.3)]" id="wheel"></div>
+                        <div class="center-circle bg-emerald-600 border-4 border-white shadow-lg"></div>
+                    </div>
+                </div>
                 <form id="updateGainForm" action="#" method="post">
-                    <label for="gainCode">ID du Gain :</label>
-                    <input type="text" class="form-control" id="gainCode" name="gainCode" placeholder="Entrez l'ID du gain" required>
-                    <button type="submit" class="btn-participer">Mettre à jour</button>
+                    <label for="gainCode">Code du Gain :</label>
+                    <input type="text" class="form-control" id="gainCode" name="gainCode" placeholder="Entrez le code du gain" required>
+                    <button type="submit" class="btn-participer" >Mettre à jour </button>
                 </form>
                 <div id="result" class="mt-3"></div>
             </section>
@@ -53,106 +131,253 @@
         });
 
         $(document).ready(function() {
-            $('#updateGainForm').on('submit', function(event) {
-                event.preventDefault();
+   $('#updateGainForm').on('submit', function(event) {
+       event.preventDefault();
 
-                const gainCode = $('#gainCode').val();
-                $.ajax({
-                    url: `/gains/gain?gainCode=${gainCode}`,
-                    type: 'PUT',
-                    success: function(data) {
-                        $('#result').html(`<div class="alert alert-success">L'utilisateur du gain a été mis à jour avec succès.</div>`);
-                    },
-                    error: function(xhr) {
-                        $('#result').html(`<div class="alert alert-danger">Erreur : ${xhr.responseText}</div>`);
-                    }
-                });
+       const gainCode = $('#gainCode').val();
+       $.ajax({
+           url: `/gains/gain?gainCode=${gainCode}`,
+           type: 'PUT',
+           success: function(data) {
+               // Map des IDs de gain aux positions
+               const gainPositions = {
+                   1:0, // Infuseur
+                   2: 1, // Thé Détox
+                   3: 2, // Thé Signature 
+                   4: 3, // Coffret 39€
+                   5: 4  // Coffret 69€
+               };
+               // Reset de la roue
+               wheel.style.transform = 'rotate(0deg)';
+               
+               requestAnimationFrame(() => {
+                   const gainPosition = gainPositions[data.gainType.id];
+                   const sectionAngle = 360 / sections.length;
+                   const targetAngle = (360 - (gainPosition * sectionAngle)) + (5 * 360);
+                   
+                   wheel.style.transform = `rotate(${targetAngle}deg)`;
+                   
+                   setTimeout(() => {
+                       $('#result').html(`
+                           <div class="alert-card success-card">
+                               <i class="fas fa-check-circle success-icon"></i>
+                               <p><strong>Félicitations !</strong> Vous avez gagné : ${data.gainType.nom}</p>
+                           </div>
+                       `);
+                   }, 3000);
+               });
+           },
+           error: function(xhr) {
+               $('#result').html(`
+                   <div class="alert-card error-card">
+                       <i class="fas fa-times-circle error-icon"></i>
+                       <p><strong>Erreur !</strong> Le code de gain est incorrect ou a déjà été utilisé.</p>
+                   </div>
+               `);
+           }
+       });
+   });
+}); </script>
+
+    <style>
+        /* Participation Section */
+        .participation-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .participation-section h2 {
+            color: #388e3c;
+            margin-bottom: 15px;
+        }
+        
+        .participation-section label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: block;
+            color: #333;
+        }
+        
+        .participation-section input {
+            padding: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        .btn-participer {
+            background-color: #66bb6a;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .btn-participer:hover {
+            background-color: #388e3c;
+        }
+
+        /* Style pour les cartes d'alertes */
+        .alert-card {
+            margin: 20px auto;
+            padding: 20px;
+            width: 80%;
+            max-width: 400px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Carte de succès */
+        .success-card {
+            background-color: #66bb6a;
+            color: white;
+        }
+
+        .success-icon {
+            font-size: 30px;
+            margin-right: 15px;
+        }
+
+        /* Carte d'erreur */
+        .error-card {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .error-icon {
+            font-size: 30px;
+            margin-right: 15px;
+        }
+    </style>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; © 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script>
+        const wheel = document.getElementById('wheel');
+        const spinBtn = document.getElementById('spinBtn');
+        let isSpinning = false;
+
+        const sections = [
+    { text: "Gain 1", color: "#FF6B6B" },
+    { text: "Gain 2", color: "#4ECDC4" },
+    { text: "Gain 3", color: "#45B7D1" },
+    { text: "Gain 4", color: "#96CEB4" },
+    { text: "Gain 5", color: "#FFEEAD" }
+];
+
+        function createWheel() {
+            const totalSections = sections.length;
+            const rotationAngle = 360 / totalSections;
+            const svgNamespace = "http://www.w3.org/2000/svg";
+            
+            // Créer l'élément SVG
+            const svg = document.createElementNS(svgNamespace, "svg");
+            svg.setAttribute("viewBox", "0 0 100 100");
+            svg.style.width = "100%";
+            svg.style.height = "100%";
+            
+            // Calculer les paramètres du donut
+            const centerX = 50;
+            const centerY = 50;
+            const outerRadius = 50;
+            const innerRadius = 20;
+
+            sections.forEach((section, index) => {
+                // Calculer les angles pour cette section
+                const startAngle = (index * rotationAngle) * Math.PI / 180;
+                const endAngle = ((index + 1) * rotationAngle) * Math.PI / 180;
+                
+                // Calculer les points du path
+                const outerStartX = centerX + outerRadius * Math.cos(startAngle);
+                const outerStartY = centerY + outerRadius * Math.sin(startAngle);
+                const outerEndX = centerX + outerRadius * Math.cos(endAngle);
+                const outerEndY = centerY + outerRadius * Math.sin(endAngle);
+                
+                const innerStartX = centerX + innerRadius * Math.cos(endAngle);
+                const innerStartY = centerY + innerRadius * Math.sin(endAngle);
+                const innerEndX = centerX + innerRadius * Math.cos(startAngle);
+                const innerEndY = centerY + innerRadius * Math.sin(startAngle);
+                
+                // Créer le path pour cette section
+                const path = document.createElementNS(svgNamespace, "path");
+                const d = [
+                    `M ${outerStartX} ${outerStartY}`,
+                    `A ${outerRadius} ${outerRadius} 0 0 1 ${outerEndX} ${outerEndY}`,
+                    `L ${innerStartX} ${innerStartY}`,
+                    `A ${innerRadius} ${innerRadius} 0 0 0 ${innerEndX} ${innerEndY}`,
+                    'Z'
+                ].join(' ');
+                
+                path.setAttribute("d", d);
+                path.setAttribute("fill", section.color);
+                svg.appendChild(path);
+
+                // Ajouter le texte
+                const textAngle = startAngle + (rotationAngle / 2) * Math.PI / 180;
+                const textRadius = (outerRadius + innerRadius) / 2;
+                const textX = centerX + textRadius * Math.cos(textAngle);
+                const textY = centerY + textRadius * Math.sin(textAngle);
+                
+                const text = document.createElementNS(svgNamespace, "text");
+                text.textContent = section.text;
+                text.setAttribute("x", textX);
+                text.setAttribute("y", textY);
+                text.setAttribute("text-anchor", "middle");
+                text.setAttribute("dominant-baseline", "middle");
+                text.setAttribute("fill", "white");
+                text.setAttribute("font-size", "4");
+                text.setAttribute("font-weight", "bold");
+                text.setAttribute("transform", `rotate(${(index * rotationAngle) + rotationAngle/2}, ${textX}, ${textY})`);
+                
+                svg.appendChild(text);
             });
-        });
+            
+            wheel.appendChild(svg);
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            spinBtn.disabled = true;
+
+            const rotations = 5 + Math.random() * 5;
+            const extraDegrees = Math.random() * 360;
+            const totalDegrees = rotations * 360 + extraDegrees;
+
+            wheel.style.transform = `rotate(${totalDegrees}deg)`;
+
+            setTimeout(() => {
+                isSpinning = false;
+                spinBtn.disabled = false;
+                
+                const finalAngle = extraDegrees;
+                const sectionAngle = 360 / sections.length;
+                const winningIndex = Math.floor((360 - (finalAngle % 360)) / sectionAngle);
+            }, 4000);
+        }
+
+        createWheel();
     </script>
+    
 </body>
 </html>
-
-<style>
-    /* Participation Section */
-    .participation-section {
-        text-align: center;
-        margin-top: 50px;
-    }
-    
-    .participation-section h2 {
-        color: #388e3c;
-        margin-bottom: 15px;
-    }
-    
-    .participation-section label {
-        font-size: 18px;
-        margin-bottom: 10px;
-        display: block;
-        color: #333;
-    }
-    
-    .participation-section input {
-        padding: 10px;
-        width: 100%;
-        max-width: 300px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-    }
-    
-    .btn-participer {
-        background-color: #66bb6a;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-    }
-    
-    .btn-participer:hover {
-        background-color: #388e3c;
-    }
-    
-    /* Popup Styles */
-    .popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-    
-    .popup.hidden {
-        display: none;
-    }
-    
-    .popup-content {
-        position: relative;
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-    
-    .popup-logo {
-        width: 100px;
-        height: auto;
-        margin-bottom: 15px;
-    }
-    
-    .close-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        font-size: 18px;
-        cursor: pointer;
-    }
-    </style>

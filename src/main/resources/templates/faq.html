@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - Thé Tip Top - Réponses à vos questions sur notre concours de thé</title>
+    <meta name="description" content="Trouvez les réponses aux questions fréquemment posées sur le concours Thé Tip Top. Modalités de participation, lots à gagner, retrait des lots et plus encore.">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
+
+    <!-- Open Graph tags pour le partage sur les réseaux sociaux -->
+    <meta property="og:title" content="FAQ - Thé Tip Top - Réponses à vos questions sur notre concours de thé">
+    <meta property="og:description" content="Trouvez les réponses aux questions fréquemment posées sur le concours Thé Tip Top. Modalités de participation, lots à gagner, retrait des lots et plus encore.">
+    <meta property="og:image" content="http://www.dsp5-archi-o23-15m-g2.fr/image/logo.png">
+    <meta property="og:url" content="http://www.dsp5-archi-o23-15m-g2.fr/faq">
+    <meta property="og:type" content="website">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
+
+        main {
+            flex: 1;
+            background-color: #f9fafb;
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 2rem;
+        }
+
+        .faq-title {
+            text-align: center;
+            color: #166534;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            font-weight: bold;
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            background: white;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .faq-question {
+            padding: 1.25rem;
+            margin: 0;
+            font-weight: 500;
+            color: #1f2937;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #f0fdf4;
+        }
+
+        .faq-question i {
+            color: #166534;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 1.25rem;
+            color: #4b5563;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+
+        .faq-item.active .faq-question {
+            background-color: #f0fdf4;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding: 1.25rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+
+            .faq-title {
+                font-size: 2rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .faq-section {
+                padding: 1rem;
+            }
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Ferme toutes les autres questions
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle l'état actif de la question cliquée
+                    item.classList.toggle('active');
+                });
+            });
+        });
+        </script>
+</head>
+<header>
+    <div class="logo">
+        <a href="/index">
+            <img src="/image/logo.png" alt="Logo" />
+        </a> 
+    </div>
+    <nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
+</header>
+
+<body>
+
+    <main>
+        <section class="faq-section">
+            <h1 class="faq-title">Questions Fréquemment Posées (FAQ)</h1>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        2. Tous les codes sont-ils gagnants ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Oui, tous les codes sont gagnants ! Cependant, le lot gagné peut varier. Assurez-vous de vérifier régulièrement les lots disponibles.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        3. Où puis-je récupérer mon lot ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Une fois que vous avez gagné, vous devez vous rendre au magasin pour récupérer votre lot. Vous pouvez le faire à tout moment avant la fin du concours et jusqu'à 30 jours après la fin.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        4. Que se passe-t-il après la fin du concours ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Après la fin du concours, vous avez encore 30 jours pour récupérer votre lot. Veuillez conserver votre code et votre ticket pour le retrait.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        5. Y a-t-il un tirage au sort ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Oui, tous les participants auront la chance de participer à un tirage au sort pour gagner un grand lot. Assurez-vous de participer et de rester à l'affût des résultats !
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        6. Quel type de thé proposez-vous ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Nous proposons une large gamme de thés, y compris des thés bio et faits main. Vous pouvez découvrir nos différentes variétés sur notre site ou dans notre magasin.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        7. Les thés sont-ils vraiment bio ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Oui, tous nos thés sont certifiés bio. Nous travaillons avec des fournisseurs qui respectent les normes de culture biologique.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        8. Puis-je participer au concours plusieurs fois ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Oui, chaque facture supérieure à 40 euros vous donne droit à un code unique. Vous pouvez donc participer plusieurs fois si vous effectuez plusieurs achats.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        9. Que faire si je perds mon ticket de caisse ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Malheureusement, si vous perdez votre ticket de caisse, vous ne pourrez pas récupérer votre code pour participer au concours. Nous vous conseillons de garder votre ticket en lieu sûr.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        10. Comment savoir si j'ai gagné ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Les gagnants seront contactés par email ou téléphone, et les résultats seront également publiés sur notre site. Assurez-vous de vérifier régulièrement votre boîte de réception !
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        11. Puis-je échanger mon lot ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Non, les lots ne sont pas échangeables contre de l'argent ou d'autres produits. Ils doivent être récupérés tels qu'annoncés dans le cadre du concours.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        12. Les frais d'expédition sont-ils inclus dans le prix ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Oui, si vous commandez en ligne, les frais d'expédition sont inclus dans le prix de votre commande lorsque vous choisissez l'option de livraison.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        13. Quel est le délai de récupération des lots ?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Vous devez récupérer votre lot dans un délai de 30 jours après la fin du concours. Passé ce délai, les lots non réclamés seront considérés comme perdus.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+<footer class="bg-gradient-to-b from-green-600 to-green-700 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- À propos -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">À propos de Tiptop</h4>
+                <div class="flex items-center space-x-2 mb-4">
+                    <img src="/image/logo.png" alt="Logo Tiptop" class="h-8 w-auto brightness-200">
+                    <span class="text-lg font-semibold">Tiptop</span>
+                </div>
+                <p class="text-green-100 text-sm">
+                    Découvrez notre sélection de thés d'exception et participez à nos concours exclusifs.
+                </p>
+            </div>
+
+            <!-- Liens utiles -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Liens utiles</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/mentionslegals" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            Mentions légales
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/cgu" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            CGU
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/politiquedeconfidentialite" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            Politique de confidentialité
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/rse" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            RSE
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/faq" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            FAQ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Contactez-nous</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center text-green-100">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        contact@tiptop.fr
+                    </li>
+                    <li class="flex items-center text-green-100">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        01 23 45 67 89
+                    </li>
+                    <li>
+                        <a href="/contacteznous" class="inline-block mt-4 px-6 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white transition-colors duration-200">
+                            Nous contacter
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Réseaux sociaux -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Suivez-nous</h4>
+                <div class="flex flex-col space-y-4">
+                    <a href="https://www.facebook.com/the.tip.top.2024" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        Facebook
+                    </a>
+                    <a href="Instagram.com/the_tiptop1" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        Instagram
+                    </a>
+                    <a href="https://www.tiktok.com/@th.tiptop?_t=8rJSwPdbq35&_r=1" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                        TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="pt-8 mt-8 border-t border-green-500/30 text-center">
+            <p class="text-green-100">© 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
+
+        </div>
+    </div>
+</footer>
+
+    </body>
+    </html>

@@ -1,14 +1,14 @@
 package com.g2.tiptopG2.contoller;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import java.security.Principal;
-import java.util.Collection;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Collection;
+
 @Controller
 public class LoginController {
 
@@ -19,14 +19,13 @@ public class LoginController {
         }
         return "login"; // Retourner la vue de login
     }
- 
+    @GetMapping("/mp-oublie")
+    public String login() {
 
-     @GetMapping("/index")
-    public String indexPage() {
-        return "index"; // Retourner la vue de la page admin
+        return "mp-oublie"; // Retourner la vue de login
     }
- /* */   
- @GetMapping("/")
+
+    @GetMapping({"/", "/home", "/index"})
     public String index(Model model, Principal principal) {
         // Vérifiez si l'utilisateur est connecté
         boolean isAuthenticated = principal != null;

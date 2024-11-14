@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions Légales - Thé Tip Top</title>
+    <meta name="description" content="Consultez les mentions légales de Thé Tip Top. Informations sur l'éditeur, l'hébergement, la propriété intellectuelle, les données personnelles et plus encore.">
+    
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
+    <meta property="og:title" content="Mentions Légales - Thé Tip Top">
+    <meta property="og:description" content="Consultez les mentions légales de Thé Tip Top. Informations sur l'éditeur, l'hébergement, la propriété intellectuelle, les données personnelles et plus encore.">
+    <meta property="og:image" content="http://www.dsp5-archi-o23-15m-g2.fr/image/logo.png">
+    <meta property="og:url" content="http://www.dsp5-archi-o23-15m-g2.fr/mentionslegals">
+    <meta property="og:type" content="website">
+
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">  
+</head>
+<style>
+    
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white; /* Changé de #f4f4f9 à white */
+    color: #333;
+}
+    /* Style spécifique pour la section des mentions légales */
+    .mentions-legales-heading {
+    text-align: center;
+    color: #166534;
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    font-weight: bold;
+}
+.mentions-legales-container {
+    max-width: 800px;  /* Même largeur que la politique */
+    margin: 40px auto;
+    padding: 2rem;
+}
+.mentions-legales-container h2 {
+    color: #166534;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+}
+
+    .mentions-legales-container p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+        color: #4b5563;
+    }
+
+    .mentions-legales-container strong {
+        color: #166534;
+        font-weight: 600;
+        margin-right: 0.5rem;
+    }
+
+    .mentions-legales-container a {
+        color: #166534;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .mentions-legales-container a:hover {
+        color: #047857;
+        text-decoration: underline;
+    }
+
+    .mentions-legales-container ul {
+        list-style-type: disc;
+        margin-left: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .mentions-legales-container ul li {
+        margin-bottom: 0.5rem;
+        color: #4b5563;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .mentions-legales-container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+
+        .mentions-legales-heading {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mentions-legales-container h2 {
+            font-size: 1.2rem;
+        }
+    }
+
+    /* Animation */
+    .mentions-legales-container {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    .section-content {
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    background: white;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.3s ease;
+}
+
+.section-content:hover {
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Style des liens */
+.mentions-legales-container a {
+    color: #166534;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.mentions-legales-container a:hover {
+    color: #047857;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mentions-legales-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .mentions-legales-heading {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+}
+</style>
+
+<body>
+    <header>
+        <div class="logo">
+            <a href="/index">
+                <img src="/image/logo.png" alt="Logo" />
+            </a>        </div>
+        <nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
+    </header>
+
+    <h1 class="mentions-legales-heading">Mentions Légales</h1>
+
+    <div class="mentions-legales-container">
+        <h2>1. Identification de l'éditeur</h2>
+        <p><strong>Nom de l'entreprise :</strong> Thé Tip Top</p>
+        <p><strong>Siège social :</strong> 123 Rue du Thé, 75001 Paris, France</p>
+        <p><strong>Numéro de SIRET :</strong> 123 456 789 00010</p>
+        <p><strong>Téléphone :</strong> 01 23 45 67 89</p>
+        <p><strong>Email :</strong> <a href="mailto:contact@thetiptop.com">contact@thetiptop.com</a></p>
+        <p><strong>Site internet :</strong> <a href="http://www.thetiptop.com">www.thetiptop.com</a></p>
+
+        <h2>2. Directeur de publication</h2>
+        <p><strong>Nom :</strong> Jean Dupont</p>
+        <p><strong>Fonction :</strong> Gérant</p>
+        <p>Le directeur de publication est responsable du contenu éditorial du site et des informations qui y sont publiées.</p>
+
+        <h2>3. Hébergement du site</h2>
+        <p><strong>Nom de l'hébergeur :</strong> Google Cloud Platform</p>
+        <p><strong>Adresse :</strong> 1600 Amphitheatre Parkway, Mountain View, CA 94043, États-Unis</p>
+        <p>Le site est hébergé par Google Cloud Platform, garantissant une sécurité, une rapidité et une disponibilité optimales. Les données sont sauvegardées régulièrement et des mesures de sécurité strictes sont mises en place pour protéger les informations des utilisateurs.</p>
+
+        <h2>4. Propriété intellectuelle</h2>
+        <p>Le contenu du site, y compris, mais sans s'y limiter, les textes, images, logos, et éléments graphiques, est la propriété exclusive de Thé Tip Top et est protégé par les lois sur la propriété intellectuelle. Toute reproduction ou représentation, totale ou partielle, est interdite sans autorisation préalable.</p>
+        <p>Les marques et noms de produits mentionnés sur ce site sont la propriété de leurs titulaires respectifs. Nous respectons les droits de propriété intellectuelle des tiers et nous attendons la même chose de nos utilisateurs.</p>
+
+        <h2>5. Données personnelles</h2>
+        <p>Conformément à la loi Informatique et Libertés, vous disposez d'un droit d'accès, de rectification et de suppression des données vous concernant. Pour exercer ces droits, vous pouvez nous contacter à l'adresse email suivante : <a href="mailto:contact@thetiptop.com">contact@thetiptop.com</a>.</p>
+        <p>Nous nous engageons à protéger vos données personnelles et à ne les utiliser que dans le cadre de nos activités. Aucune donnée personnelle ne sera vendue ou transférée à des tiers sans votre consentement.</p>
+        <p>Nous collectons uniquement les informations nécessaires pour vous offrir un service de qualité, notamment pour la gestion des jeux de concours.</p>
+
+        <h2>6. Cookies</h2>
+        <p>Le site utilise des cookies pour améliorer votre expérience utilisateur. Ces fichiers sont stockés sur votre ordinateur et permettent de personnaliser votre visite. Vous pouvez choisir de désactiver les cookies à tout moment dans les paramètres de votre navigateur. Cependant, certaines fonctionnalités du site peuvent ne pas fonctionner correctement sans cookies.</p>
+        <p>Pour plus d'informations sur notre utilisation des cookies et sur la manière de gérer vos préférences, veuillez consulter notre politique de confidentialité.</p>
+
+        <h2>7. Limitations de responsabilité</h2>
+        <p>Thé Tip Top ne pourra être tenu responsable des dommages directs ou indirects résultant de l'utilisation ou de l'impossibilité d'utiliser le site, de la perte de données ou de l'accès non autorisé aux systèmes. Nous nous efforçons de fournir des informations précises et à jour, mais nous ne garantissons pas l'exhaustivité ou l'actualité des informations.</p>
+        <p>Nous ne saurions être tenus responsables de l'indisponibilité temporaire du site ou de toute autre difficulté technique.</p>
+
+        <h2>8. Modifications des mentions légales</h2>
+        <p>Nous nous réservons le droit de modifier ces mentions légales à tout moment. Les modifications seront publiées sur cette page. Nous vous encourageons à consulter régulièrement cette page pour rester informé des changements. Si des modifications substantielles sont apportées, nous nous engageons à informer nos utilisateurs par le biais d'un avis sur notre site.</p>
+
+        <h2>9. Droit applicable</h2>
+        <p>Les présentes mentions légales sont régies par le droit français. En cas de litige, les tribunaux de Paris seront seuls compétents. Nous encourageons tous les utilisateurs à nous contacter directement pour toute question ou réclamation avant de faire appel à un arbitrage ou à une action en justice.</p>
+
+        <h2>10. Contact</h2>
+        <p>Pour toute question relative aux mentions légales ou pour toute demande d'information, n'hésitez pas à nous contacter par email à l'adresse suivante : <a href="mailto:contact@thetiptop.com">contact@thetiptop.com</a>. Nous nous engageons à répondre à toutes les demandes dans un délai raisonnable.</p>
+        <p>Nous vous remercions de votre confiance et de votre intérêt pour nos produits. Votre satisfaction est notre priorité.</p>
+
+        <h2>11. Conditions d'utilisation du site</h2>
+        <p>L'accès et l'utilisation du site sont soumis aux présentes mentions légales et à la législation en vigueur. En accédant au site, vous acceptez sans réserve ces conditions. Si vous n'acceptez pas ces conditions, vous devez immédiatement cesser d'utiliser le site.</p>
+
+        <h2>12. Responsabilité des utilisateurs</h2>
+        <p>Les utilisateurs s'engagent à utiliser le site de manière conforme aux lois et règlements en vigueur. Ils sont responsables de l'utilisation de leur compte et doivent veiller à la confidentialité de leurs informations d'identification. En cas d'utilisation frauduleuse ou non autorisée de leur compte, les utilisateurs doivent en informer immédiatement Thé Tip Top.</p>
+
+        <h2>13. Liens vers d'autres sites</h2>
+        <p>Le site peut contenir des liens vers d'autres sites internet. Thé Tip Top ne saurait être tenu responsable des contenus, pratiques ou politiques de confidentialité de ces sites. L'accès à ces sites se fait sous votre propre responsabilité.</p>
+
+        <h2>14. Force majeure</h2>
+        <p>Thé Tip Top ne pourra être tenu responsable de l'inexécution de ses obligations en cas de force majeure. Sont considérés comme des cas de force majeure, sans que cette liste soit exhaustive, les événements tels que les grèves, les pandémies, les catastrophes naturelles, les guerres, ou toute autre situation échappant au contrôle raisonnable de Thé Tip Top.</p>
+
+        <h2>15. Acceptation des mentions légales</h2>
+        <p>En utilisant ce site, vous reconnaissez avoir pris connaissance des présentes mentions légales et vous vous engagez à les respecter. Si vous ne souhaitez pas être lié par ces mentions légales, vous devez cesser d'utiliser le site immédiatement.</p>
+    </div>
+    <footer class="bg-gradient-to-b from-green-600 to-green-700 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- À propos -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">À propos de Tiptop</h4>
+                <div class="flex items-center space-x-2 mb-4">
+                    <img src="/image/logo.png" alt="Logo Tiptop" class="h-8 w-auto brightness-200">
+                    <span class="text-lg font-semibold">Tiptop</span>
+                </div>
+                <p class="text-green-100 text-sm">
+                    Découvrez notre sélection de thés d'exception et participez à nos concours exclusifs.
+                </p>
+            </div>
+
+            <!-- Liens utiles -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Liens utiles</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/mentionslegals" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            Mentions légales
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/cgu" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            CGU
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/politiquedeconfidentialite" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            Politique de confidentialité
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/rse" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            RSE
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/faq" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            FAQ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Contactez-nous</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center text-green-100">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        contact@tiptop.fr
+                    </li>
+                    <li class="flex items-center text-green-100">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        01 23 45 67 89
+                    </li>
+                    <li>
+                        <a href="/contacteznous" class="inline-block mt-4 px-6 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white transition-colors duration-200">
+                            Nous contacter
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Réseaux sociaux -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Suivez-nous</h4>
+                <div class="flex flex-col space-y-4">
+                    <a href="https://www.facebook.com/the.tip.top.2024" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        Facebook
+                    </a>
+                    <a href="Instagram.com/the_tiptop1" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        Instagram
+                    </a>
+                    <a href="https://www.tiktok.com/@th.tiptop?_t=8rJSwPdbq35&_r=1" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                        TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="pt-8 mt-8 border-t border-green-500/30 text-center">
+            <p class="text-green-100">© 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
+
+        </div>
+    </div>
+</footer>
+</body>
+</html>

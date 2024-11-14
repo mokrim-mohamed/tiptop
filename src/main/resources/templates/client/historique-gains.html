@@ -3,11 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historique des Gains</title>
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <title>Mes Gains</title>
+    <link rel="stylesheet" th:href="@{/css/historique.css}">
     <link rel="stylesheet" th:href="@{/css/historique-gains.css}">
     <link rel="stylesheet" th:href="@{/css/user.css}">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
+    
+
 </head>
+<style>
+
+.footer {
+    background-color: #81c784; /* Même couleur que la sidebar pour une harmonie visuelle */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: none; /* Retirer l'ombre pour ne pas avoir de séparation visible */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+}
+
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #dcedc8; /* Couleur plus claire au survol pour une meilleure lisibilité */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+</style>
 <body>
     <div class="main-wrapper">
         <button class="burger-menu" id="burgerMenu">
@@ -23,9 +84,9 @@
             </div>
             <ul class="menu">
                 <li><a href="/client/participation">Participation</a></li>
-                <li><a href="/client/historique-gains" class="active">Historique des Gains</a></li>
-                <li><a href="/client/parrametre">Paramètre</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/client/historique-gains" class="active">Mes Gains</a></li>
+                <li><a href="/client/parrametre">Paramètres</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
             </ul>
         </div>
 
@@ -35,8 +96,9 @@
                 <h2 style="text-decoration: none;">Historique des Gains</h2> <!-- Ajout de style inline -->
                 
                 <!-- Vérification si la liste des gains est vide -->
-                <div th:if="${#lists.isEmpty(gains)}">
-                    <p>Aucun gain trouvé pour cet utilisateur.</p>
+                <div th:if="${#lists.isEmpty(gains)}" style="text-align: center;">
+                    <p style="color: #888;">Aucun gain trouvé.</p>
+                    
                 </div>
 
                 <!-- Si la liste des gains n'est pas vide, on affiche le tableau -->
@@ -44,20 +106,19 @@
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>code</th>
-                                <th>status</th>
-                                <th>type</th>
-
+                                <th>Code</th>
+                                <th>Status</th>
+                                <th>Gain</th>
+                                <th>Dernier délai pour récupérer</th>
                             </tr>
                         </thead>
                         <tbody>
                             <!-- Boucle Thymeleaf pour afficher chaque gain -->
                             <tr th:each="gain : ${gains}">
-                                <td th:text="${gain.id}"></td>
                                 <td th:text="${gain.code}"></td>
-                                <td th:text="${gain.remis}"></td>
+                                <td th:text="${gain.remis ? 'Récupéré' : 'Non récupéré'}"></td>
                                 <td th:text="${gain.gainType.nom}"></td>
+                                <td>3 Janvier 2025</td>                            
                             </tr>
                         </tbody>
                     </table>
@@ -74,5 +135,20 @@
             sidebar.classList.toggle('active');
         });
     </script>
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; © 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
+            <ul class="footer-links">
+                <li><a href="/mentionslegals">Mentions légales</a></li>
+                <li><a href="/cgu">CGU</a></li>
+                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
+                <li><a href="/rse">RSE</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/contacteznous">Contact</a></li>
+            </ul>
+        </div>
+    </footer>
+    
+    
 </body>
 </html>

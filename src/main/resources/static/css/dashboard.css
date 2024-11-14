@@ -21,6 +21,7 @@ body, html {
     align-items: center;
     padding: 20px 0;
     transition: transform 0.3s ease; /* Smooth transition for sidebar */
+    box-shadow: none; /* Retirer la bordure visible */
 }
 
 .logo img {
@@ -362,4 +363,219 @@ table tbody tr:hover {
 
 .btn-return:hover {
     background-color: #388e3c; /* Couleur du bouton au survol */
+}
+.profile-section, .form-section {
+    margin-bottom: 20px;
+}
+.user-form .input-group {
+    margin-bottom: 15px;
+}
+
+.action-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #2e7d32; /* Dark green button */
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.action-btn:hover {
+    background-color: #66bb6a; /* Lighter green for hover */
+}
+.user-form input, .user-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.profile-section h2, .form-section h2 {
+    margin-bottom: 20px;
+    color: #2e7d32; /* Dark green */
+}
+
+.top-right {
+    text-align: right; /* Alignement à droite */
+    margin: 20px 0; /* Marge au-dessus et en dessous */
+}
+
+.add-employee-btn {
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    text-decoration: none; /* Pas de soulignement */
+    cursor: pointer; /* Changer le curseur au survol */
+    display: inline-block; /* Pour appliquer les marges */
+}
+
+.table-section {
+    margin-top: 20px; /* Espace au-dessus du tableau */
+}
+
+table {
+    width: 100%; /* Largeur du tableau */
+    border-collapse: collapse; /* Évite les espaces entre les cellules */
+}
+
+th, td {
+    padding: 10px; /* Espacement interne des cellules */
+    border: 1px solid #ddd; /* Bordure des cellules */
+    text-align: left; /* Alignement du texte */
+}
+/* Style de base pour le formulaire */
+.employee-form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 500px;
+    margin: auto;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style des champs de formulaire */
+.employee-form .form-group {
+    margin-bottom: 15px;
+}
+
+.employee-form label {
+    font-weight: bold;
+    color: #333;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.employee-form input[type="text"],
+.employee-form input[type="email"],
+.employee-form input[type="password"],
+.employee-form input[type="tel"],
+.employee-form input[type="number"],
+.employee-form select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+/* Style du bouton */
+.employee-form .form-actions button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.employee-form .form-actions button:hover {
+    background-color: #45a049;
+}
+
+/* Conteneur pour le message d'erreur */
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+/* Centrer le tableau */
+.table-section {
+    display: flex;
+    justify-content: center; /* Centre le tableau horizontalement */
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* Styliser le bouton "Ajouter un employé" */
+.button-ajouter {
+    background-color: #4CAF50; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px 20px; /* Espacement interne */
+    border: none; /* Supprime la bordure */
+    border-radius: 5px; /* Coins arrondis */
+    text-decoration: none; /* Supprime le soulignement */
+    font-size: 16px; /* Taille de la police */
+    cursor: pointer; /* Change le curseur en pointeur */
+    transition: background-color 0.3s ease; /* Effet de transition */
+}
+
+.button-ajouter:hover {
+    background-color: #45a049; /* Couleur au survol */
+}
+
+
+ /* Appliquer un modèle de mise en page flexbox à la page principale */
+ body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Assurez-vous que le corps prend toute la hauteur de la fenêtre */
+    margin: 0;
+}
+
+/* Main wrapper pour gérer le contenu principal */
+.main-wrapper {
+    flex: 1; /* Cette propriété permet au contenu principal de prendre tout l'espace disponible */
+}
+
+.footer {
+    background-color: #81c784; /* Même couleur que la sidebar pour une harmonie visuelle */
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: none; /* Retirer l'ombre pour ne pas avoir de séparation visible */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content p {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #dcedc8; /* Couleur plus claire au survol pour une meilleure lisibilité */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .footer-links {
+        flex-direction: column;
+        gap: 10px;
+    }
 }

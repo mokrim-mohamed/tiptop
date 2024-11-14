@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Tea Brand</title>
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
     <link rel="stylesheet" th:href="@{/css/login.css}"> <!-- Utilisation de th:href -->
     <script th:src="@{/js/login.js}" defer></script> <!-- Utilisation de th:src -->
 </head>
@@ -28,15 +29,15 @@
                     <button type="submit">Login</button>
                 </form>
                 <div class="extra-options">
-                    <a th:href="@{/forgot-password}" class="link">Mot de passe oublié ?</a> <!-- Utilisation de th:href -->
+                    <a th:href="@{/mp-oublie}" class="link">Mot de passe oublié ?</a> <!-- Utilisation de th:href -->
                     <div class="social-login">
                         <p>Ou inscrivez-vous avec :</p>
                         <div class="social-buttons">
-                            <a th:href="@{/login/facebook}" class="social-button"> <!-- Utilisation de th:href -->
+                            <a th:href="@{/oauth2/authorization/facebook}" class="social-button"> <!-- Utilisation de th:href -->
                                 <img th:src="@{/image/facebook.png}" alt="Facebook" class="social-logo"> <!-- Utilisation de th:src -->
                             </a>
-                            <a th:href="@{/login/google}" class="social-button"> <!-- Utilisation de th:href -->
-                                <img th:src="@{/oauth2/authorization/google}" alt="Gmail" class="social-logo"> <!-- Utilisation de th:src -->
+                            <a th:href="@{/oauth2/authorization/google}" class="social-button"> <!-- Utilisation de th:href -->
+                                <img th:src="@{/image/google.png}" alt="Gmail" class="social-logo"> <!-- Utilisation de th:src -->
                             </a>
                         </div>
                         <!-- Ajout du lien pour l'inscription manuelle -->

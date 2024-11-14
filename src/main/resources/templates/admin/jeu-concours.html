@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu-concours</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        .winner-card {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            text-align: center;
+        }
+        .winner-card h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+        .winner-card p {
+            font-size: 16px;
+            color: #555;
+            margin: 5px 0;
+        }
+        .inform-button, #showRandomUserBtn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .inform-button:hover, #showRandomUserBtn:hover {
+            background-color: #218838;
+        }
+        .game-section {
+            text-align: center;
+            margin-top: 50px;
+        }
+        /* Spinner CSS */
+        .spinner {
+            display: none; /* Masqué par défaut */
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: #28a745;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-wrapper">
+        <button class="burger-menu" id="burgerMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+
+        <div class="sidebar" id="sidebar">
+            <div class="logo">
+                <img th:src="@{/image/logo.png}" alt="Logo">
+            </div>
+            <ul class="menu">
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/listeEmp">Liste des employés</a></li>
+                <li><a href="/admin/listeClients">Liste des clients</a></li>
+                <li><a href="/admin/jeu-concours" class="active">Jeu-concours</a></li>
+                <li><a href="/admin/parrametre">Paramètres</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <header>
+                <h1>Jeu-concours</h1>
+            </header>
+
+            <section class="game-section">
+                <h2>Client gagné :</h2>
+
+                <div th:if="${hasWinner}">
+                    <div class="winner-card">
+                        <h3>Le gagnant est : <span th:text="${winnerNom}"></span> !</h3>
+                        <p><strong>Nom :</strong> <span th:text="${winnerNom}"></span></p>
+                        <p><strong>Prénom :</strong> <span th:text="${winnerPrenom}"></span></p>
+                        <p><strong>Email :</strong> <span th:text="${winnerEmail}"></span></p>
+                        <p><strong>Téléphone :</strong> <span th:text="${winnerTelephone}"></span></p>
+                        <button class="inform-button" onclick="informGagnant()">Informer par mail</button>
+                    </div>
+                </div>
+
+                <div th:if="${!hasWinner}">
+                    <button class="inform-button" id="showRandomUserBtn">Démarrer le Tirage</button>
+                </div>
+
+                <div id="randomUserInfo" style="margin-top: 20px;"></div>
+                <!-- Spinner de chargement -->
+                <div class="spinner" id="loadingSpinner"></div>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+
+        $(document).ready(function() {
+            $('#showRandomUserBtn').click(function() {
+                $.ajax({
+                    type: "POST",
+                    url: "/randomUserWithGain",
+                    success: function(user) {
+                        if (user) {
+                            $('#randomUserInfo').html(
+                                `<div class="winner-card">
+                                    <h3>Félicitations, ${user.nom} !</h3>
+                                    <p><strong>Nom :</strong> ${user.nom}</p>
+                                    <p><strong>Prénom :</strong> ${user.prenom}</p>
+                                    <p><strong>Email :</strong> ${user.email}</p>
+                                    <button class="inform-button" onclick="informGagnant()">Informer par mail</button>
+                                </div>`
+                            );
+                        } else {
+                            $('#randomUserInfo').html("<p>Aucun gagnant trouvé.</p>");
+                        }
+                    },
+                    error: function() {
+                        $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
+                    }
+                });
+            });
+        });
+
+        function informGagnant() {
+            $('#loadingSpinner').show(); // Affiche le spinner
+
+            $.ajax({
+                type: "POST",
+                url: "/informGagnant",
+                success: function(response) {
+                    alert(response);
+                },
+                error: function() {
+                    alert("Erreur lors de l'envoi de l'email.");
+                },
+                complete: function() {
+                    $('#loadingSpinner').hide(); // Masque le spinner après la requête
+                }
+            });
+        }
+    </script>
+</body>
+</html>

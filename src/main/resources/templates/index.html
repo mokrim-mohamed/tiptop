@@ -3,252 +3,1046 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thé Tip Top - Jeu-Concours</title>
-    <link rel="manifest" href="/manifest.json">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/index.css">
-    <link rel="stylesheet" href="/css/rgbd.css"> <!-- Fichier CSS de la bannière RGPD -->
-    <link rel="icon" href="/img/icon.png" sizes="192x192">
+    <title>Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels</title>
+    <meta name="description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
     
-    <style>
-        /* Ajout d'une ombre légère aux images des cadeaux */
-        .card img {
-            transition: transform 0.3s; /* Transition douce pour l'effet hover */
-        }
-        .card img:hover {
-            transform: scale(1.05); /* Agrandissement léger à l'hover */
-        }
-        
-        /* Import Google Fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+    <!-- Open Graph tags pour le partage sur les réseaux sociaux -->
+    <meta property="og:title" content="Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels">
+    <meta property="og:description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
+    <meta property="og:image" content="http://www.dsp5-archi-o23-15m-g2.fr/image/logo.png">
+    <meta property="og:url" content="http://www.dsp5-archi-o23-15m-g2.fr/index">
+    <meta property="og:type" content="website">
 
-        body {
-            font-family: 'Montserrat', sans-serif; /* Utilisation de la police moderne */
-        }
-
-        .header-section {
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5));
-            padding: 2rem 0; /* Espacement supérieur et inférieur */
-            border-radius: 15px; /* Coins arrondis */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Ombre portée */
-        }
-
-        h1 {
-            font-size: 3rem; /* Taille du titre */
-            font-weight: bold; /* Texte en gras */
-            color: #28a745; /* Couleur verte */
-            margin-bottom: 1rem; /* Marges inférieure pour espacement */
-        }
-
-        p {
-            font-size: 1.5rem; /* Taille du texte du paragraphe */
-            color: #555; /* Couleur grise */
-            margin-bottom: 1.5rem; /* Marges inférieure pour espacement */
-        }
-
-        .btn-modern {
-            background-color: #28a745; /* Couleur de fond du bouton */
-            color: white; /* Couleur du texte du bouton */
-            border-radius: 25px; /* Coins arrondis */
-            padding: 10px 30px; /* Espacement interne */
-            transition: all 0.3s ease; /* Transition douce */
-        }
-
-        .btn-modern:hover {
-            background-color: #218838; /* Couleur au survol */
-            transform: scale(1.05); /* Zoom au survol */
-        }
-
-        .carousel-caption {
-            background-color: rgba(255, 255, 255, 0.7); /* Fond semi-transparent */
-            border-radius: 10px; /* Coins arrondis */
-            padding: 10px; /* Espacement interne */
-            backdrop-filter: blur(5px); /* Effet de flou d'arrière-plan */
-        }
-
-        .animated-caption {
-            color: #28a745; /* Couleur du texte */
-            font-weight: bold; /* Texte en gras */
-            animation: fadeInUp 1s ease; /* Animation d'apparition */
-        }
-
-        .smaller-image {
-            transition: transform 0.5s ease; /* Transition douce */
-            max-height: 400px; /* Hauteur maximale */
-            object-fit: cover; /* Rendre l'image bien ajustée */
-        }
-
-        .smaller-image:hover {
-            transform: scale(1.1); /* Zoom léger au survol */
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .contest-section {
-            background-color: #f9f9f9;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .contest-section h5 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #28a745;
-            margin-bottom: 1.5rem;
-        }
-
-        .contest-section p {
-            font-size: 1.2rem;
-            color: #555;
-            margin-bottom: 1rem;
-        }
-
-        .contest-section strong {
-            color: #dc3545; /* Couleur rouge pour attirer l'attention */
-            font-size: 1.3rem;
-            font-weight: 700;
-        }
-
-        .newsletter-input {
-            font-size: 1rem;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 25px;
-        }
-
-        .newsletter-btn {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            padding: 10px 20px;
-            transition: all 0.3s ease;
-        }
-
-        .newsletter-btn:hover {
-            background-color: #218838;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
 </head>
-<body>
+<style>
+    /* Style pour le conteneur de feuilles */
+    .falling-leaves-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1000;
+        overflow: hidden;
+    }
+    
+    /* Style pour chaque feuille */
+    .falling-leaf {
+        position: absolute;
+        top: -20px;
+        animation: falling linear forwards;
+        opacity: 0.8;
+        z-index: 1000;
+    }
+    
+    /* Animation de chute */
+    @keyframes falling {
+        0% {
+            transform: translateY(-20px) rotate(0deg) scale(0.7);
+            opacity: 0.8;
+        }
+        100% {
+            transform: translateY(100vh) rotate(360deg) scale(1);
+            opacity: 0;
+        }
+    }
+    </style>
+    
+<script>
+   
+const maxLeaves = 10; // Maximum number of leaves at once
+let currentLeaves = 0;
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="image/logo.png" alt="Thé Tip Top" style="height: 60px; margin-right: 15px;">
-        </a>
+function createFallingLeaf() {
+    if (currentLeaves < maxLeaves) {
+        const leaf = document.createElement("div");
+        leaf.classList.add("falling-leaf");
+        leaf.innerHTML = "🍃";
+        leaf.style.left = `${Math.random() * 100}vw`;
+        leaf.style.animationDuration = `${Math.random() * 3 + 2}s`; // Duration between 2s and 5s
+        leaf.style.fontSize = `${Math.random() * 1.5 + 1.5}rem`; // Size variation
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">À propos</a>
-                </li>
-            </ul>
-            <ul class="nav-list">
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
-                <li th:if="${isAuthenticated}" class="nav-item">
-                    
-                    <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
-                    <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
-                    <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
-                    <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
-                </li>
-            </ul>
-            </ul>
+        currentLeaves++;
+        document.querySelector(".falling-leaves-container").appendChild(leaf);
+
+        leaf.addEventListener("animationend", () => {
+            leaf.remove();
+            currentLeaves--;
+        });
+    }
+}
+
+window.addEventListener("load", () => {
+    setInterval(createFallingLeaf, 1000); // Add a new leaf every second
+});
+
+    // Timer dégressif
+    let countdownDate = new Date().getTime() + 3600 * 1000; // 1 heure à partir de maintenant
+    let timerInterval = setInterval(function() {
+        let now = new Date().getTime();
+        let distance = countdownDate - now;
+    
+        if (distance < 0) {
+            clearInterval(timerInterval);
+            document.getElementById("timer").innerHTML = "EXPIRE";
+        } else {
+            let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds;
+        }
+    }, 1000);
+    
+    // Défilement fluide des flèches
+    function scrollToGifts() {
+        document.getElementById("gifts").scrollIntoView({ behavior: "smooth" });
+    }
+    </script>
+        <div class="falling-leaves-container"></div>
+
+<body class="font-sans bg-gray-50">
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white backdrop-blur-md border-t border-emerald-100 transform translate-y-full transition-transform duration-500 shadow-lg z-50">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div class="flex-1">
+                    <h3 class="text-lg font-semibold text-emerald-800 mb-2">🍪 Gestion des cookies</h3>
+                    <p class="text-emerald-600 text-sm md:text-base">
+                        Nous utilisons des cookies pour améliorer votre expérience sur notre site. Ils nous permettent d'analyser l'utilisation du site, de personnaliser votre expérience et d'afficher du contenu pertinent. Pour en savoir plus, consultez notre 
+                        <a href="/politiquedeconfidentialite" class="text-emerald-700 underline hover:text-emerald-800">politique de confidentialité</a> et nos 
+                        <a href="/mentionslegals" class="text-emerald-700 underline hover:text-emerald-800">mentions légales</a>.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3 min-w-fit">
+                    <button id="customizeCookies" 
+                        class="px-6 py-2 text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-full text-sm font-medium transition-colors">
+                        Personnaliser
+                    </button>
+                    <button id="acceptAllCookies"
+                        class="px-6 py-2 text-white bg-emerald-600 hover:bg-emerald-700 rounded-full text-sm font-medium transition-colors">
+                        Tout accepter
+                    </button>
+                    <button id="rejectAllCookies"
+                        class="px-6 py-2 text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-full text-sm font-medium transition-colors">
+                        Rejeter
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-</nav>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const authLinks = document.getElementById('auth-links');
-
-        // Vérifiez si l'utilisateur est connecté
-        const isLoggedIn = localStorage.getItem('token') !== null; // Changez cette ligne en fonction de votre logique d'authentification
-
-    });
-</script>
-
-<!-- Header Section -->
-<div class="container my-5 header-section">
-    <div class="row align-items-center">
-        <div class="col-md-6 text-center mb-4">
-            <h1 class="display-4">GAGNEZ AVEC NOUS</h1>
-            <p class="lead">Nous organisons un jeu-concours pour célébrer l'ouverture de notre 10<sup>e</sup> magasin</p>
-            <button class="btn btn-modern mx-auto">En savoir plus</button>
-        </div>
-        
-        <div class="col-md-6">
-            <div id="headerCarousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="image/slide/tea-1.jpeg" class="d-block w-100 smaller-image" alt="Promotion 1">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="animated-caption">Participez et gagnez des cadeaux exclusifs !</h5>
-                        </div>
+    <!-- Modal de personnalisation -->
+    <div id="cookieModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6">
+            <div class="flex justify-between items-start mb-6">
+                <h3 class="text-xl font-semibold text-emerald-800">Paramètres des cookies</h3>
+                <button id="closeModal" class="text-emerald-600 hover:text-emerald-800 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="space-y-6">
+                <!-- Cookies nécessaires -->
+                <div class="flex items-center justify-between p-4 bg-emerald-50 rounded-lg">
+                    <div>
+                        <h4 class="font-medium text-emerald-800">Cookies nécessaires</h4>
+                        <p class="text-sm text-emerald-600 mt-1">Ces cookies sont essentiels au fonctionnement du site.</p>
                     </div>
-                    <div class="carousel-item">
-                        <img src="image/slide/tea-2.jpeg" class="d-block w-100 smaller-image" alt="Promotion 2">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="animated-caption">Une année de thé à gagner !</h5>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="image/slide/tea-3.jpeg" class="d-block w-100 smaller-image" alt="Promotion 3">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class="animated-caption">Des accessoires de thé gratuits !</h5>
-                        </div>
+                    <div class="relative">
+                        <input type="checkbox" checked disabled
+                               class="appearance-none w-12 h-6 bg-emerald-200 rounded-full checked:bg-emerald-500 transition-colors cursor-not-allowed">
+                        <span class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 pointer-events-none"></span>
                     </div>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#headerCarousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Précédent</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#headerCarousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Suivant</span>
+    
+                <!-- Cookies analytiques -->
+                <div class="flex items-center justify-between p-4 bg-white border border-emerald-100 rounded-lg">
+                    <div>
+                        <h4 class="font-medium text-emerald-800">Cookies analytiques</h4>
+                        <p class="text-sm text-emerald-600 mt-1">Nous aident à améliorer votre expérience de navigation.</p>
+                    </div>
+                    <div class="relative">
+                        <input type="checkbox" id="analyticsConsent"
+                               class="appearance-none w-12 h-6 bg-gray-200 rounded-full checked:bg-emerald-500 transition-colors cursor-pointer">
+                        <span class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 pointer-events-none"></span>
+                    </div>
+                </div>
+    
+                <!-- Cookies marketing -->
+                <div class="flex items-center justify-between p-4 bg-white border border-emerald-100 rounded-lg">
+                    <div>
+                        <h4 class="font-medium text-emerald-800">Cookies marketing</h4>
+                        <p class="text-sm text-emerald-600 mt-1">Utilisés pour vous montrer des publicités pertinentes.</p>
+                    </div>
+                    <div class="relative">
+                        <input type="checkbox" id="marketingConsent"
+                               class="appearance-none w-12 h-6 bg-gray-200 rounded-full checked:bg-emerald-500 transition-colors cursor-pointer">
+                        <span class="absolute right-1 top-1 w-4 h-4 bg-white rounded-full transition-transform duration-200 pointer-events-none"></span>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flex justify-end gap-3 mt-8">
+                <button id="savePreferences"
+                    class="px-6 py-2 text-white bg-emerald-600 hover:bg-emerald-700 rounded-full text-sm font-medium transition-colors">
+                    Enregistrer les préférences
                 </button>
             </div>
         </div>
     </div>
-</div>
-
-<!-- Contest Section -->
-<div class="container contest-section my-5">
     
-    <h5>Comment participer au jeu-concours ?</h5>
-    <p>Pour participer, <strong>inscrivez-vous à notre newsletter</strong> et partagez le lien du concours sur vos réseaux sociaux.</p>
-    <p>Les gagnants seront tirés au sort le <strong>1<sup>er</sup> janvier 2025</strong>.</p>
-    <p>Ne manquez pas cette chance de remporter des cadeaux incroyables !</p>
+    <script>
+    class CookieManager {
+        constructor() {
+            this.cookieConsent = document.getElementById('cookieConsent');
+            this.cookieModal = document.getElementById('cookieModal');
+            this.setupEventListeners();
+            this.checkCookieConsent();
+            
+        }
+    
+        setupEventListeners() {
+            // Boutons principaux
+            document.getElementById('acceptAllCookies').addEventListener('click', () => this.acceptAll());
+            document.getElementById('rejectAllCookies').addEventListener('click', () => this.rejectAll());
+            document.getElementById('customizeCookies').addEventListener('click', () => this.showModal());
+            
+            // Boutons du modal
+            document.getElementById('closeModal').addEventListener('click', () => this.hideModal());
+            document.getElementById('savePreferences').addEventListener('click', () => this.savePreferences());
+    
+            // Gestion du clic en dehors du modal
+            this.cookieModal.addEventListener('click', (e) => {
+                if (e.target === this.cookieModal) {
+                    this.hideModal();
+                }
+            });
+        }
+    
+        checkCookieConsent() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (!consent) {
+                this.showBanner();
+            }
+        }
+    
+        showBanner() {
+            requestAnimationFrame(() => {
+                this.cookieConsent.classList.remove('translate-y-full');
+            });
+        }
+    
+        hideBanner() {
+            this.cookieConsent.classList.add('translate-y-full');
+        }
+    
+        showModal() {
+            this.cookieModal.classList.remove('hidden');
+            // Restaurer les préférences sauvegardées
+            const preferences = JSON.parse(localStorage.getItem('cookiePreferences') || '{}');
+            document.getElementById('analyticsConsent').checked = preferences.analytics || false;
+            document.getElementById('marketingConsent').checked = preferences.marketing || false;
+        }
+    
+        hideModal() {
+            this.cookieModal.classList.add('hidden');
+        }
+    
+        acceptAll() {
+            const preferences = {
+                necessary: true,
+                analytics: true,
+                marketing: true
+            };
+            this.saveToLocalStorage(preferences);
+            this.hideBanner();
+        }
+    
+        rejectAll() {
+            const preferences = {
+                necessary: true,
+                analytics: false,
+                marketing: false
+            };
+            this.saveToLocalStorage(preferences);
+            this.hideBanner();
+        }
+    
+        savePreferences() {
+            const preferences = {
+                necessary: true,
+                analytics: document.getElementById('analyticsConsent').checked,
+                marketing: document.getElementById('marketingConsent').checked
+            };
+            this.saveToLocalStorage(preferences);
+            this.hideModal();
+            this.hideBanner();
+        }
+    
+        saveToLocalStorage(preferences) {
+            localStorage.setItem('cookieConsent', 'true');
+            localStorage.setItem('cookiePreferences', JSON.stringify(preferences));
+            
+            // Ici, vous pouvez ajouter la logique pour activer/désactiver
+            // les différents services selon les préférences
+            this.applyPreferences(preferences);
+        }
+    
+        applyPreferences(preferences) {
+            // Exemple: Gestion de Google Analytics
+            if (preferences.analytics) {
+                // Activer GA
+                console.log('Analytics activé');
+            } else {
+                // Désactiver GA
+                console.log('Analytics désactivé');
+            }
+    
+            // Exemple: Gestion des cookies marketing
+            if (preferences.marketing) {
+                // Activer les cookies marketing
+                console.log('Marketing activé');
+            } else {
+                // Désactiver les cookies marketing
+                console.log('Marketing désactivé');
+            }
+        }
+    }
+    
+    // Initialiser le gestionnaire de cookies
+    document.addEventListener('DOMContentLoaded', () => {
+        new CookieManager();
+    });
+    </script>
+    
+    <header>
+        <div class="logo">
+            <a href="/index">
+                <img src="/image/logo.png" alt="Logo" />
+            </a>        </div>
+        <nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="relative flex flex-col md:flex-row items-center justify-between p-8 md:p-16 pb-0 bg-emerald-50" id="hero">        <!-- Left Column with Wheel -->
+        <div class="flex-1 max-w-[600px] transform hover:scale-105 transition-all duration-500">
+            <div class="relative p-8">
+                <!-- Decorative background elements -->
+                <div class="absolute inset-0 bg-white/50 backdrop-blur-lg rounded-3xl shadow-xl"></div>
+                <div class="absolute -inset-2 bg-gradient-to-r from-emerald-400 to-green-500 opacity-20 blur-2xl rounded-3xl"></div>
+                
+                <!-- Wheel Container -->
+                <div class="container relative z-10 max-w-md mx-auto my-8">
+                    <div class="wheel-container transform hover:scale-105 transition-all duration-500">
+                        <div class="pointer before:border-emerald-600"></div>
+                        <div class="wheel border-4 border-emerald-600 shadow-[0_0_30px_rgba(5,150,105,0.3)]" id="wheel"></div>
+                        <div class="center-circle bg-emerald-600 border-4 border-white shadow-lg"></div>
+                    </div>
+                    <button onclick="spinWheel()" id="spinBtn" 
+                        class="mt-8 w-full py-4 px-6 bg-emerald-600 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                        Tourner la roue ✨
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Right Column with Content -->
+        <div class="flex-1 pl-0 md:pl-16 mt-8 md:mt-0">
+            <div class="relative">
+                <!-- Animated Title Section -->
+                <div class="text-center mb-12 transform hover:-translate-y-2 transition-transform duration-500">
+                    <h1 class="text-4xl md:text-5xl font-bold text-emerald-800 mb-6 leading-tight">
+                        <span class="inline-block animate-bounce">🎉</span>
+                        Participez au concours Tiptop
+                        <span class="inline-block animate-bounce delay-150">🎉</span>
+                    </h1>
+                    <p class="text-xl text-emerald-700/80">
+                        Tentez votre chance pour gagner des infuseurs, 
+                        des thés et des coffrets exceptionnels !
+                    </p>
+                </div>
+    
+                <!-- Countdown and Form Section -->
+                <div class="max-w-md mx-auto space-y-10">
+                    <!-- Countdown -->
+                    <div class="text-center relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-red-500/20 to-pink-500/20 blur-xl"></div>
+                        <div class="countdown-container">
+                            <h2 class="countdown-title">Fin du concours dans</h2>
+                            <div class="countdown-grid">
+                                <div class="countdown-item">
+                                    <div id="days" class="countdown-number">--</div>
+                                    <div class="countdown-label">Jours</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div id="hours" class="countdown-number">--</div>
+                                    <div class="countdown-label">Heures</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div id="minutes" class="countdown-number">--</div>
+                                    <div class="countdown-label">Minutes</div>
+                                </div>
+                                <div class="countdown-item">
+                                    <div id="seconds" class="countdown-number">--</div>
+                                    <div class="countdown-label">Secondes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Form -->
+                    <form class="space-y-8 relative">
+                        <div class="p-6 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-emerald-100">
+                            <p class="text-center text-lg text-emerald-700">
+                                Vous avez jusqu'à 30 jours après la fin du concours pour réclamer vos gains, 
+                                en magasin ou en ligne.
+                            </p>
+                        </div>
+                        <a th:href="${!isAuthenticated ? '/login' : '/client/participation'}" 
+                           class="button-style w-full py-4 bg-emerald-600 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 block text-center">
+                            Participer maintenant
+                        </a>
+                    </form>
+    
+                    <!-- See Prizes Link -->
+                    <div class="text-center pt-6">
+                        <a href="#gains" 
+                           class="group inline-flex items-center space-x-2 text-emerald-600 text-xl font-semibold hover:text-emerald-700 transition-all duration-300">
+                            <span>Voir les gains</span>
+                            <span class="transform group-hover:translate-y-1 transition-transform duration-300">↓</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <div class="input-group mb-3">
-        <input type="text" class="form-control newsletter-input" placeholder="Votre email" aria-label="Votre email">
-        <button class="btn newsletter-btn" type="button">S'inscrire</button>
+    </section>
+    <div class="w-full h-24 bg-gradient-to-b from-emerald-100 to-green-50 -mt-24"></div>
+    <!-- Gains Section -->
+    <section class="relative py-16 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50" id="gains">        <!-- Background decorations -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
+            <div class="absolute top-0 right-1/4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/3 w-96 h-96 bg-emerald-100 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+    
+        <!-- Title Section avec style amélioré -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+            <div class="text-center">
+                <span class="inline-block px-4 py-1 bg-emerald-100 rounded-full text-emerald-700 text-sm font-semibold mb-4">
+                    Lots à Gagner
+                </span>
+                <h2 class="text-5xl md:text-6xl font-bold text-emerald-800 mb-6">
+                    <span class="inline-block animate-bounce-slow">🎁</span>
+                    Les Gains du Concours
+                    <span class="inline-block animate-bounce-slow delay-150">🎁</span>
+                </h2>
+                <p class="text-2xl text-emerald-600 max-w-3xl mx-auto font-medium">
+                    Découvrez tous les lots exceptionnels que vous pouvez gagner
+                </p>
+            </div>
+        </div>
+    
+        <!-- Gains Grid -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
+                <!-- Gain Card 1 - Infuseur -->
+                <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="p-8">
+                        <!-- Badge pourcentage -->
+                        <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
+                            <span class="text-emerald-700 font-semibold">60%</span>
+                        </div>
+                        
+                        <!-- Image container -->
+                        <div class="w-32 h-32 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
+                            <img src="/image/image.png" alt="Infuseur" 
+                                 class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
+                                🫖
+                            </div>
+                        </div>
+    
+                        <!-- Content -->
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">Infuseur à thé</h3>
+                            <p class="text-emerald-600 font-medium mb-4">Un infuseur élégant pour vos thés</p>
+                            
+                            <!-- Progress bar -->
+                            <div class="mt-4 relative pt-4">
+                                <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
+                                    <div class="h-full w-[60%] bg-emerald-100 rounded-full 
+                                                group-hover:animate-pulse transition-all duration-500"></div>
+                                </div>
+                                <span class="absolute -top-1 left-[60%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
+                                    60%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Gain Card 2 - Thé Détox -->
+                <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="p-8">
+                        <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
+                            <span class="text-emerald-700 font-semibold">20%</span>
+                        </div>
+                        
+                        <div class="w-32 h-32 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
+                            <img src="/image/gain3.png" alt="Thé Détox" 
+                                 class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
+                                🍵
+                            </div>
+                        </div>
+    
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">Thé Détox</h3>
+                            <p class="text-emerald-600 font-medium mb-4">Boîte de 100g - Thé détox ou infusion</p>
+                            
+                            <div class="mt-4 relative pt-4">
+                                <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
+                                                group-hover:animate-pulse transition-all duration-500"></div>
+                                </div>
+                                <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
+                                    20%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Répéter le même pattern pour les autres cartes... -->
+                <!-- Gain Card 3 - Thé Signature -->
+                <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="p-8">
+                        <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
+                            <span class="text-emerald-700 font-semibold">20%</span>
+                        </div>
+                        
+                        <div class="w-32 h-32 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
+                            <img src="/image/gain3.png" alt="Thé Détox" 
+                                 class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
+                                🍵
+                            </div>
+                        </div>
+    
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">Thé signature</h3>
+                            <p class="text-emerald-600 font-medium mb-4">Boîte de 100g - Thé signature</p>
+                            
+                            <div class="mt-4 relative pt-4">
+                                <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
+                                                group-hover:animate-pulse transition-all duration-500"></div>
+                                </div>
+                                <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
+                                    20%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Gain Card 4 - Coffret 39€ -->
+                <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="p-8">
+                        <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
+                            <span class="text-emerald-700 font-semibold">20%</span>
+                        </div>
+                        
+                        <div class="w-32 h-32 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
+                            <img src="/image/gain2.png" alt="Thé Détox" 
+                                 class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
+                                🍵
+                            </div>
+                        </div>
+    
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">Coffret</h3>
+                            <p class="text-emerald-600 font-medium mb-4">Coffret découverte - 39€</p>
+                            
+                            <div class="mt-4 relative pt-4">
+                                <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
+                                                group-hover:animate-pulse transition-all duration-500"></div>
+                                </div>
+                                <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
+                                    20%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Gain Card 5 - Coffret 69€ -->
+                <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                    <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="p-8">
+                        <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
+                            <span class="text-emerald-700 font-semibold">20%</span>
+                        </div>
+                        
+                        <div class="w-32 h-32 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
+                            <img src="/image/gain4.png" alt="Thé Détox" 
+                                 class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
+                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
+                                🍵
+                            </div>
+                        </div>
+    
+                        <div class="text-center">
+                            <h3 class="text-xl font-bold text-emerald-800 mb-2">Coffret</h3>
+                            <p class="text-emerald-600 font-medium mb-4">Coffret découverte - 69€</p>
+                            
+                            <div class="mt-4 relative pt-4">
+                                <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
+                                    <div class="h-full w-[20%] bg-emerald-100 rounded-full 
+                                                group-hover:animate-pulse transition-all duration-500"></div>
+                                </div>
+                                <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-500 text-white text-xs rounded-full">
+                                    20%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Grand Prix Final Section reste identique -->
+    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-green-50 to-emerald-100" id="grand-prix">
+        <!-- Contenu existant du grand prix -->
+    </section>
+    
+
+    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-green-50 to-emerald-100" id="grand-prix">
+        <!-- Background decorations améliorés -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
+            <div class="absolute top-0 right-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
+            <div class="absolute -bottom-8 left-1/3 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-4000"></div>
+        </div>
+    
+        <!-- Title Section avec style amélioré -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+            <div class="text-center">
+                <span class="inline-block px-4 py-1 bg-emerald-100 rounded-full text-emerald-700 text-sm font-semibold mb-4">
+                    Grand Prix Exceptionnel
+                </span>
+                <h2 class="text-5xl md:text-6xl font-bold text-emerald-800 mb-6">
+                    <span class="inline-block animate-bounce-slow">🎉</span>
+                    Le Grand Prix Final
+                    <span class="inline-block animate-bounce-slow delay-150">🎉</span>
+                </h2>
+                <p class="text-2xl text-emerald-600 max-w-3xl mx-auto font-medium">
+                    Une année entière de délicieux thés
+                </p>
+            </div>
+        </div>
+    
+        <!-- Card Container -->
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Grand Prize Card -->
+            <div class="group relative bg-white rounded-3xl shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/20 to-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                <!-- Content Container -->
+                <div class="p-8 md:p-12">
+                    <div class="flex flex-col md:flex-row items-center gap-8">
+                        <!-- Image Section -->
+                        <div class="w-48 h-48 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-yellow-200 to-emerald-200 rounded-full animate-pulse-slow"></div>
+                            <img src="/image/1.png" alt="Grand Prix" 
+                                 class="relative w-full h-full object-cover rounded-full border-8 border-emerald-100 group-hover:border-emerald-200 transition-colors duration-300 shadow-xl">
+                            <!-- Decorative elements -->
+                            <div class="absolute -top-4 -right-4 w-12 h-12 bg-yellow-400 rounded-full animate-bounce-slow flex items-center justify-center text-2xl">
+                                🌟
+                            </div>
+                        </div>
+    
+                        <!-- Text Content -->
+                        <div class="flex-1 text-center md:text-left">
+                            <h3 class="text-3xl font-bold text-emerald-800 mb-4">1 An de Thé Gratuit</h3>
+                            <ul class="space-y-3 text-lg text-emerald-600">
+
+                            </ul>
+                            <div class="mt-6">
+                                <span class="inline-block bg-emerald-100 rounded-full px-6 py-2 text-emerald-700 font-semibold">
+                                    Valeur estimée: 360€
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+    </section>
+    <!-- Newsletter Section -->
+<section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50">
+    <!-- Background decorations -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
     </div>
-</div>
 
-<!-- Footer -->
-<footer class="text-center bg-light py-4">
-    <div class="container">
-        <p>&copy; 2024 Thé Tip Top. Tous droits réservés.</p>
-        <a href="#">Mentions légales</a> | <a href="#">Politique de confidentialité</a>
+    <!-- Content Container -->
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="inline-block px-4 py-1 bg-emerald-100 rounded-full text-emerald-700 text-sm font-semibold mb-4">
+                Newsletter
+            </span>
+            <h2 class="text-4xl md:text-5xl font-bold text-emerald-800 mb-6">
+                <span class="inline-block animate-bounce-slow">📬</span>
+                Restez informé !
+                <span class="inline-block animate-bounce-slow delay-150">🌱</span>
+            </h2>
+            <p class="text-xl text-emerald-600 max-w-2xl mx-auto">
+                Inscrivez-vous à notre newsletter pour ne manquer aucun concours et recevoir nos offres exclusives
+            </p>
+        </div>
+
+        <!-- Newsletter Form -->
+        <div class="relative max-w-xl mx-auto">
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 transform rotate-1 rounded-3xl"></div>
+            <div class="relative bg-white/90 backdrop-blur-md shadow-xl rounded-3xl p-8">
+                <form class="space-y-6">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1">
+                            <input type="email" 
+                                   placeholder="Votre adresse email" 
+                                   class="w-full px-6 py-4 bg-emerald-50 border border-emerald-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
+                                   required>
+                        </div>
+                        <button type="submit" 
+                                class="px-8 py-4 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                            S'inscrire
+                        </button>
+                    </div>
+                    <div class="text-center text-emerald-600 text-sm">
+                        <p class="mt-2">
+                            En vous inscrivant, vous acceptez de recevoir nos newsletters. 
+                            Vous pourrez vous désinscrire à tout moment.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Footer -->
+    <footer class="bg-green-600 text-white py-12">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- À propos -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">À propos de Tiptop</h4>
+                <div class="flex items-center space-x-2 mb-4">
+                    <img src="/image/logo.png" alt="Logo Tiptop" class="h-8 w-auto brightness-200">
+                    <span class="text-lg font-semibold">Tiptop</span>
+                </div>
+                <p class="text-green-100 text-sm">
+                    Découvrez notre sélection de thés d'exception et participez à nos concours exclusifs.
+                </p>
+            </div>
+
+            <!-- Liens utiles -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Liens utiles</h4>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="/mentionslegals" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            Mentions légales
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/cgu" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            CGU
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/politiquedeconfidentialite" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            Politique de confidentialité
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/rse" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            RSE
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/faq" class="text-green-100 hover:text-white transition-colors duration-200 flex items-center">
+                            <span class="mr-2">→</span>
+                            FAQ
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Contactez-nous</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center text-green-100">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                        </svg>
+                        contact@tiptop.fr
+                    </li>
+                    <li class="flex items-center text-green-100">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                        </svg>
+                        01 23 45 67 89
+                    </li>
+                    <li>
+                        <a href="/contacteznous" class="inline-block mt-4 px-6 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white transition-colors duration-200">
+                            Nous contacter
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Réseaux sociaux -->
+            <div class="space-y-4">
+                <h4 class="text-xl font-bold mb-4">Suivez-nous</h4>
+                <div class="flex flex-col space-y-4">
+                    <a href="https://www.facebook.com/the.tip.top.2024" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                        Facebook
+                    </a>
+                    <a href="Instagram.com/the_tiptop1" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        </svg>
+                        Instagram
+                    </a>
+                    <a href="https://www.tiktok.com/@th.tiptop?_t=8rJSwPdbq35&_r=1" class="flex items-center text-green-100 hover:text-white transition-colors duration-200">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                        </svg>
+                        TikTok
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="pt-8 mt-8 border-t border-green-500/30 text-center">
+            <p class="text-green-100">© 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
+
+        </div>
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        
+        // JavaScript for countdown
+        function updateCountdown() {
+            // Définir la date de fin au 13 décembre 2024 à minuit
+            const endDate = new Date('2024-12-13T23:59:59').getTime();
+            
+            function update() {
+                const now = new Date().getTime();
+                const timeLeft = endDate - now;
+
+                if (timeLeft <= 0) {
+                    // Le compte à rebours est terminé
+                    document.querySelector('.countdown-grid').innerHTML = `
+                        <div class="countdown-item" style="grid-column: span 4;">
+                            <div class="countdown-number" style="font-size: 2rem;">
+                                Le concours est terminé !
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                function updateElement(id, value, previousValue) {
+                    const element = document.getElementById(id);
+                    const currentValue = element.textContent;
+                    if (currentValue !== '--' && value !== parseInt(currentValue)) {
+                        element.classList.remove('changing');
+                        void element.offsetWidth; // Force reflow
+                        element.classList.add('changing');
+                    }
+                    element.textContent = value.toString().padStart(2, '0');
+                }
+
+                updateElement('days', days);
+                updateElement('hours', hours);
+                updateElement('minutes', minutes);
+                updateElement('seconds', seconds);
+            }
+
+            // Mise à jour initiale
+            update();
+            
+            // Mise à jour toutes les secondes
+            const timerInterval = setInterval(update, 1000);
+
+            // Nettoyage de l'intervalle quand nécessaire
+            return () => clearInterval(timerInterval);
+        }
+
+        // Démarrer le compte à rebours quand le DOM est chargé
+        document.addEventListener('DOMContentLoaded', updateCountdown);
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+
+
+        //roue
+        const wheel = document.getElementById('wheel');
+        const spinBtn = document.getElementById('spinBtn');
+        let isSpinning = false;
+
+        const sections = [
+            { text: "Gain 1", color: "#FF6B6B" },
+            { text: "Gain 2", color: "#4ECDC4" },
+            { text: "Gain 3", color: "#45B7D1" },
+            { text: "Gain 4", color: "#96CEB4" },
+            { text: "Gain 5", color: "#FFEEAD" }
+        ];
+
+        function createWheel() {
+            const totalSections = sections.length;
+            const rotationAngle = 360 / totalSections;
+            const svgNamespace = "http://www.w3.org/2000/svg";
+            
+            // Créer l'élément SVG
+            const svg = document.createElementNS(svgNamespace, "svg");
+            svg.setAttribute("viewBox", "0 0 100 100");
+            svg.style.width = "100%";
+            svg.style.height = "100%";
+            
+            // Calculer les paramètres du donut
+            const centerX = 50;
+            const centerY = 50;
+            const outerRadius = 50;
+            const innerRadius = 20;
+
+            sections.forEach((section, index) => {
+                // Calculer les angles pour cette section
+                const startAngle = (index * rotationAngle) * Math.PI / 180;
+                const endAngle = ((index + 1) * rotationAngle) * Math.PI / 180;
+                
+                // Calculer les points du path
+                const outerStartX = centerX + outerRadius * Math.cos(startAngle);
+                const outerStartY = centerY + outerRadius * Math.sin(startAngle);
+                const outerEndX = centerX + outerRadius * Math.cos(endAngle);
+                const outerEndY = centerY + outerRadius * Math.sin(endAngle);
+                
+                const innerStartX = centerX + innerRadius * Math.cos(endAngle);
+                const innerStartY = centerY + innerRadius * Math.sin(endAngle);
+                const innerEndX = centerX + innerRadius * Math.cos(startAngle);
+                const innerEndY = centerY + innerRadius * Math.sin(startAngle);
+                
+                // Créer le path pour cette section
+                const path = document.createElementNS(svgNamespace, "path");
+                const d = [
+                    `M ${outerStartX} ${outerStartY}`,
+                    `A ${outerRadius} ${outerRadius} 0 0 1 ${outerEndX} ${outerEndY}`,
+                    `L ${innerStartX} ${innerStartY}`,
+                    `A ${innerRadius} ${innerRadius} 0 0 0 ${innerEndX} ${innerEndY}`,
+                    'Z'
+                ].join(' ');
+                
+                path.setAttribute("d", d);
+                path.setAttribute("fill", section.color);
+                svg.appendChild(path);
+
+                // Ajouter le texte
+                const textAngle = startAngle + (rotationAngle / 2) * Math.PI / 180;
+                const textRadius = (outerRadius + innerRadius) / 2;
+                const textX = centerX + textRadius * Math.cos(textAngle);
+                const textY = centerY + textRadius * Math.sin(textAngle);
+                
+                const text = document.createElementNS(svgNamespace, "text");
+                text.textContent = section.text;
+                text.setAttribute("x", textX);
+                text.setAttribute("y", textY);
+                text.setAttribute("text-anchor", "middle");
+                text.setAttribute("dominant-baseline", "middle");
+                text.setAttribute("fill", "white");
+                text.setAttribute("font-size", "4");
+                text.setAttribute("font-weight", "bold");
+                text.setAttribute("transform", `rotate(${(index * rotationAngle) + rotationAngle/2}, ${textX}, ${textY})`);
+                
+                svg.appendChild(text);
+            });
+            
+            wheel.appendChild(svg);
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            spinBtn.disabled = true;
+
+            const rotations = 5 + Math.random() * 5;
+            const extraDegrees = Math.random() * 360;
+            const totalDegrees = rotations * 360 + extraDegrees;
+
+            wheel.style.transform = `rotate(${totalDegrees}deg)`;
+
+            setTimeout(() => {
+                isSpinning = false;
+                spinBtn.disabled = false;
+                
+                const finalAngle = extraDegrees;
+                const sectionAngle = 360 / sections.length;
+                const winningIndex = Math.floor((360 - (finalAngle % 360)) / sectionAngle);
+            }, 4000);
+        }
+
+        createWheel();
+    </script>
+    <div class="falling-leaves-container"></div>
+
 </body>
 </html>
+
+

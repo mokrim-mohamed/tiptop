@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script th:src="@{/js/dashboard.js}" defer></script>
@@ -38,10 +39,11 @@
             </div>
             <ul class="menu">
                 <li><a href="/admin/dashboard" class="active">Dashboard</a></li>
-                <li><a href="/admin/user">User</a></li>
-                <li><a href="/admin/historique-gains" >Historique des Gains</a></li>
-                <li><a href="/admin/parrametre" >Parrametre</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/admin/listeEmp">Liste des employés</a></li>
+                <li><a href="/admin/listeClients">Liste des clients</a></li>
+                <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
+                <li><a href="/admin/parrametre" >Paramètres</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
             </ul>
         </div>
 
@@ -59,7 +61,7 @@
                 
                     <!-- Carte 2 : Tickets utilisés -->
                     <div class="dashboard-card">
-                        <h3>Tickets Récuperer</h3>
+                        <h3>Tickets à récuperer</h3>
                         <p th:text="${countRemis} ">0%</p>
                     </div>
                 
@@ -91,40 +93,6 @@
                 </div>
             </section>
 
-            <!-- Historique des tickets -->
-            <section class="tickets-section">
-                <h2>Historique des tickets</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>N° ticket</th>
-                            <th>Gain obtenu</th>
-                            <th>Date de récupération</th>
-                            <th>Statut du gain</th>
-                            <th>Détails</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>12345</td>
-                            <td>Lot A</td>
-                            <td>01/10/2024</td>
-                            <td>Livré</td>
-                            <td><a href="#" class="details-btn">Voir détails</a></td>
-                        </tr>
-                        <tr>
-                            <td>12346</td>
-                            <td>Lot B</td>
-                            <td>02/10/2024</td>
-                            <td>En attente</td>
-                            <td><a href="#" class="details-btn">Voir détails</a></td>
-                        </tr>
-                        <!-- Contenu dynamique -->
-                    </tbody>
-                </table>
-            </section>
-        </main>
-    </div>
 
     <script>
         
@@ -136,5 +104,6 @@
             document.querySelector('.main-content').classList.toggle('active');
         });
     </script>
+
 </body>
 </html>
