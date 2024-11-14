@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -22,7 +23,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeHttpRequests(request -> request.requestMatchers("/","sitemap.xml","robots.txt","contacteznous","/mp-oublie","reset-password","reset-password-success", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**","faq","cgu","mentionslegales","rse","404","politiquedeconfidentialite").permitAll()
+                .authorizeHttpRequests(request -> request.requestMatchers("/","sitemap.xml","robots.txt","contacteznous","/mp-oublie","reset-password","reset-password-success", "/resources/**", "/register", "/login","index","/css/**","/js/**","/image/**","/templates/**","faq","cgu","mentionslegals","rse","404","politiquedeconfidentialite","reglement","403").permitAll()
                         .anyRequest().authenticated())
                 .formLogin()
                         .loginPage("/login")
@@ -49,7 +50,11 @@ public class SecurityConfig {
                         .permitAll()
                         .and() // Ajoutez cette ligne pour continuer la chaîne
                     .exceptionHandling()
-                        .accessDeniedPage("/403"); // Spécifiez la page d'accès refusé
+            .accessDeniedPage("/403")
+            .defaultAuthenticationEntryPointFor((request, response, exception) -> {
+                response.sendRedirect("/404");
+                return;
+            }, new AntPathRequestMatcher("/**"));
 
         return http.build();
     }

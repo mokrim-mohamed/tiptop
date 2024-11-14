@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inscription - Tea Brand</title>
     <link rel="stylesheet" th:href="@{/css/register.css}">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
     <script th:src="@{/js/inscription.js}" defer></script>
 </head>
 <body>
@@ -14,6 +15,8 @@
                 <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo">
                 <h2>Inscription</h2>
                 <form th:action="@{/register}" method="post">
+                    <div th:if="${errorMessage}" class="alert alert-danger" th:text="${error}">
+                    </div>
                     <div class="input-group">
                         <label for="nom">Nom</label>
                         <input type="text" name="nom" id="nom" placeholder="Entrer votre nom" required>

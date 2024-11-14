@@ -6,10 +6,18 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <title>Contact</title>
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
 
 </head>
 <style>
-    /* Style du titre principal identique à la FAQ */
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
+
     .contact-heading {
         text-align: center;
         color: #166534;
@@ -134,20 +142,23 @@
 <body>
     <header>
         <div class="logo">
+        <a href="/index">
             <img src="/image/logo.png" alt="Logo" />
-        </div>
+        </a> 
+    </div>
         <nav>
-            <ul class="nav-list">
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
-                <li th:if="${isAuthenticated}">
-                    <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
-                    <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
-                    <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
-                    <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
-                </li>
-            </ul>
-        </nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
     </header>
     <h1 class="contact-heading">Contactez-nous</h1>
 
@@ -156,7 +167,7 @@
         <h3>Nos coordonnées</h3>
         <p>
             <i class="fas fa-map-marker-alt"></i>
-            123 Rue du Thé, 75001 Paris, France
+            18 rue Léon Frot,75011 Paris, France
         </p>
         <p>
             <i class="fas fa-phone"></i>
@@ -265,7 +276,7 @@
                         01 23 45 67 89
                     </li>
                     <li>
-                        <a href="/nous-contacter" class="inline-block mt-4 px-6 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white transition-colors duration-200">
+                        <a href="/contacteznous" class="inline-block mt-4 px-6 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white transition-colors duration-200">
                             Nous contacter
                         </a>
                     </li>
@@ -300,7 +311,7 @@
 
         <!-- Copyright -->
         <div class="pt-8 mt-8 border-t border-green-500/30 text-center">
-            <p class="text-green-100">© 2024 Tiptop. Tous droits réservés.</p>
+            <p class="text-green-100">© 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
         </div>
     </div>
 </footer>

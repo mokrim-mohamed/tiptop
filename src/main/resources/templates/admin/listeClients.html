@@ -6,6 +6,7 @@
     <title>Liste des Clients</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="stylesheet" th:href="@{/css/parrametre.css}">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     
@@ -82,7 +83,7 @@
                 <li><a href="/admin/listeClients" class="active">Liste des clients</a></li>
                 <li><a href="/admin/jeu-concours">Jeu-concours</a></li>
                 <li><a href="/admin/parrametre">Paramètres</a></li>
-                <li><a href="/logout">Logout</a></li>
+                <li><a href="/logout">Déconnexion</a></li>
             </ul>
         </div>
 
@@ -93,7 +94,7 @@
 
             <!-- Section pour le bouton de téléchargement Excel -->
             <section class="download-section" style="margin-bottom: 20px;">
-                <button id="downloadExcelBtn" class="button-ajouter">Exporter la liste de clients</button>
+                <button id="downloadExcelBtn" class="button-ajouter">Exporter la liste des clients</button>
             </section>
 
             <!-- Barre de recherche -->
@@ -208,18 +209,6 @@
         // Initialisation de l'affichage initial (20 premiers clients)
         paginate(0);
     </script>
-     <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; 2024 Votre Entreprise. Tous droits réservés.</p>
-            <ul class="footer-links">
-                <li><a href="/mentionslegals">Mentions légales</a></li>
-                <li><a href="/cgu">CGU</a></li>
-                <li><a href="/politiquedeconfidentialite">Politique de confidentialité</a></li>
-                <li><a href="/rse">RSE</a></li>
-                <li><a href="/faq">FAQ</a></li>
-                <li><a href="/contacteznous">Contact</a></li>
-            </ul>
-        </div>
-    </footer>
+
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - Thé Tip Top - Réponses à vos questions sur notre concours de thé</title>
     <meta name="description" content="Trouvez les réponses aux questions fréquemment posées sur le concours Thé Tip Top. Modalités de participation, lots à gagner, retrait des lots et plus encore.">
+    <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
 
     <!-- Open Graph tags pour le partage sur les réseaux sociaux -->
     <meta property="og:title" content="FAQ - Thé Tip Top - Réponses à vos questions sur notre concours de thé">
@@ -17,7 +18,14 @@
     <link rel="stylesheet" href="/css/style.css">
 
     <style>
-        
+        body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
+
         main {
             flex: 1;
             background-color: #f9fafb;
@@ -144,17 +152,18 @@
         </a> 
     </div>
     <nav>
-        <ul class="nav-list">
-            <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
-            <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
-            <li th:if="${isAuthenticated}">
-                <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
-                <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
-                <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
-                <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
-            </li>
-        </ul>
-    </nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
 </header>
 
 <body>
