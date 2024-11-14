@@ -141,11 +141,11 @@
            success: function(data) {
                // Map des IDs de gain aux positions
                const gainPositions = {
-                   1:1, // Infuseur
-                   2: 2, // Thé Détox
-                   3: 3, // Thé Signature 
-                   4: 4, // Coffret 39€
-                   5: 5  // Coffret 69€
+                   1:0, // Infuseur
+                   2: 1, // Thé Détox
+                   3: 2, // Thé Signature 
+                   4: 3, // Coffret 39€
+                   5: 4  // Coffret 69€
                };
                // Reset de la roue
                wheel.style.transform = 'rotate(0deg)';
@@ -278,11 +278,11 @@
         let isSpinning = false;
 
         const sections = [
-    { text: 1, color: "#FF6B6B" },
-    { text: 2, color: "#4ECDC4" },
-    { text: 3, color: "#45B7D1" },
-    { text: 4, color: "#96CEB4" },
-    { text: 5, color: "#FFEEAD" }
+    { text: "Gain 1", color: "#FF6B6B" },
+    { text: "Gain 2", color: "#4ECDC4" },
+    { text: "Gain 3", color: "#45B7D1" },
+    { text: "Gain 4", color: "#96CEB4" },
+    { text: "Gain 5", color: "#FFEEAD" }
 ];
 
         function createWheel() {
