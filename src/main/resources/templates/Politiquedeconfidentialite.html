@@ -18,9 +18,14 @@
 </head>
 
 <style>
-/* Dans le style de la politique de confidentialité, remplacer */
+body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f9;
+        color: #333;
+    }
 
-/* Par */
 .contact-container {
     max-width: 800px;
     margin: 40px auto;
@@ -110,17 +115,18 @@ body {
                 <img src="/image/logo.png" alt="Logo" />
             </a>        </div>
         <nav>
-            <ul class="nav-list">
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
-                <li th:if="${isAuthenticated}">
-                    <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
-                    <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
-                    <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
-                    <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
-                </li>
-            </ul>
-        </nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
     </header>
     <main class="cgu-section">
         <h1 class="cgu-title">Politique de Confidentialité</h1>
@@ -279,7 +285,7 @@ body {
                         01 23 45 67 89
                     </li>
                     <li>
-                        <a href="/contact" class="inline-block mt-4 px-6 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white transition-colors duration-200">
+                        <a href="/contacteznous" class="inline-block mt-4 px-6 py-2 bg-green-500 hover:bg-green-400 rounded-full text-white transition-colors duration-200">
                             Nous contacter
                         </a>
                     </li>

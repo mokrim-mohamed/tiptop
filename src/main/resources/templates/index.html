@@ -105,13 +105,15 @@ window.addEventListener("load", () => {
         <div class="falling-leaves-container"></div>
 
 <body class="font-sans bg-gray-50">
-    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-emerald-100 transform translate-y-full transition-transform duration-500 shadow-lg z-50">
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white backdrop-blur-md border-t border-emerald-100 transform translate-y-full transition-transform duration-500 shadow-lg z-50">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div class="flex-1">
                     <h3 class="text-lg font-semibold text-emerald-800 mb-2">🍪 Gestion des cookies</h3>
                     <p class="text-emerald-600 text-sm md:text-base">
-                        Nous utilisons des cookies pour améliorer votre expérience sur notre site. Ils nous permettent d'analyser l'utilisation du site, de personnaliser votre expérience et d'afficher du contenu pertinent. Vous pouvez gérer vos préférences à tout moment.
+                        Nous utilisons des cookies pour améliorer votre expérience sur notre site. Ils nous permettent d'analyser l'utilisation du site, de personnaliser votre expérience et d'afficher du contenu pertinent. Pour en savoir plus, consultez notre 
+                        <a href="/politiquedeconfidentialite" class="text-emerald-700 underline hover:text-emerald-800">politique de confidentialité</a> et nos 
+                        <a href="/mentionslegals" class="text-emerald-700 underline hover:text-emerald-800">mentions légales</a>.
                     </p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3 min-w-fit">
@@ -124,14 +126,13 @@ window.addEventListener("load", () => {
                         Tout accepter
                     </button>
                     <button id="rejectAllCookies"
-                        class="px-6 py-2 text-emerald-600 bg-transparent hover:bg-emerald-50 rounded-full text-sm font-medium border border-emerald-200 transition-colors">
-                        Tout refuser
+                        class="px-6 py-2 text-emerald-600 bg-emerald-50 hover:bg-emerald-100 rounded-full text-sm font-medium transition-colors">
+                        Rejeter
                     </button>
                 </div>
             </div>
         </div>
     </div>
-    
     <!-- Modal de personnalisation -->
     <div id="cookieModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
         <div class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-2xl bg-white rounded-2xl shadow-xl p-6">
@@ -201,6 +202,7 @@ window.addEventListener("load", () => {
             this.cookieModal = document.getElementById('cookieModal');
             this.setupEventListeners();
             this.checkCookieConsent();
+            
         }
     
         setupEventListeners() {
@@ -323,17 +325,18 @@ window.addEventListener("load", () => {
                 <img src="/image/logo.png" alt="Logo" />
             </a>        </div>
         <nav>
-            <ul class="nav-list">
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
-                <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
-                <li th:if="${isAuthenticated}">
-                    <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
-                    <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
-                    <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
-                    <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
-                </li>
-            </ul>
-        </nav>
+    <ul class="nav-list">
+        <li><a class="nav-link" href="/reglement">Règles</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/login}">Connexion</a></li>
+        <li th:if="${!isAuthenticated}"><a class="nav-link" th:href="@{/register}">Inscription</a></li>
+        <li th:if="${isAuthenticated}">
+            <a class="nav-link" th:if="${isAdmin}" th:href="@{/admin/dashboard}">Mon compte</a>
+            <a class="nav-link" th:if="${isEmployee}" th:href="@{/employee/historique-gains}">Mon compte</a>
+            <a class="nav-link" th:if="${isUser}" th:href="@{/client/participation}">Mon compte</a>
+            <a class="nav-link" th:href="@{/logout}">Déconnexion</a>
+        </li>
+    </ul>
+</nav>
     </header>
     <!-- Hero Section -->
     <section class="relative flex flex-col md:flex-row items-center justify-between p-8 md:p-16 pb-0 bg-emerald-50" id="hero">        <!-- Left Column with Wheel -->
@@ -410,10 +413,10 @@ window.addEventListener("load", () => {
                                 en magasin ou en ligne.
                             </p>
                         </div>
-                        <button type="submit" 
-                                class="w-full py-4 bg-emerald-600 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                        <a th:href="${!isAuthenticated ? '/login' : '/client/participation'}" 
+                           class="button-style w-full py-4 bg-emerald-600 text-white text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 block text-center">
                             Participer maintenant
-                        </button>
+                        </a>
                     </form>
     
                     <!-- See Prizes Link -->
@@ -706,6 +709,58 @@ window.addEventListener("load", () => {
     
 
     </section>
+    <!-- Newsletter Section -->
+<section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50">
+    <!-- Background decorations -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
+        <div class="absolute top-0 right-1/4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
+    </div>
+
+    <!-- Content Container -->
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="inline-block px-4 py-1 bg-emerald-100 rounded-full text-emerald-700 text-sm font-semibold mb-4">
+                Newsletter
+            </span>
+            <h2 class="text-4xl md:text-5xl font-bold text-emerald-800 mb-6">
+                <span class="inline-block animate-bounce-slow">📬</span>
+                Restez informé !
+                <span class="inline-block animate-bounce-slow delay-150">🌱</span>
+            </h2>
+            <p class="text-xl text-emerald-600 max-w-2xl mx-auto">
+                Inscrivez-vous à notre newsletter pour ne manquer aucun concours et recevoir nos offres exclusives
+            </p>
+        </div>
+
+        <!-- Newsletter Form -->
+        <div class="relative max-w-xl mx-auto">
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-400/20 to-green-400/20 transform rotate-1 rounded-3xl"></div>
+            <div class="relative bg-white/90 backdrop-blur-md shadow-xl rounded-3xl p-8">
+                <form class="space-y-6">
+                    <div class="flex flex-col md:flex-row gap-4">
+                        <div class="flex-1">
+                            <input type="email" 
+                                   placeholder="Votre adresse email" 
+                                   class="w-full px-6 py-4 bg-emerald-50 border border-emerald-100 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-all duration-300"
+                                   required>
+                        </div>
+                        <button type="submit" 
+                                class="px-8 py-4 bg-emerald-600 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transform transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                            S'inscrire
+                        </button>
+                    </div>
+                    <div class="text-center text-emerald-600 text-sm">
+                        <p class="mt-2">
+                            En vous inscrivant, vous acceptez de recevoir nos newsletters. 
+                            Vous pourrez vous désinscrire à tout moment.
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
     <!-- Footer -->
     <footer class="bg-green-600 text-white py-12">
     <div class="container mx-auto px-4">
@@ -879,7 +934,7 @@ window.addEventListener("load", () => {
         updateCountdown();
 
 
-        //
+        //roue
         const wheel = document.getElementById('wheel');
         const spinBtn = document.getElementById('spinBtn');
         let isSpinning = false;
