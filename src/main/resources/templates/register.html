@@ -7,14 +7,63 @@
     <link rel="stylesheet" th:href="@{/css/register.css}">
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
     <script th:src="@{/js/inscription.js}" defer></script>
+
+    <style>
+        .password-strength {
+            margin-top: 5px;
+            height: 5px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .very-weak { background-color: #ff4444; width: 20%; }
+        .weak { background-color: #ffbb33; width: 40%; }
+        .medium { background-color: #ffeb3b; width: 60%; }
+        .strong { background-color: #00C851; width: 80%; }
+        .very-strong { background-color: #007E33; width: 100%; }
+
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        .password-requirements {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            text-align: left;
+        }
+
+        .requirement {
+            margin: 2px 0;
+        }
+
+        .requirement.met {
+            color: #00C851;
+        }
+    </style>
 </head>
 <body>
     <div class="background-container">
         <div class="register-container">
             <div class="register-box">
-                <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo">
-                <h2>Inscription</h2>
-                <form th:action="@{/register}" method="post">
+                <div class="logo">
+                    <a th:href="@{/index}">
+                        <img th:src="@{/image/logo.jpeg}" alt="Tip Top">
+                    </a>                </div>
+                                <h2>Inscription</h2>
+                <form th:action="@{/register}" method="post" id="registrationForm" novalidate>
                     <div th:if="${errorMessage}" class="alert alert-danger" th:text="${error}">
                     </div>
                     <div class="input-group">
@@ -28,22 +77,42 @@
                     <div class="input-group">
                         <label for="sexe">Sexe</label>
                         <select name="sexe" id="sexe" required>
-                            <option value="Homme">Homme</option>
-                            <option value="Femme">Femme</option>
+                            <option value="H">Homme</option>
+                            <option value="F">Femme</option>
                             <option value="Autre">Autre</option>
                         </select>
                     </div>
                     <div class="input-group">
                         <label for="email">Email</label>
                         <input type="email" name="email" id="email" placeholder="Entrer votre email" required>
+                        <div class="invalid-feedback">Veuillez entrer une adresse email valide.</div>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirmEmail">Confirmer Email</label>
+                        <input type="email" name="confirmEmail" id="confirmEmail" placeholder="Confirmer votre email" required>
+                        <div class="invalid-feedback">Les adresses email ne correspondent pas.</div>
                     </div>
                     <div class="input-group">
                         <label for="telephone">Téléphone</label>
-                        <input type="tel" name="telephone" id="telephone" placeholder="Entrer votre numéro de téléphone">
+                        <input type="tel" name="telephone" id="telephone" placeholder="Exemple: XX XX XX XX XX" maxlength="14">
+                        <div class="invalid-feedback">Le numéro doit contenir exactement 10 chiffres.</div>
                     </div>
                     <div class="input-group">
                         <label for="motDePasse">Mot de passe</label>
                         <input type="password" name="motDePasse" id="motDePasse" placeholder="Entrer un mot de passe" required>
+                        <div class="password-strength"></div>
+                        <div class="strength-text"></div>
+                        <div class="password-requirements">
+                            <div class="requirement" id="length">8 caractères minimum</div>
+                            <div class="requirement" id="uppercase">Une majuscule</div>
+                            <div class="requirement" id="lowercase">Une minuscule</div>
+                            <div class="requirement" id="number">Un chiffre</div>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirmPassword">Confirmer le mot de passe</label>
+                        <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirmer votre mot de passe" required>
+                        <div class="invalid-feedback">Les mots de passe ne correspondent pas.</div>
                     </div>
                     <button type="submit">S'inscrire</button>
                 </form>
