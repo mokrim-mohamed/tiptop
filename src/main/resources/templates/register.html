@@ -59,8 +59,9 @@
         <div class="register-container">
             <div class="register-box">
                 <div class="logo">
-                    <img th:src="@{/image/logo.jpeg}" alt="Tip Top">
-                </div>
+                    <a th:href="@{/index}">
+                        <img th:src="@{/image/logo.jpeg}" alt="Tip Top">
+                    </a>                </div>
                                 <h2>Inscription</h2>
                 <form th:action="@{/register}" method="post" id="registrationForm" novalidate>
                     <div th:if="${errorMessage}" class="alert alert-danger" th:text="${error}">
