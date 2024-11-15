@@ -57,7 +57,6 @@ document.addEventListener('DOMContentLoaded', function() {
             uppercase: /[A-Z]/.test(password),
             lowercase: /[a-z]/.test(password),
             number: /[0-9]/.test(password),
-            special: /[^A-Za-z0-9]/.test(password)
         };
 
         // Update requirement indicators
