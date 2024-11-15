@@ -12,7 +12,9 @@
     <div class="background-container">
         <div class="login-container">
             <div class="login-box">
-                <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo"> <!-- Utilisation de th:src -->
+                <a th:href="@{/index}">
+                    <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo"> <!-- Utilisation de th:src -->
+                </a>
                 <h2>Bienvenue</h2>
                 <div th:if="${errorMessage}" style="color: red;">
                     <p th:text="${errorMessage}"></p>
