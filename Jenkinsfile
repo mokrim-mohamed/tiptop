@@ -16,22 +16,27 @@ pipeline {
 
     
 
-        stage('Check Docker') {
+        stage('Build') {
             steps {
                 script {
-                    // Vérifier que Docker est accessible et obtenir la version
-                    sh 'docker --version'
+                    sh  'mvn clean package -DskipTests'
                 }
             }
         }
-
+        stage('Test & Publish Report') {
+            steps {
+                script {
+                    sh 'mvn clean verify sonar:sonar -P Unit-tests'
+                }
+            }
+        }
         stage('Build Docker Image') {
             steps {
                 script {
                     def dockerTag = "${env.BUILD_ID}"
 
-                    sh 'mvn test'
-                    sh 'mvn clean package'
+                    
+                   
                     sh "docker build -t mokrim/test:${dockerTag} ."
                     echo "Image a été créée avec le tag: ${dockerTag}"
                     
@@ -40,24 +45,18 @@ pipeline {
             }
         }
 
-        stage('Login') {
-            steps {
-                script {
-                    // Se connecter à Docker Hub
-                    sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-                    sh 'echo Login réussi'
-                }
-            }
-        }
 
-        stage('Push') {
+
+        stage('Push Docker Image') {
             steps {
-                // Pousser l'image Docker sur Docker Hub avec le tag dynamique
+                // Se connecter à Docker Hub
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'echo Login réussi'
                 sh "docker push mokrim/test:${env.DOCKER_TAG}"
             }
         }
 
-        stage('Deploy to GCP') {
+        stage('Pull & Deploy to GCP') {
             steps {
                 script {
                     // Authentifier avec Google Cloud Platform et déployer l'image avec le tag dynamique
@@ -77,6 +76,13 @@ pipeline {
                         """
                     }
                 }
+            }
+        }
+        stage('Fonctionnel Test') {
+            steps {
+                sh 'sleep 60'
+                sh 'mvn clean test -P selenium-tests'
+
             }
         }
     }
