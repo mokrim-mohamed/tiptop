@@ -7,10 +7,32 @@
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <!-- Ajouter FontAwesome pour les icônes -->
 </head>
 <style>
+    /* Ajout de style pour l'image du gain */
+    .gain-image {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+        margin: 0 10px;
+    }
+    
+    /* Modification du style de la carte de succès pour aligner l'image */
+    .success-card {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 15px;
+    }
+    
+    .success-content {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
     .wheel-container {
     position: relative;
     width: 300px;
@@ -120,7 +142,6 @@
         </main>
 
     </div>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         const burgerMenu = document.getElementById('burgerMenu');
@@ -130,55 +151,100 @@
             sidebar.classList.toggle('active');
         });
 
+        function launchConfetti() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 }
+                }));
+                confetti(Object.assign({}, defaults, {
+                    particleCount,
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 }
+                }));
+            }, 250);
+        }
+
+        // Fonction pour obtenir l'URL de l'image en fonction du type de gain
+        function getGainImageUrl(gainTypeId) {
+            const imageUrls = {
+                1: '/image/image.png',    // Infuseur
+                2: '/image/gain3.png',    // Thé Détox
+                3: '/image/gain3.png',    // Thé Signature
+                4: '/image/gain2.png',    // Coffret 39€
+                5: '/image/gain4.png'     // Coffret 69€
+            };
+            return imageUrls[gainTypeId] || '/image/default.png';
+        }
+
         $(document).ready(function() {
-   $('#updateGainForm').on('submit', function(event) {
-       event.preventDefault();
+            $('#updateGainForm').on('submit', function(event) {
+                event.preventDefault();
 
-       const gainCode = $('#gainCode').val();
-       $.ajax({
-           url: `/gains/gain?gainCode=${gainCode}`,
-           type: 'PUT',
-           success: function(data) {
-               // Map des IDs de gain aux positions
-               const gainPositions = {
-                   1:0, // Infuseur
-                   2: 1, // Thé Détox
-                   3: 2, // Thé Signature 
-                   4: 3, // Coffret 39€
-                   5: 4  // Coffret 69€
-               };
-               // Reset de la roue
-               wheel.style.transform = 'rotate(0deg)';
-               
-               requestAnimationFrame(() => {
-                   const gainPosition = gainPositions[data.gainType.id];
-                   const sectionAngle = 360 / sections.length;
-                   const targetAngle = (360 - (gainPosition * sectionAngle)) + (5 * 360);
-                   
-                   wheel.style.transform = `rotate(${targetAngle}deg)`;
-                   
-                   setTimeout(() => {
-                       $('#result').html(`
-                           <div class="alert-card success-card">
-                               <i class="fas fa-check-circle success-icon"></i>
-                               <p><strong>Félicitations !</strong> Vous avez gagné : ${data.gainType.nom}</p>
-                           </div>
-                       `);
-                   }, 3000);
-               });
-           },
-           error: function(xhr) {
-               $('#result').html(`
-                   <div class="alert-card error-card">
-                       <i class="fas fa-times-circle error-icon"></i>
-                       <p><strong>Erreur !</strong> Le code de gain est incorrect ou a déjà été utilisé.</p>
-                   </div>
-               `);
-           }
-       });
-   });
-}); </script>
-
+                const gainCode = $('#gainCode').val();
+                $.ajax({
+                    url: `/gains/gain?gainCode=${gainCode}`,
+                    type: 'PUT',
+                    success: function(data) {
+                        const gainPositions = {
+                            1: 0,
+                            2: 1,
+                            3: 2,
+                            4: 3,
+                            5: 4
+                        };
+                        
+                        wheel.style.transform = 'rotate(0deg)';
+                        
+                        requestAnimationFrame(() => {
+                            const gainPosition = gainPositions[data.gainType.id];
+                            const sectionAngle = 360 / sections.length;
+                            const targetAngle = (360 - (gainPosition * sectionAngle)) + (5 * 360);
+                            
+                            wheel.style.transform = `rotate(${targetAngle}deg)`;
+                            
+                            setTimeout(() => {
+                                const gainImage = getGainImageUrl(data.gainType.id);
+                                $('#result').html(`
+                                    <div class="alert-card success-card">
+                                        <i class="fas fa-check-circle success-icon"></i>
+                                        <div class="success-content">
+                                            <p><strong>Félicitations !</strong> Vous avez gagné : ${data.gainType.nom}</p>
+                                            <img src="${gainImage}" alt="${data.gainType.nom}" class="gain-image">
+                                        </div>
+                                    </div>
+                                `);
+                                launchConfetti();
+                            }, 3000);
+                        });
+                    },
+                    error: function(xhr) {
+                        $('#result').html(`
+                            <div class="alert-card error-card">
+                                <i class="fas fa-times-circle error-icon"></i>
+                                <p><strong>Erreur !</strong> Le code de gain est incorrect ou a déjà été utilisé.</p>
+                            </div>
+                        `);
+                    }
+                });
+            });
+        });
+    </script>
     <style>
         /* Participation Section */
         .participation-section {
