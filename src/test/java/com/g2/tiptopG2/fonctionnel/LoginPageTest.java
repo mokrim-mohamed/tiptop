@@ -25,12 +25,11 @@ public class LoginPageTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://test.wk-archi-o23-15m-g2.fr/");
-        try {
-            Thread.sleep(5000); // Attendez 5 secondes pour être sûr que Chrome a démarré
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        driver.get("https://test.wk-archi-o23-15m-g2.fr/login");
+
+        // Attente que la page se charge
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h2"))); // Attendre l'apparition de l'élément "Bienvenue"
     }
 
     @AfterEach
@@ -42,11 +41,11 @@ public class LoginPageTest {
 
     @Test
     void testLoginSuccess() {
-        // Attendre que la page se charge
+        // Attendre que le champ username soit visible
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // Vérifier que la page contient le texte "Bienvenue"
-        WebElement welcomeElement = wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("h2")));
+        WebElement welcomeElement = driver.findElement(By.tagName("h2"));
         assertTrue(welcomeElement.getText().contains("Bienvenue"));
 
         // Remplir le champ username
@@ -58,31 +57,32 @@ public class LoginPageTest {
         passwordField.sendKeys("mokrim1234");
 
         // Soumettre le formulaire
-        WebElement loginButton = driver.findElement(By.tagName("button"));
+        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
         loginButton.click();
 
         // Vérifier la redirection ou la présence d'un message d'erreur
-        wait.until(ExpectedConditions.urlContains("admin/dashboard")); // Vérifie si la redirection a eu lieu
+        wait.until(ExpectedConditions.urlContains("admin/dashboard")); // Vérifie si la redirection a eu lieu vers la page d'administration
     }
 
     @Test
     void testLoginFailure() {
+        // Test de connexion avec des identifiants incorrects
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-        // Remplir le champ username avec un mauvais identifiant
+        // Remplir le champ username
         WebElement usernameField = driver.findElement(By.id("username"));
-        usernameField.sendKeys("wronguser");
+        usernameField.sendKeys("wronguser@gmail.com");
 
-        // Remplir le champ password avec un mauvais mot de passe
+        // Remplir le champ password
         WebElement passwordField = driver.findElement(By.id("password"));
         passwordField.sendKeys("wrongpassword");
 
         // Soumettre le formulaire
-        WebElement loginButton = driver.findElement(By.tagName("button"));
+        WebElement loginButton = driver.findElement(By.cssSelector("button[type='submit']"));
         loginButton.click();
 
-        // Vérifier si un message d'erreur est affiché
-        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@style='color: red;']")));
-        assertTrue(errorMessage.getText().contains("Invalid username or password"));
+        // Attendre et vérifier la présence du message d'erreur
+        WebElement errorMessage = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("div[style='color: red;'] p")));
+        assertTrue(errorMessage.getText().contains("Invalid username or password."));  // Vérifie le message d'erreur
     }
 }
