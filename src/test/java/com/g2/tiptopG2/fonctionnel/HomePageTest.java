@@ -18,7 +18,7 @@ public class HomePageTest {
     void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
-        driver.get("https://34.1.9.181:8080/");
+        driver.get("https://test.wk-archi-o23-15m-g2.fr/");
     }
 
     @AfterEach

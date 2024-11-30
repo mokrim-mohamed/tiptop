@@ -25,7 +25,7 @@ public class LoginPageTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.manage().window().maximize();
-        driver.get("https://34.1.9.181:8080/");
+        driver.get("https://test.wk-archi-o23-15m-g2.fr/");
     }
 
     @AfterEach
@@ -46,7 +46,7 @@ public class LoginPageTest {
 
         // Remplir le champ username
         WebElement usernameField = driver.findElement(By.id("username"));
-        usernameField.sendKeys("admin@gmail.com");
+        usernameField.sendKeys("test@gmail.com");
 
         // Remplir le champ password
         WebElement passwordField = driver.findElement(By.id("password"));

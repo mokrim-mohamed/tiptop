@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('id_token_prv')
+        CLOUDSDK_CORE_PROJECT = 'g2-archi-o23'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Récupérer le code source depuis le repository
+                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'mokrim'
+            }
+        }
+
+    
+
+        stage('Build') {
+            steps {
+                script {
+                    sh  'mvn clean package -DskipTests'
+                }
+            }
+        }
+        stage('fonctionnel test') {
+            steps {
+                script {
+                    sh 'mvn clean test -P fonctionnel-tests'
+                }
+            }
+        }
+
+
+
+
+
+
+    }
+
+    post {
+        success {
+            echo 'Le pipeline s\'est terminé avec succès.'
+            sh 'docker logout'
+        }
+
+        failure {
+            echo 'Le pipeline a échoué.'
+            sh 'docker logout'
+        }
+    }
+}
