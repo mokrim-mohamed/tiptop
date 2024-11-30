@@ -27,7 +27,6 @@ pipeline {
             steps {
                 script {
                     sh 'mvn clean verify sonar:sonar -P unit-tests'
-                    sh  'mvn clean package -DskipTests'
                 }
             }
         }
@@ -79,18 +78,35 @@ pipeline {
                 }
             }
         }
-
+        stage('fonctionnel test') {
+            steps {
+                script {
+                    sleep(time: 40, unit: 'SECONDS')
+                    sh 'mvn test -P fonctionnel-tests'
+                }
+            }
+        }
     }
 
     post {
         success {
             echo 'Le pipeline s\'est terminé avec succès.'
             sh 'docker logout'
+             emailext(
+                        subject: "Test de Jenkins - Notification",
+                        body: "Le pipeline Jenkins a été exécuté avec succès.",
+                        to: "mokrimmohamed2016@gmail.com"
+                    )
         }
 
         failure {
             echo 'Le pipeline a échoué.'
             sh 'docker logout'
+             emailext(
+                        subject: "Test de Jenkins - Notification",
+                        body: "Le pipeline Jenkins a échoué.",
+                        to: "mokrimmohamed2016@gmail.com"
+                    )
         }
     }
 }
