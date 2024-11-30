@@ -78,12 +78,7 @@ pipeline {
                 }
             }
         }
-        stage('Fonctionnel Test') {
-            steps {
-                
 
-            }
-        }
     }
 
     post {
