@@ -42,6 +42,7 @@ pipeline {
         success {
             echo 'Le pipeline s\'est terminé avec succès.'
             sh 'docker logout'
+                sleep(time: 30, unit: 'SECONDS')
              emailext(
                         subject: "Test de Jenkins - Notification",
                         body: "Le pipeline Jenkins a été exécuté avec succès.",
