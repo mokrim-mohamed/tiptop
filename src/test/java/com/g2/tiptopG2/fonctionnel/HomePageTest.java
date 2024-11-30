@@ -8,6 +8,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import java.time.Duration;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HomePageTest {
@@ -17,13 +22,20 @@ public class HomePageTest {
     @BeforeEach
     void setUp() {
         WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver();
+
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--remote-allow-origins=*");
+
+        driver = new ChromeDriver(options);
         driver.get("https://test.wk-archi-o23-15m-g2.fr/");
-        try {
-            Thread.sleep(5000); // Attendez 5 secondes pour être sûr que Chrome a démarré
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+        // Attente explicite
+        new WebDriverWait(driver, Duration.ofSeconds(10))
+                .until(ExpectedConditions.presenceOfElementLocated(By.tagName("h1")));
     }
 
     @AfterEach
