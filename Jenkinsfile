@@ -26,7 +26,7 @@ pipeline {
         stage('Test & Publish Report') {
             steps {
                 script {
-                    sh 'mvn clean verify sonar:sonar -P Unit-tests'
+                    sh 'mvn clean verify sonar:sonar -P unit-tests'
                 }
             }
         }
