@@ -104,7 +104,7 @@ pipeline {
             sh 'docker logout'
              emailext(
                         subject: "Test de Jenkins - Notification",
-                        body: "Le pipeline Jenkins a échoué.",
+                        body: "Le pipeline Jenkins a échoué. Voici l'érreur:\n\n${errorMessage}",
                         to: "mokrimmohamed2016@gmail.com"
                     )
         }
