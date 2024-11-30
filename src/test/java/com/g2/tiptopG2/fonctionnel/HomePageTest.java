@@ -19,6 +19,11 @@ public class HomePageTest {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://test.wk-archi-o23-15m-g2.fr/");
+        try {
+            Thread.sleep(5000); // Attendez 5 secondes pour être sûr que Chrome a démarré
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @AfterEach
