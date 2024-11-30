@@ -26,7 +26,7 @@ pipeline {
         stage('fonctionnel test') {
             steps {
                 script {
-                    sh 'mvn clean test -P fonctionnel-tests'
+                    sh 'mvn test -P fonctionnel-tests'
                 }
             }
         }
