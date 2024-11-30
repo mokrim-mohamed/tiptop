@@ -13,6 +13,11 @@ public class SeleniumConfig {
     public WebDriver webDriver() {
         // Configuration automatique du WebDriver pour Chrome
         WebDriverManager.chromedriver().setup();
-        return new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        options.addArguments("--disable-gpu");  // Nécessaire pour le mode headless sur certains systèmes
+        options.addArguments("--window-size=1920x1080");  // Définit la taille de la fenêtre
+        options.addArguments("--no-sandbox");  // Impor
+        return new ChromeDriver(options);
     }
 }
