@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Récupérer le code source depuis le repository
-                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'koko'
+                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'mokrim'
             }
         }
 
@@ -27,6 +27,7 @@ pipeline {
             steps {
                 script {
                     sh 'mvn test -P fonctionnel-tests'
+                }
                 }
             }
         }
