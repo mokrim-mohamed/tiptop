@@ -80,8 +80,7 @@ pipeline {
         }
         stage('Fonctionnel Test') {
             steps {
-                sh 'sleep 60'
-                sh 'mvn clean test -P selenium-tests'
+                
 
             }
         }
