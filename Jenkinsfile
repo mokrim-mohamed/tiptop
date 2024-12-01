@@ -23,14 +23,14 @@ pipeline {
                 }
             }
         }
-        stage('Test & Publish Report') {
+        stage('Tests & Publish Report') {
             steps {
                 script {
                     sh 'mvn clean verify sonar:sonar -P unit-tests'
                 }
             }
         }
-        stage('Build Docker Image') {
+        stage('Build Image') {
             steps {
                 script {
                     def dockerTag = "${env.BUILD_ID}"
@@ -47,7 +47,7 @@ pipeline {
 
 
 
-        stage('Push Docker Image') {
+        stage('Push Image') {
             steps {
                 // Se connecter à Docker Hub
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
@@ -56,7 +56,7 @@ pipeline {
             }
         }
 
-        stage('Pull & Deploy to GCP') {
+        stage('Deploy to GCP') {
             steps {
                 script {
                     // Authentifier avec Google Cloud Platform et déployer l'image avec le tag dynamique
@@ -78,7 +78,7 @@ pipeline {
                 }
             }
         }
-        stage('fonctionnel test') {
+        stage('fonctionnel tests') {
             steps {
                 script {
                     sleep(time: 40, unit: 'SECONDS')
