@@ -8,11 +8,110 @@
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<!-- Au début du fichier, juste après l'ouverture de la balise body -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <!-- Ajouter FontAwesome pour les icônes -->
 </head>
 <style>
-    /* Ajout de style pour l'image du gain */
-    .gain-image {
+.chest-container {
+    width: 300px;
+    margin: 0 auto;
+    perspective: 1000px;
+}
+
+.chest {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.chest:hover {
+    transform: scale(1.05);
+}
+
+.chest.shaking {
+    animation: shake 0.5s ease-in-out infinite;
+}
+
+.chest-lid {
+    width: 200px;
+    height: 100px;
+    background: #66bb6a;
+    border-radius: 10px 10px 0 0;
+    position: relative;
+    transition: transform 0.5s ease;
+    transform-origin: bottom;
+    z-index: 2;
+    border: 4px solid #388e3c;
+}
+
+.chest.open .chest-lid {
+    transform: translateY(-20px) rotateX(-60deg);
+}
+
+.chest-base {
+    width: 200px;
+    height: 120px;
+    background: #81c784;
+    border-radius: 0 0 10px 10px;
+    position: relative;
+    border: 4px solid #388e3c;
+}
+
+.lid-decoration {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: #388e3c;
+    border: 4px solid #2e7d32;
+    border-radius: 50%;
+}
+
+.prize-animation {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.prize-animation.show {
+    animation: float-up 2s ease-out forwards;
+}
+
+.prize-content {
+    background: #388e3c;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    white-space: nowrap;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes shake {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes float-up {
+    0% {
+        transform: translate(-50%, 0);
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(-50%, -100px);
+        opacity: 0;
+    }
+}    .gain-image {
         width: 100px;
         height: 100px;
         object-fit: contain;
@@ -100,6 +199,95 @@
     }
 }
 </style>
+<script>
+    $(document).ready(function() {
+        // Menu burger
+        const burgerMenu = document.getElementById('burgerMenu');
+        const sidebar = document.getElementById('sidebar');
+    
+        burgerMenu.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+        });
+    
+        // Fonction confetti
+        function launchConfetti() {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+    
+        // Fonction pour obtenir l'image du gain
+        function getGainImageUrl(gainTypeId) {
+            const imageUrls = {
+                1: '/image/image.png',    
+                2: '/image/gain3.png',    
+                3: '/image/gain3.png',    
+                4: '/image/gain2.png',    
+                5: '/image/gain4.png'     
+            };
+            return imageUrls[gainTypeId] || '/image/default.png';
+        }
+    
+        // Gestion du formulaire
+        $('#updateGainForm').submit(function(e) {
+            e.preventDefault();
+            
+            const chest = document.getElementById('chest');
+            const prizeAnimation = document.getElementById('prizeAnimation');
+            const prizeContent = document.getElementById('prizeContent');
+            
+            $.ajax({
+                url: '/gains/gain?gainCode=' + $('#gainCode').val(),
+                type: 'PUT',
+                success: function(data) {
+                    // Animation coffre
+                    chest.classList.add('shaking');
+                    
+                    setTimeout(function() {
+                        chest.classList.remove('shaking');
+                        chest.classList.add('open');
+                        prizeAnimation.classList.add('show');
+                        
+                        if(data.gainType && data.gainType.nom) {
+                            prizeContent.textContent = data.gainType.nom;
+                        }
+                        
+                        // Affichage résultat
+                        setTimeout(function() {
+                            var gainImage = getGainImageUrl(data.gainType.id);
+                            $('#result').html(
+                                '<div class="alert-card success-card">' +
+                                '<i class="fas fa-check-circle success-icon"></i>' +
+                                '<div class="success-content">' +
+                                '<p><strong>Félicitations !</strong> Vous avez gagné : ' + data.gainType.nom + '</p>' +
+                                '<img src="' + gainImage + '" alt="' + data.gainType.nom + '" class="gain-image">' +
+                                '</div>' +
+                                '</div>'
+                            );
+                            launchConfetti();
+                        }, 1000);
+    
+                        // Reset coffre
+                        setTimeout(function() {
+                            chest.classList.remove('open');
+                            prizeAnimation.classList.remove('show');
+                        }, 3000);
+                    }, 1000);
+                },
+                error: function() {
+                    $('#result').html(
+                        '<div class="alert-card error-card">' +
+                        '<i class="fas fa-times-circle error-icon"></i>' +
+                        '<p><strong>Erreur !</strong> Le code de gain est incorrect ou a déjà été utilisé.</p>' +
+                        '</div>'
+                    );
+                }
+            });
+        });
+    });
+    </script>
 <body>
     <div class="main-wrapper">
         <button class="burger-menu" id="burgerMenu">
@@ -126,10 +314,17 @@
             <section class="participation-section">
                 <h2>Mettre à jour l'utilisateur d'un Gain</h2>
                 <div class="container relative z-10 max-w-md mx-auto my-8">
-                    <div class="wheel-container transform hover:scale-105 transition-all duration-500">
-                        <div class="pointer before:border-emerald-600"></div>
-                        <div class="wheel border-4 border-emerald-600 shadow-[0_0_30px_rgba(5,150,105,0.3)]" id="wheel"></div>
-                        <div class="center-circle bg-emerald-600 border-4 border-white shadow-lg"></div>
+                    <div class="chest-container">
+                        <div class="chest" id="chest">
+                            <div class="chest-lid">
+                                <div class="lid-decoration"></div>
+                            </div>
+                            <div class="chest-base"></div>
+                            <div class="prize-animation" id="prizeAnimation">
+                                <div class="sparkle">✨</div>
+                                <div class="prize-content" id="prizeContent"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <form id="updateGainForm" action="#" method="post">
@@ -327,7 +522,7 @@
     </style>
     <footer class="footer">
         <div class="footer-content">
-            <p>&copy; © 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
+            <p>&copy; 2024 Tiptop. Tous droits réservés. Il s'agit d'un projet étudiant fictif.</p>
             <ul class="footer-links">
                 <li><a href="/mentionslegals">Mentions légales</a></li>
                 <li><a href="/cgu">CGU</a></li>
