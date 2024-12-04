@@ -18,156 +18,76 @@
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
 </head>
 <style>
- .prize-bubble {
+
+ 
+ 
+.prizes-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    perspective: 1000px;
+}
+
+.prize-sphere {
     position: absolute;
-    width: 60px;
-    height: 60px;
+    width: 120px;
+    height: 120px;
+    transition: all 0.5s ease;
+}
+
+.prize-sphere-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    background: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    backface-visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.prize-front {
+    background: #000;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.prize-back {
+    background: white;
+    transform: scale(2) rotateY(180deg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
     opacity: 0;
-    transform: translateY(0) translateX(0);  /* Position initiale */
-    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.prize-back img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+.prize-sphere:nth-child(1) { transform: translateX(-250px); }
+.prize-sphere:nth-child(2) { transform: translateX(-125px); }
+.prize-sphere:nth-child(3) { transform: translateX(0); }
+.prize-sphere:nth-child(4) { transform: translateX(125px); }
+.prize-sphere:nth-child(5) { transform: translateX(250px); }
+
+.prize-sphere:hover {
     z-index: 10;
 }
 
-/* Positions finales des bulles */
-.treasure-box:hover .prize-bubble:nth-child(1) {
+.prize-sphere:hover .prize-front {
+    opacity: 0;
+}
+
+.prize-sphere:hover .prize-back {
     opacity: 1;
-    transform: translate(-120px, -100px);
+    transform: scale(2) rotateY(0);
 }
 
-.treasure-box:hover .prize-bubble:nth-child(2) {
-    opacity: 1;
-    transform: translate(-60px, -120px);
-}
 
-.treasure-box:hover .prize-bubble:nth-child(3) {
-    opacity: 1;
-    transform: translate(0, -130px);
-}
-
-.treasure-box:hover .prize-bubble:nth-child(4) {
-    opacity: 1;
-    transform: translate(60px, -120px);
-}
-
-.treasure-box:hover .prize-bubble:nth-child(5) {
-    opacity: 1;
-    transform: translate(120px, -100px);
-}
-
-.prize-bubble img {
-    width: 45px;
-    height: 45px;
-    object-fit: contain;
-    transition: transform 0.3s ease;
-}
-
-/* Animation au survol des bulles */
-.prize-bubble:hover {
-    transform: scale(1.1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.prize-bubble:hover img {
-    transform: scale(1.1);
-}
-    /* Ajouter ces styles CSS */
-.treasure-box-container {
-    width: 300px;
-    height: 300px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
-
-.treasure-box {
-    width: 200px;
-    height: 160px;
-    position: relative;
-    transform-style: preserve-3d;
-    transform: perspective(1000px) rotateX(10deg);
-    animation: float 3s ease-in-out infinite;
-    cursor: pointer;
-}
-
-.treasure-box:hover .lid {
-    transform: rotateX(-20deg) translateY(-10px);
-}
-
-.lid {
-    position: absolute;
-    top: -40px;
-    width: 100%;
-    height: 40px;
-    transform-origin: bottom;
-    transition: transform 0.3s ease;
-}
-
-.lid-top {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #66bb6a;
-    border-radius: 5px 5px 0 0;
-    border: 4px solid #388e3c;
-}
-
-.lid-front {
-    position: absolute;
-    bottom: -4px;
-    width: 100%;
-    height: 20px;
-    background: #4caf50;
-    border-left: 4px solid #388e3c;
-    border-right: 4px solid #388e3c;
-}
-
-.box {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.box-front {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: #81c784;
-    border: 4px solid #388e3c;
-    border-radius: 5px;
-}
-
-.box-side {
-    position: absolute;
-    top: 0;
-    right: -20px;
-    width: 20px;
-    height: 100%;
-    background: #66bb6a;
-    border-top: 4px solid #388e3c;
-    border-right: 4px solid #388e3c;
-    border-bottom: 4px solid #388e3c;
-    transform: rotateY(90deg);
-    transform-origin: left;
-}
-
-.treasure-message {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-@keyframes float {
-    0%, 100% { transform: perspective(1000px) rotateX(10deg) translateY(0px); }
-    50% { transform: perspective(1000px) rotateX(10deg) translateY(-20px); }
-}
     /* Style pour le conteneur de feuilles */
     .falling-leaves-container {
         position: fixed;
@@ -475,44 +395,48 @@ window.addEventListener("load", () => {
     <!-- Hero Section -->
     <section class="relative flex flex-col md:flex-row items-center justify-between p-8 md:p-16 pb-0 bg-emerald-100" id="hero">        <!-- Left Column with Wheel -->
         <div class="flex-1 max-w-[600px] transform hover:scale-105 transition-all duration-500">
+            
             <div class="relative p-8">
-                <!-- Decorative background elements -->
+                <div class="pattern-background"></div>
                 <div class="absolute inset-0 bg-white/50 backdrop-blur-lg rounded-3xl shadow-xl"></div>
                 <div class="absolute -inset-2 bg-gradient-to-r from-emerald-400 to-green-500 opacity-20 blur-2xl rounded-3xl"></div>
                 
-                <div class="treasure-box-container transform hover:scale-105 transition-all duration-500">
-                    <div class="treasure-box">
-                        <!-- Bulles des prix -->
-                        <div class="prize-bubble">
+                <div class="prizes-container">
+                    <div class="prize-sphere">
+                        <div class="prize-sphere-face prize-front">1</div>
+                        <div class="prize-sphere-face prize-back">
                             <img src="/image/image.png" alt="Infuseur à thé">
                         </div>
-                        <div class="prize-bubble">
+                    </div>
+                    <div class="prize-sphere">
+                        <div class="prize-sphere-face prize-front">2</div>
+                        <div class="prize-sphere-face prize-back">
                             <img src="/image/gain3.png" alt="Thé Détox">
                         </div>
-                        <div class="prize-bubble">
+                    </div>
+                    <div class="prize-sphere">
+                        <div class="prize-sphere-face prize-front">3</div>
+                        <div class="prize-sphere-face prize-back">
                             <img src="/image/gain3.png" alt="Thé signature">
                         </div>
-                        <div class="prize-bubble">
+                    </div>
+                    <div class="prize-sphere">
+                        <div class="prize-sphere-face prize-front">4</div>
+                        <div class="prize-sphere-face prize-back">
                             <img src="/image/gain2.png" alt="Coffret découverte">
                         </div>
-                        <div class="prize-bubble">
+                    </div>
+                    <div class="prize-sphere">
+                        <div class="prize-sphere-face prize-front">5</div>
+                        <div class="prize-sphere-face prize-back">
                             <img src="/image/gain4.png" alt="Coffret premium">
                         </div>
-                        
-                        <!-- Structure existante du coffre -->
-                        <div class="lid">
-                            <div class="lid-top"></div>
-                            <div class="lid-front"></div>
-                        </div>
-                        <div class="box">
-                            <div class="box-front"></div>
-                            <div class="box-side"></div>
-                        </div>
                     </div>
-                    <div class="treasure-message">
-                        <h3 class="text-2xl font-bold text-emerald-800 mb-4">Des lots exceptionnels vous attendent !</h3>
-                        <p class="text-emerald-700 mb-6">Connectez-vous pour tenter votre chance</p>
-                    </div>
+                </div>
+                
+                <div class="treasure-message text-center mt-8">
+                    <h3 class="text-2xl font-bold text-black mb-4">Des lots exceptionnels à découvrir !</h3>
+                    <p class="text-gray-900 mb-6">Survolez les sphères pour révéler nos lots</p>
                 </div>
             </div>
         </div>
@@ -879,8 +803,7 @@ window.addEventListener("load", () => {
             </span>
             <h2 class="text-4xl md:text-5xl font-bold text-emerald-800 mb-6">
                 <span class="inline-block animate-bounce-slow">📬</span>
-                Restez informé !
-                <span class="inline-block animate-bounce-slow delay-150">🌱</span>
+                Res<span class="inline-block animate-bounce-slow delay-150">🌱</span>ez informé !
             </h2>
             <p class="text-xl text-emerald-700 max-w-2xl mx-auto">
                 Inscrivez-vous à notre newsletter pour ne manquer aucun concours et recevoir nos offres exclusives
