@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-WWT36CRX');</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels</title>
     <meta name="description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
-    
+    <meta name="keywords" content="Tip Top, Jeu-Concours, Thé bio de luxe, Thé fait main, Thé artisanal, Thé haut de gamme, Jeu-concours thé bio, Concours thé de luxe, Gagner du thé bio, Thé biologique exclusif, Marque de thé de luxe, Thé premium bio, Thé bio éthique, Thé biologique fait main, Concours spécial thé bio, Produits artisanaux de thé, Thé bien-être luxe, Thé bio et éthique, Thé vert bio de qualité, Cadeaux concours thé, Thé de luxe pour connaisseurs, Offres spéciales thé bio">
     <!-- Open Graph tags pour le partage sur les réseaux sociaux -->
     <meta property="og:title" content="Concours Tiptop - Gagnez des infuseurs, thés et coffrets exceptionnels">
     <meta property="og:description" content="Participez au concours Tiptop et tentez de gagner des infuseurs, des thés et des coffrets d'exception. Inscrivez-vous dès maintenant !">
@@ -16,7 +21,17 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
+    <link rel="manifest" href="/manifest.json">
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-WLE5XKK297"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-WLE5XKK297');
+</script>
 <style>
 
  
@@ -159,6 +174,10 @@ window.addEventListener("load", () => {
         <div class="falling-leaves-container"></div>
 
 <body class="font-sans bg-gray-50">
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWT36CRX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white backdrop-blur-md border-t border-emerald-100 transform translate-y-full transition-transform duration-500 shadow-lg z-50">
         <div class="container mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
@@ -1109,7 +1128,18 @@ document.addEventListener('DOMContentLoaded', updateCountdown);
         createWheel();
     </script>
     <div class="falling-leaves-container"></div>
-
+    <script>
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then((registration) => {
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+              }, (err) => {
+                console.log('ServiceWorker registration failed: ', err);
+              });
+          });
+        }
+      </script>
 </body>
 </html>
 
