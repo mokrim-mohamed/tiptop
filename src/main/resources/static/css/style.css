@@ -246,7 +246,7 @@
                 }
         
                 footer {
-                    background-color: #333;
+                    background-color: #1f2937;
                     color: white;
                 }
         
@@ -827,9 +827,9 @@
         }
     }
  :root {
-    --primary: #047857; /* Vert plus foncé pour meilleur contraste */
-    --primary-light: #059669;
-    --primary-dark: #064e3b;
+    --primary: #025a41;
+    --primary-light: #037552;
+    --primary-dark: #013524;
     --secondary: #ca8a04; /* Jaune plus foncé pour meilleur contraste */
     --background: #f0f8f4;
     --text-dark: #1f2937;
@@ -838,12 +838,12 @@
 
 /* Navigation */
 .nav-link {
-    color: #047857; /* Vert plus foncé */
-    border: 2px solid #047857;
+    color: #013524; /* Vert plus foncé */
+    border: 2px solid #013524;
 }
 
 .nav-link:hover {
-    background-color: #047857;
+    background-color: #013524;
     color: #ffffff;
 }
 
@@ -853,7 +853,7 @@
 }
 
 .countdown-number {
-    color: #047857;
+    color: #013524;
     font-weight: 700; /* Augmentation du weight pour meilleur contraste */
 }
 
@@ -864,18 +864,18 @@
 
 /* Gains */
 .gain-circle h3 {
-    color: #064e3b;
-    font-weight: 700;
+    color: #013524;
+    font-weight: 800;
 }
 
 .gain-circle p {
-    color: #065f46;
-    font-weight: 500;
+    color: #025a41;
+    font-weight: 600;
 }
 
 /* Boutons */
 .spin-button {
-    background: #047857;
+    background: #013524;
     color: #ffffff;
     font-weight: 700;
 }
@@ -900,7 +900,7 @@ footer .social-links a {
 
 /* Messages d'état et notifications */
 .notification--success {
-    background: #047857;
+    background: #013524;
     color: #ffffff;
 }
 
@@ -942,4 +942,56 @@ input[type="checkbox"]:checked::before {
 
 input[type="checkbox"]:checked {
     background-color: #059669 !important;
+}    
+.pattern-background {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    --s: 60px;
+    --c1: #6ca700;
+    --c2: #406102;
+    --_g: radial-gradient(
+        25% 25% at 25% 25%,
+        var(--c1) 99%,
+        rgba(0, 0, 0, 0) 101%
+    );
+    background: var(--_g) var(--s) var(--s) / calc(2 * var(--s)) calc(2 * var(--s)),
+        var(--_g) 0 0 / calc(2 * var(--s)) calc(2 * var(--s)),
+        radial-gradient(50% 50%, var(--c2) 98%, rgba(0, 0, 0, 0)) 0 0 / var(--s) var(--s),
+        repeating-conic-gradient(var(--c2) 0 50%, var(--c1) 0 100%)
+            calc(0.5 * var(--s)) 0 / calc(2 * var(--s)) var(--s);
+    pointer-events: none;
+}
+
+/* Ensure content remains visible over the pattern */
+.main-content {
+    position: relative;
+    z-index: 1;
+}
+.treasure-message {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    margin-top: 2rem;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.treasure-message h3 {
+    color: #000000;
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.treasure-message p {
+    color: #1a1a1a;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
 }
