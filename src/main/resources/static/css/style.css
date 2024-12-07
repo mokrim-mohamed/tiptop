@@ -246,7 +246,7 @@
                 }
         
                 footer {
-                    background-color: #333;
+                    background-color: #1f2937;
                     color: white;
                 }
         
@@ -827,9 +827,9 @@
         }
     }
  :root {
-    --primary: #047857; /* Vert plus foncé pour meilleur contraste */
-    --primary-light: #059669;
-    --primary-dark: #064e3b;
+    --primary: #025a41;
+    --primary-light: #037552;
+    --primary-dark: #013524;
     --secondary: #ca8a04; /* Jaune plus foncé pour meilleur contraste */
     --background: #f0f8f4;
     --text-dark: #1f2937;
@@ -838,12 +838,12 @@
 
 /* Navigation */
 .nav-link {
-    color: #047857; /* Vert plus foncé */
-    border: 2px solid #047857;
+    color: #013524; /* Vert plus foncé */
+    border: 2px solid #013524;
 }
 
 .nav-link:hover {
-    background-color: #047857;
+    background-color: #013524;
     color: #ffffff;
 }
 
@@ -853,7 +853,7 @@
 }
 
 .countdown-number {
-    color: #047857;
+    color: #013524;
     font-weight: 700; /* Augmentation du weight pour meilleur contraste */
 }
 
@@ -864,18 +864,18 @@
 
 /* Gains */
 .gain-circle h3 {
-    color: #064e3b;
-    font-weight: 700;
+    color: #013524;
+    font-weight: 800;
 }
 
 .gain-circle p {
-    color: #065f46;
-    font-weight: 500;
+    color: #025a41;
+    font-weight: 600;
 }
 
 /* Boutons */
 .spin-button {
-    background: #047857;
+    background: #013524;
     color: #ffffff;
     font-weight: 700;
 }
@@ -900,7 +900,7 @@ footer .social-links a {
 
 /* Messages d'état et notifications */
 .notification--success {
-    background: #047857;
+    background: #013524;
     color: #ffffff;
 }
 
