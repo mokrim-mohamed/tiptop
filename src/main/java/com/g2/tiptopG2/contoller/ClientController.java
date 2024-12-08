@@ -14,14 +14,20 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.g2.tiptopG2.dto.UserDto;
 import com.g2.tiptopG2.service.IUserService;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 @Controller
 public class ClientController {
     private final IUserService userService;
@@ -61,7 +67,32 @@ public class ClientController {
         }
     }
 
-
+    @PostMapping("/supprimer/supprimer-compte/{id}")
+    public String deleteClient(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes, HttpServletRequest request, HttpServletResponse response) {
+    try {
+        userService.deleteUser(id);  
+        redirectAttributes.addFlashAttribute("successMessage", "Client supprimé avec succès.");
+        
+        // Suppression des cookies
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                cookie.setValue("");
+                cookie.setPath("/");
+                cookie.setMaxAge(0);
+                response.addCookie(cookie);
+            }
+        }
+        
+        // Invalider la session
+        request.getSession().invalidate();
+        
+        return "redirect:/";  // Redirection vers index.html
+    } catch (EntityNotFoundException e) {
+        redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        return "redirect:/client/parrametre";
+    }
+}
     
     @GetMapping("client/participation")
     public String histoGains() {
