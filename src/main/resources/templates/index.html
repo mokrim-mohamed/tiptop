@@ -37,14 +37,14 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh; /* Hauteur relative à la taille de la fenêtre */
+    height: 50vh;
     perspective: 1000px;
     overflow: visible;
 }
 
 .prize-sphere {
     position: absolute;
-    width: min(120px, 10vw); /* S'adapte à la largeur de l'écran */
+    width: min(120px, 10vw);
     height: min(120px, 10vw);
     transition: all 0.5s ease;
 }
@@ -61,23 +61,19 @@
 }
 
 .prize-front {
-    background: #000;
-    color: white;
+    /* Ajout de la nouvelle couleur pour le devant des sphères */
+    background: #f0fdf4f4;
+    color: #000000;
     font-size: min(2rem, 4vw);
     font-weight: bold;
 }
 
 .prize-back {
-    background: white;
+    /* Ajout de la nouvelle couleur pour l'arrière des sphères */
+    background: #effdf4;
     transform: scale(2) rotateY(180deg);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.2); /* Ombre avec la couleur #4caf50 */
     opacity: 0;
-}
-
-.prize-back img {
-    width: 80%;
-    height: 80%;
-    object-fit: contain;
 }
 
 /* Positions relatives */
@@ -994,7 +990,7 @@ window.addEventListener("load", () => {
         // JavaScript for countdown
         function updateCountdown() {
     // Définir la date de fin au 13 décembre 2024 à minuit
-    const endDate = new Date('2024-12-13T23:59:59').getTime();
+    const endDate = new Date('2024-12-19T23:59:59').getTime();
     
     function update() {
         const now = new Date().getTime();
