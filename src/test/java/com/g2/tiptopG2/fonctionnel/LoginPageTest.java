@@ -34,7 +34,7 @@ public class LoginPageTest {
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://test.wk-archi-o23-15m-g2.fr/login");
+        driver.get("https://http://www.dsp5-archi-o23-15m-g2.fr/login");
 
         // Attente que la page se charge
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -58,7 +58,7 @@ public class LoginPageTest {
 
         // Remplir le champ username
         WebElement usernameField = driver.findElement(By.id("username"));
-        usernameField.sendKeys("test@gmail.com");
+        usernameField.sendKeys("admin@gmail.com");
 
         // Remplir le champ password
         WebElement passwordField = driver.findElement(By.id("password"));
