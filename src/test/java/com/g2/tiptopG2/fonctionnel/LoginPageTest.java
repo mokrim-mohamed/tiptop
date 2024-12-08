@@ -34,7 +34,7 @@ public class LoginPageTest {
 
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://http://www.dsp5-archi-o23-15m-g2.fr/login");
+        driver.get("https://www.dsp5-archi-o23-15m-g2.fr/login");
 
         // Attente que la page se charge
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

@@ -31,7 +31,7 @@ public class faqPageTest {
         options.addArguments("--remote-allow-origins=*");
 
         driver = new ChromeDriver(options);
-        driver.get("https://http://www.dsp5-archi-o23-15m-g2.fr/faq");
+        driver.get("https://www.dsp5-archi-o23-15m-g2.fr/faq");
 
         // Attente explicite
         new WebDriverWait(driver, Duration.ofSeconds(10))
