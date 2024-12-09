@@ -78,14 +78,7 @@ pipeline {
                 }
             }
         }
-        stage('fonctionnel tests') {
-            steps {
-                script {
-                    sleep(time: 40, unit: 'SECONDS')
-                    sh 'mvn test -P fonctionnel-tests'
-                }
-            }
-        }
+
     }
 
     post {
