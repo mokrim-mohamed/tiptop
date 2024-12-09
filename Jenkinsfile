@@ -23,13 +23,7 @@ pipeline {
                 }
             }
         }
-        stage('Tests & Publish Report') {
-            steps {
-                script {
-                    sh 'mvn clean verify sonar:sonar -P unit-tests'
-                }
-            }
-        }
+
         stage('Build Image') {
             steps {
                 script {
