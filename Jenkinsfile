@@ -10,7 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Récupérer le code source depuis le repository
-                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'main'
+                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'preprod'
             }
         }
 
@@ -37,7 +37,7 @@ pipeline {
 
                     
                    
-                    sh "docker build -t mokrim/prod:${dockerTag} ."
+                    sh "docker build -t mokrim/preprod:${dockerTag} ."
                     echo "Image a été créée avec le tag: ${dockerTag}"
                     
                     env.DOCKER_TAG = dockerTag
@@ -52,7 +52,7 @@ pipeline {
                 // Se connecter à Docker Hub
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
                 sh 'echo Login réussi'
-                sh "docker push mokrim/prod:${env.DOCKER_TAG}"
+                sh "docker push mokrim/preprod:${env.DOCKER_TAG}"
             }
         }
 
@@ -65,14 +65,14 @@ pipeline {
                             gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
                             gcloud config set project "$CLOUDSDK_CORE_PROJECT"
                             gcloud compute instances list
-                            gcloud compute ssh --zone="europe-west9-c" "env-prod" -- "
+                            gcloud compute ssh --zone="europe-west9-c" "env-preprod" -- "
                             docker stop my_container || true
                             docker rm my_container || true
-                            docker pull mokrim/prod:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
-                                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.1.13.155/test \
-                                -e SPRING_DATASOURCE_USERNAME=admin \
-                                -e SPRING_DATASOURCE_PASSWORD=Admin123! \
-                                --name my_container mokrim/prod:${env.DOCKER_TAG}"
+                            docker pull mokrim/preprod:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
+                                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.1.9.181/test \
+                                -e SPRING_DATASOURCE_USERNAME=mokrim \
+                                -e SPRING_DATASOURCE_PASSWORD=Mokrim123! \
+                                --name my_container mokrim/preprod:${env.DOCKER_TAG}"
                         """
                     }
                 }
