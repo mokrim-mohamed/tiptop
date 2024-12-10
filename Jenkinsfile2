@@ -51,7 +51,7 @@ pipeline {
                         sh """
                             gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
                             gcloud config set project "$CLOUDSDK_CORE_PROJECT"
-                            gcloud compute ssh --zone="europe-west9-c" "jenkinsserver " -- "
+                            gcloud compute ssh --zone="europe-west9-c" "jenkinsserver" -- "
                             bash /home/mohamed_nonka/create_snapshot.sh"
                         """
                     }
