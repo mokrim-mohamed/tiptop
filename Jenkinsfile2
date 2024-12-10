@@ -13,7 +13,12 @@ pipeline {
                 git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'test'
             }
         }
-
+    stages {
+        stage('date') {
+            steps {
+                    sh 'date',
+            }
+        }
 
  
 
