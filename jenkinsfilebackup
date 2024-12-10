@@ -1,0 +1,30 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('id_token_prv')
+        CLOUDSDK_CORE_PROJECT = 'g2-archi-o23'
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Récupérer le code source depuis le repository
+                git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'test'
+            }
+        }
+
+
+ 
+
+    }
+
+    post {
+        success {
+            echo 'Le backup s\'est terminé avec succès.'
+
+        }
+
+
+    }
+}
