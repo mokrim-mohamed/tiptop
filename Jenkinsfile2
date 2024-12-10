@@ -13,23 +13,18 @@ pipeline {
                 git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'test'
             }
         }
-    stages {
-        stage('date') {
+        
+        stage('Date') {
             steps {
-                    sh 'date',
+                // Afficher l'heure actuelle
+                sh 'date'
             }
         }
-
- 
-
     }
 
     post {
         success {
             echo 'Le backup s\'est terminé avec succès.'
-
         }
-
-
     }
 }
