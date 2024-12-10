@@ -13,7 +13,7 @@ pipeline {
             }
         }
 
-        stage('Create Snapshot') {
+        stage('Create Snapshot Base de donnees') {
             steps {
                 script {
                     // Authentifier avec Google Cloud Platform et exécuter le script
@@ -22,6 +22,36 @@ pipeline {
                             gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
                             gcloud config set project "$CLOUDSDK_CORE_PROJECT"
                             gcloud compute ssh --zone="europe-west9-c" "basededonnees" -- "
+                            bash /home/mohamed_nonka/create_snapshot.sh"
+                        """
+                    }
+                }
+            }
+        }
+                stage('Create Snapshot prod') {
+            steps {
+                script {
+                    // Authentifier avec Google Cloud Platform et exécuter le script
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCP_KEY_FILE')]) {
+                        sh """
+                            gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
+                            gcloud config set project "$CLOUDSDK_CORE_PROJECT"
+                            gcloud compute ssh --zone="europe-west9-c" "prod" -- "
+                            bash /home/mohamed_nonka/create_snapshot.sh"
+                        """
+                    }
+                }
+            }
+        }
+                stage('Create Snapshot wk') {
+            steps {
+                script {
+                    // Authentifier avec Google Cloud Platform et exécuter le script
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCP_KEY_FILE')]) {
+                        sh """
+                            gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
+                            gcloud config set project "$CLOUDSDK_CORE_PROJECT"
+                            gcloud compute ssh --zone="europe-west9-c" "jenkinsserver " -- "
                             bash /home/mohamed_nonka/create_snapshot.sh"
                         """
                     }
