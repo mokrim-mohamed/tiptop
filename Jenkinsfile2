@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('id_token_prv')
         CLOUDSDK_CORE_PROJECT = 'g2-archi-o23'
     }
 
@@ -13,18 +12,32 @@ pipeline {
                 git url: 'https://github.com/mokrim-mohamed/tiptop', branch: 'test'
             }
         }
-        
-        stage('Date') {
+
+        stage('Create Snapshot') {
             steps {
-                // Afficher l'heure actuelle
-                sh 'date'
+                script {
+                    // Authentifier avec Google Cloud Platform et exécuter le script
+                    withCredentials([file(credentialsId: 'gcloud-creds', variable: 'GCP_KEY_FILE')]) {
+                        sh """
+                            gcloud auth activate-service-account --key-file="$GCP_KEY_FILE"
+                            gcloud config set project "$CLOUDSDK_CORE_PROJECT"
+                            gcloud compute ssh --zone="europe-west9-c" "env-test" -- "
+                            bash /home/mohamed_nonka/create_snapshot.sh"
+                        """
+                    }
+                }
             }
         }
     }
 
     post {
         success {
-            echo 'Le backup s\'est terminé avec succès.'
+            echo 'Le snapshot a été créé avec succès.'
+
+        }
+
+        failure {
+            echo 'Échec de l\'exécution du pipeline.'
         }
     }
 }
