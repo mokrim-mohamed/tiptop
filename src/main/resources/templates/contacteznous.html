@@ -14,7 +14,23 @@
     <link rel="stylesheet" href="/css/style.css">
     <title>Contact</title>
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
-
+    <script src="https://js.hcaptcha.com/1/api.js?onload=onLoadCallback&render=explicit" 
+    async defer></script>
+    <script type="text/javascript">
+        var onLoadCallback = function() {
+            console.log('hCaptcha is ready to render');
+            hcaptcha.render('h-captcha-container', {
+                sitekey: '68426f62-53ae-4d18-a086-7c405668406c',
+                theme: 'light',
+                callback: function(token) {
+                    console.log('Captcha completed with token:', token);
+                },
+                'error-callback': function(error) {
+                    console.error('Captcha error:', error);
+                }
+            });
+        };
+    </script>
 </head>
 <style>
     body {
@@ -211,7 +227,10 @@
             <label class="form-label" for="message">Message *</label>
             <textarea id="message" name="message" class="form-textarea" required></textarea>
         </div>
-
+        <div class="input-group">
+            <div id="h-captcha-container"></div>
+            <input type="hidden" name="h-captcha-response" id="h-captcha-response">
+        </div>
         <button type="submit" class="submit-button">
             Envoyer le message
         </button>

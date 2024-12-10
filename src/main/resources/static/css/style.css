@@ -951,8 +951,8 @@ input[type="checkbox"]:checked {
     left: 0;
     z-index: -1;
     --s: 60px;
-    --c1: #6ca700;
-    --c2: #406102;
+    --c1: #effdf4;
+    --c2: #4caf50;
     --_g: radial-gradient(
         25% 25% at 25% 25%,
         var(--c1) 99%,
@@ -965,7 +965,6 @@ input[type="checkbox"]:checked {
             calc(0.5 * var(--s)) 0 / calc(2 * var(--s)) var(--s);
     pointer-events: none;
 }
-
 /* Ensure content remains visible over the pattern */
 .main-content {
     position: relative;
