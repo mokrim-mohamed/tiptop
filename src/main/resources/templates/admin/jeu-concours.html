@@ -118,57 +118,43 @@
     </div>
 
     <script>
-        const burgerMenu = document.getElementById('burgerMenu');
-        const sidebar = document.getElementById('sidebar');
-
-        burgerMenu.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-        });
-
         $(document).ready(function() {
             $('#showRandomUserBtn').click(function() {
-                $.ajax({
-                    type: "POST",
-                    url: "/randomUserWithGain",
-                    success: function(user) {
-                        if (user) {
-                            $('#randomUserInfo').html(
-                                `<div class="winner-card">
-                                    <h3>Félicitations, ${user.nom} !</h3>
-                                    <p><strong>Nom :</strong> ${user.nom}</p>
-                                    <p><strong>Prénom :</strong> ${user.prenom}</p>
-                                    <p><strong>Email :</strong> ${user.email}</p>
-                                    <button class="inform-button" onclick="informGagnant()">Informer par mail</button>
-                                </div>`
-                            );
-                        } else {
-                            $('#randomUserInfo').html("<p>Aucun gagnant trouvé.</p>");
+                // Vérification de la date actuelle
+                const currentDate = new Date();
+                const targetDate = new Date('2024-12-19');
+        
+                if (currentDate < targetDate) {
+                    // Afficher un pop-up si la date actuelle est avant le 19 décembre 2024
+                    alert("Vous ne pouvez pas lancer le tirage avant le 19 décembre 2024.");
+                } else {
+                    // Si la date est le 19 décembre ou après, continuer le tirage
+                    $.ajax({
+                        type: "POST",
+                        url: "/randomUserWithGain",
+                        success: function(user) {
+                            if (user) {
+                                $('#randomUserInfo').html(
+                                    `<div class="winner-card">
+                                        <h3>Félicitations, ${user.nom} !</h3>
+                                        <p><strong>Nom :</strong> ${user.nom}</p>
+                                        <p><strong>Prénom :</strong> ${user.prenom}</p>
+                                        <p><strong>Email :</strong> ${user.email}</p>
+                                        <button class="inform-button" onclick="informGagnant()">Informer par mail</button>
+                                    </div>`
+                                );
+                            } else {
+                                $('#randomUserInfo').html("<p>Aucun gagnant trouvé.</p>");
+                            }
+                        },
+                        error: function() {
+                            $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
                         }
-                    },
-                    error: function() {
-                        $('#randomUserInfo').html("<p>Erreur lors de la récupération du gagnant.</p>");
-                    }
-                });
-            });
-        });
-
-        function informGagnant() {
-            $('#loadingSpinner').show(); // Affiche le spinner
-
-            $.ajax({
-                type: "POST",
-                url: "/informGagnant",
-                success: function(response) {
-                    alert(response);
-                },
-                error: function() {
-                    alert("Erreur lors de l'envoi de l'email.");
-                },
-                complete: function() {
-                    $('#loadingSpinner').hide(); // Masque le spinner après la requête
+                    });
                 }
             });
-        }
+        });
+        
     </script>
 </body>
 </html>
