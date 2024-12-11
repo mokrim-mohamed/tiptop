@@ -29,7 +29,6 @@ public class WebController {
         model.addAttribute("user", new UserDto());
         String siteKey = "68426f62-53ae-4d18-a086-7c405668406c";
         model.addAttribute("siteKey", siteKey);
-        System.out.println("Site Key: " + siteKey); // Pour debug
         return "register";
     }
     @PostMapping("/register")
