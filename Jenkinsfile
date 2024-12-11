@@ -69,7 +69,7 @@ pipeline {
                             docker stop my_container || true
                             docker rm my_container || true
                             docker pull mokrim/prod:${env.DOCKER_TAG} && docker run -d -p 8080:8080 \
-                                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.1.13.155/test \
+                                -e SPRING_DATASOURCE_URL=jdbc:mysql://34.155.47.166/prod \
                                 -e SPRING_DATASOURCE_USERNAME=admin \
                                 -e SPRING_DATASOURCE_PASSWORD=Admin123! \
                                 --name my_container mokrim/prod:${env.DOCKER_TAG}"
