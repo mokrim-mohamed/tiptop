@@ -6,6 +6,7 @@
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-WWT36CRX');</script>
+
     <!-- End Google Tag Manager -->
 
     <meta charset="UTF-8">
@@ -14,23 +15,6 @@
     <link rel="stylesheet" href="/css/style.css">
     <title>Contact</title>
     <link rel="icon" type="image/png" href="/image/logo.png" alt="Logo Thé Tip Top">
-    <script src="https://js.hcaptcha.com/1/api.js?onload=onLoadCallback&render=explicit" 
-    async defer></script>
-    <script type="text/javascript">
-        var onLoadCallback = function() {
-            console.log('hCaptcha is ready to render');
-            hcaptcha.render('h-captcha-container', {
-                sitekey: '68426f62-53ae-4d18-a086-7c405668406c',
-                theme: 'light',
-                callback: function(token) {
-                    console.log('Captcha completed with token:', token);
-                },
-                'error-callback': function(error) {
-                    console.error('Captcha error:', error);
-                }
-            });
-        };
-    </script>
 </head>
 <style>
     body {
@@ -163,14 +147,15 @@
     }
 </style>
 <body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWT36CRX"
+        height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <header>
         <div class="logo">
         <a href="/index">
             <img src="/image/logo.png" alt="Logo" />
         </a> 
         <!-- Google Tag Manager (noscript) -->
-<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWT36CRX"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
     <!-- End Google Tag Manager (noscript) -->
     </div>
         <nav>
@@ -225,11 +210,7 @@
 
         <div class="form-group">
             <label class="form-label" for="message">Message *</label>
-            <textarea id="message" name="message" class="form-textarea" required></textarea>
-        </div>
-        <div class="input-group">
-            <div id="h-captcha-container"></div>
-            <input type="hidden" name="h-captcha-response" id="h-captcha-response">
+            <textarea id="message2" name="message" class="form-textarea" required></textarea>
         </div>
         <button type="submit" class="submit-button">
             Envoyer le message
@@ -346,32 +327,28 @@
     </div>
 </footer>
 <script>
-    document.getElementById('contactForm').addEventListener('submit', async function(event) {
-        event.preventDefault(); // Empêche le rechargement de la page
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault(); // Empêche le rechargement de la page
 
-        // Récupérer les valeurs du formulaire
-        const objet = document.getElementById('subject').value;
-        const body = document.getElementById('message').value;
+        // Valider les champs
+        let name = document.getElementById('name').value;
+        let email = document.getElementById('email').value;
+        let subject = document.getElementById('subject').value;
+        let messageContent = document.getElementById('message2').value;
 
-        try {
-            // Envoyer la requête POST au serveur
-            const response = await fetch('/contacteznous', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ objet, body })
-            });
+        // Afficher un message de confirmation dans la div #message
+        const messageDiv = document.getElementById('message');
+        messageDiv.innerHTML = '<p style="color: green;">Votre message a bien été envoyé !</p>';
+        
+        // Réinitialiser les champs du formulaire
+        document.getElementById('name').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('subject').value = '';
+        document.getElementById('message2').value = '';
 
-            // Vérifier si la requête a été réussie
-            const message = await response.text();
-            if (response.ok) {
-                document.getElementById('message').textContent = message;
-            } else {
-                document.getElementById('message').textContent = "Une erreur s'est produite.";
-            }
-        } catch (error) {
-            document.getElementById('message').textContent = "Erreur lors de l'envoi du formulaire.";
-        }
+      
     });
 </script>
+
 </body>
 </html>

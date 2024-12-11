@@ -19,7 +19,11 @@
 
         <div class="sidebar" id="sidebar">
             <div class="logo">
-                <img th:src="@{/image/logo.png}" alt="Logo">
+                <div class="logo">
+                    <a th:href="@{/index}">
+                        <img th:src="@{/image/logo.png}" alt="Tip Top" class="logo"> <!-- Utilisation de th:src -->
+                    </a>            
+                </div>           
             </div>
             <ul class="menu">
                 <li><a href="/admin/dashboard">Dashboard</a></li>

@@ -8,7 +8,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-G2K8PNXVFZ');
 </script>
 
@@ -32,96 +31,121 @@
 
 
 <style>
-.prizes-container {
+.card-carousel {
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 50vh;
+    width: 100%;
+    height: 500px;
     perspective: 1000px;
-    overflow: visible;
+    margin: 20px auto;
 }
 
-.prize-sphere {
-    position: absolute;
-    width: min(120px, 10vw);
-    height: min(120px, 10vw);
-    transition: all 0.5s ease;
-}
-
-.prize-sphere-face {
-    position: absolute;
+.carousel-stage {
+    position: relative;
     width: 100%;
     height: 100%;
+    transform-style: preserve-3d;
+}
+
+.game-card {
+    position: absolute;
+    width: 280px;
+    height: 380px;
+    left: 50%;
+    top: 50%;
+    transform-origin: center;
+    transform-style: preserve-3d;
+    transition: all 0.5s ease-out;
+    cursor: pointer;
+    border-radius: 20px;
+    background: white;
+}
+
+.card-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(145deg, #ffffff, #f3f4f6);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-image {
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #065f46;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 1rem;
+    color: #047857;
+    text-align: center;
+    line-height: 1.4;
+}
+
+/* Navigation buttons */
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: #059669;
+    border: none;
     border-radius: 50%;
-    backface-visibility: hidden;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.prize-front {
-    /* Ajout de la nouvelle couleur pour le devant des sphères */
-    background: #f0fdf4f4;
-    color: #000000;
-    font-size: min(2rem, 4vw);
-    font-weight: bold;
+.carousel-nav:hover {
+    background: #047857;
+    transform: translateY(-50%) scale(1.1);
 }
 
-.prize-back {
-    /* Ajout de la nouvelle couleur pour l'arrière des sphères */
-    background: #effdf4;
-    transform: scale(2) rotateY(180deg);
-    box-shadow: 0 8px 32px rgba(76, 175, 80, 0.2); /* Ombre avec la couleur #4caf50 */
-    opacity: 0;
+.prev-btn { left: -60px; }
+.next-btn { right: -60px; }
+
+/* Grand Prize styling */
+.game-card.grand-prize .card-content {
+    background: linear-gradient(145deg, #fef3c7, #fde68a);
+    border-color: #f59e0b;
 }
 
-/* Positions relatives */
-.prize-sphere:nth-child(1) { transform: translateX(min(-250px, -20vw)); }
-.prize-sphere:nth-child(2) { transform: translateX(min(-125px, -10vw)); }
-.prize-sphere:nth-child(3) { transform: translateX(0); }
-.prize-sphere:nth-child(4) { transform: translateX(max(125px, 10vw)); }
-.prize-sphere:nth-child(5) { transform: translateX(max(250px, 20vw)); }
-
-.prize-sphere:hover {
-    z-index: 10;
+.game-card.grand-prize .card-title {
+    color: #92400e;
 }
 
-.prize-sphere:hover .prize-front {
-    opacity: 0;
+/* Active card styling */
+.game-card.active {
+    z-index: 1;
+    transform: translateX(-50%) translateY(-50%) scale(1.1);
 }
 
-.prize-sphere:hover .prize-back {
-    opacity: 1;
-    transform: scale(2) rotateY(0);
+.game-card:not(.active) {
+    transform: translateX(-50%) translateY(-50%) scale(0.8);
+    opacity: 0.6;
 }
-
-/* Tablette et petits écrans */
-@media (max-width: 768px) {
-    .prizes-container {
-        height: auto;
-        flex-wrap: wrap;
-        gap: 2rem;
-        padding: 2rem;
-        perspective: none;
-    }
-    
-    .prize-sphere {
-        position: relative;
-        transform: none !important;
-        width: 90px;
-        height: 90px;
-    }
-    
-    .prize-back {
-        transform: scale(1.5) rotateY(180deg);
-    }
-    
-    .prize-sphere:hover .prize-back {
-        transform: scale(1.5) rotateY(0);
-    }
-}
-
     /* Style pour le conteneur de feuilles */
     .falling-leaves-container {
         position: fixed;
@@ -433,50 +457,121 @@ window.addEventListener("load", () => {
     <!-- Hero Section -->
     <section class="relative flex flex-col md:flex-row items-center justify-between p-8 md:p-16 pb-0 bg-emerald-100" id="hero">        <!-- Left Column with Wheel -->
         <div class="flex-1 max-w-[600px] transform hover:scale-105 transition-all duration-500">
-            
-            <div class="relative p-8">
-                <div class="pattern-background"></div>
-                <div class="absolute inset-0 bg-white/50 backdrop-blur-lg rounded-3xl shadow-xl"></div>
-                <div class="absolute -inset-2 bg-gradient-to-r from-emerald-400 to-green-500 opacity-20 blur-2xl rounded-3xl"></div>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    const prizes = [
+                        {
+                            title: "🏆 Grand Prix",
+                            description: "1 An de Thé Gratuit - Valeur 360€",
+                            image: "/image/1.png",
+                            isGrandPrize: true
+                        },
+                        {
+                            title: "Infuseur à thé",
+                            description: "Un infuseur élégant",
+                            image: "/image/image.png"
+                        },
+                        {
+                            title: "Thé Détox",
+                            description: "Boîte de 100g",
+                            image: "/image/gain3.png"
+                        },
+                        {
+                            title: "Thé Signature",
+                            description: "Notre création exclusive",
+                            image: "/image/gain3.png"
+                        },
+                        {
+                            title: "Coffret Découverte",
+                            description: "Sélection premium",
+                            image: "/image/gain2.png"
+                        }
+                    ];
                 
-                <div class="prizes-container">
-                    <div class="prize-sphere">
-                        <div class="prize-sphere-face prize-front">1</div>
-                        <div class="prize-sphere-face prize-back">
-                            <img src="/image/image.png" alt="Infuseur à thé">
-                        </div>
-                    </div>
-                    <div class="prize-sphere">
-                        <div class="prize-sphere-face prize-front">2</div>
-                        <div class="prize-sphere-face prize-back">
-                            <img src="/image/gain3.png" alt="Thé Détox">
-                        </div>
-                    </div>
-                    <div class="prize-sphere">
-                        <div class="prize-sphere-face prize-front">3</div>
-                        <div class="prize-sphere-face prize-back">
-                            <img src="/image/gain3.png" alt="Thé signature">
-                        </div>
-                    </div>
-                    <div class="prize-sphere">
-                        <div class="prize-sphere-face prize-front">4</div>
-                        <div class="prize-sphere-face prize-back">
-                            <img src="/image/gain2.png" alt="Coffret découverte">
-                        </div>
-                    </div>
-                    <div class="prize-sphere">
-                        <div class="prize-sphere-face prize-front">5</div>
-                        <div class="prize-sphere-face prize-back">
-                            <img src="/image/gain4.png" alt="Coffret premium">
-                        </div>
-                    </div>
-                </div>
+                    let currentIndex = 0;
+                    let cards = [];
                 
-                <div class="treasure-message text-center mt-8">
-                    <h3 class="text-2xl font-bold text-black mb-4">Des lots exceptionnels à découvrir !</h3>
-                    <p class="text-gray-900 mb-6">Survolez les sphères pour révéler nos lots</p>
+                    function updateCardPositions() {
+                        cards.forEach((card, index) => {
+                            const offset = index - currentIndex;
+                            const xPosition = offset * 300;
+                            const zPosition = Math.abs(offset) * -100;
+                            const opacity = Math.max(0.6, 1 - Math.abs(offset) * 0.3);
+                
+                            card.style.transform = `
+                                translate3d(${xPosition}px, 0, ${zPosition}px)
+                                translateX(-50%) translateY(-50%)
+                                ${index === currentIndex ? 'scale(1.1)' : 'scale(0.8)'}
+                            `;
+                            card.style.opacity = opacity;
+                            card.classList.toggle('active', index === currentIndex);
+                        });
+                    }
+                
+                    function createCards() {
+                        const container = document.querySelector('.carousel-stage');
+                        container.innerHTML = '';
+                        
+                        prizes.forEach((prize, index) => {
+                            const card = document.createElement('div');
+                            card.className = `game-card ${prize.isGrandPrize ? 'grand-prize' : ''}`;
+                            
+                            card.innerHTML = `
+                                <div class="card-content">
+                                    <img src="${prize.image}" alt="${prize.title}" class="card-image">
+                                    <h3 class="card-title">${prize.title}</h3>
+                                    <p class="card-description">${prize.description}</p>
+                                </div>
+                            `;
+                            
+                            container.appendChild(card);
+                            cards.push(card);
+                            
+                            card.addEventListener('click', () => {
+                                currentIndex = index;
+                                updateCardPositions();
+                            });
+                        });
+                        
+                        updateCardPositions();
+                    }
+                
+                    function nextSlide() {
+                        currentIndex = (currentIndex + 1) % prizes.length;
+                        updateCardPositions();
+                    }
+                
+                    function prevSlide() {
+                        currentIndex = (currentIndex - 1 + prizes.length) % prizes.length;
+                        updateCardPositions();
+                    }
+                
+                    // Initialize
+                    createCards();
+                
+                    // Add navigation
+                    document.querySelector('.prev-btn').addEventListener('click', prevSlide);
+                    document.querySelector('.next-btn').addEventListener('click', nextSlide);
+                
+                    // Auto-rotation every 5 seconds
+                    setInterval(nextSlide, 2000);
+                });
+                </script>
+                <div class="text-center mb-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-emerald-800">
+                        <span class="inline-block animate-bounce-slow">🎁</span>
+                        Les lots à gagner
+                        <span class="inline-block animate-bounce-slow">🎁</span>
+                    </h2>
+                    <p class="text-xl text-emerald-700 mt-4">
+                        Découvrez tous les lots exceptionnels de notre grand jeu-concours
+                    </p>
                 </div>
-            </div>
+<div class="card-carousel">
+    <button class="carousel-nav prev-btn">❮</button>
+    <button class="carousel-nav next-btn">❯</button>
+    <div class="carousel-stage"></div>
+</div>
         </div>
         
         <!-- Right Column with Content -->
@@ -523,10 +618,9 @@ window.addEventListener("load", () => {
     
                     <!-- Form -->
                     <form class="space-y-8 relative">
-                        <div class="p-6 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-emerald-100">
+                        <div class="p-6 bg-white rounded-xl shadow-lg border border-emerald-100">
                             <p class="text-center text-lg text-emerald-700">
-                                Vous avez jusqu'à 30 jours après la fin du concours pour réclamer vos gains, 
-                                en magasin ou en ligne.
+                                Vous avez jusqu'à 30 jours après la fin du concours pour réclamer vos gains, en magasin ou en ligne.
                             </p>
                         </div>
                         <a th:href="${!isAuthenticated ? '/login' : '/client/participation'}" 
@@ -550,7 +644,7 @@ window.addEventListener("load", () => {
     </section>
     <div class="w-full h-24 bg-gradient-to-b from-emerald-100 to-green-50 -mt-24"></div>
     <!-- Gains Section -->
-    <section class="relative py-16 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50" id="gains">        <!-- Background decorations -->
+    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50" id="gains">        <!-- Background decorations -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
             <div class="absolute top-0 right-1/4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
@@ -579,6 +673,7 @@ window.addEventListener("load", () => {
                 <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                     <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
+                        
                         <!-- Badge pourcentage -->
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
                             <span class="text-emerald-700 font-semibold">60%</span>
@@ -589,16 +684,13 @@ window.addEventListener("load", () => {
                             <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
                             <img src="/image/image.png" alt="Infuseur" 
                                  class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
-                                🫖
-                            </div>
+
                         </div>
     
                         <!-- Content -->
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Infuseur à thé</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Un infuseur élégant pour vos thés</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Un infuseur en inox de haute qualité, design élégant et pratique pour vos thés en vrac. Parfait pour une infusion optimale.</p>                            
                             <!-- Progress bar -->
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
@@ -625,14 +717,11 @@ window.addEventListener("load", () => {
                             <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
                             <img src="/image/gain3.png" alt="Thé Détox" 
                                  class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
-                                🍵
-                            </div>
                         </div>
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Thé Détox</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Boîte de 100g - Thé détox ou infusion</p>
+                            <p class="text-emerald-700 font-medium mb-4">Mélange unique de thé vert, maté et plantes détoxifiantes. Boîte de 100g pour environ 40 tasses de bien-être.</p>
                             
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
@@ -653,29 +742,26 @@ window.addEventListener("load", () => {
                     <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
-                            <span class="text-emerald-700 font-semibold">20%</span>
+                            <span class="text-emerald-700 font-semibold">10%</span>
                         </div>
                         
                         <div class="w-32 h-32 mx-auto mb-6 relative">
                             <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
                             <img src="/image/gain3.png" alt="Thé Détox" 
                                  class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
-                                🍵
-                            </div>
+
                         </div>
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Thé signature</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Boîte de 100g - Thé signature</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Notre création exclusive : un mélange subtil de thé noir, vanille et agrumes. Une expérience gustative unique en 100g.</p>                            
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
                                     <div class="h-full w-[20%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-1000 text-white text-xs rounded-full">
-                                    20%
+                                    10%
                                 </span>
                             </div>
                         </div>
@@ -687,29 +773,25 @@ window.addEventListener("load", () => {
                     <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
-                            <span class="text-emerald-700 font-semibold">20%</span>
+                            <span class="text-emerald-700 font-semibold">6%</span>
                         </div>
                         
                         <div class="w-32 h-32 mx-auto mb-6 relative">
                             <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
                             <img src="/image/gain2.png" alt="Thé Détox" 
                                  class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
-                                🍵
-                            </div>
                         </div>
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Coffret</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Coffret découverte - 39€</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Coffret découverte premium incluant 3 thés différents de 50g chacun et un guide de dégustation personnalisé.</p>                            
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
                                     <div class="h-full w-[20%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-1000 text-white text-xs rounded-full">
-                                    20%
+                                    6%
                                 </span>
                             </div>
                         </div>
@@ -721,29 +803,25 @@ window.addEventListener("load", () => {
                     <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
-                            <span class="text-emerald-700 font-semibold">20%</span>
+                            <span class="text-emerald-700 font-semibold">4%</span>
                         </div>
                         
                         <div class="w-32 h-32 mx-auto mb-6 relative">
                             <div class="absolute inset-0 bg-gradient-to-r from-emerald-100 to-green-100 rounded-full animate-pulse-slow"></div>
                             <img src="/image/gain4.png" alt="Thé Détox" 
                                  class="relative w-full h-full object-cover rounded-full border-8 border-emerald-50 group-hover:border-emerald-100 transition-colors duration-300 shadow-lg">
-                            <div class="absolute -top-2 -right-2 w-8 h-8 bg-emerald-400 rounded-full animate-bounce-slow flex items-center justify-center text-xl">
-                                🍵
-                            </div>
                         </div>
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Coffret</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Coffret découverte - 69€</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Notre coffret luxe avec 5 thés exclusifs de 50g, un infuseur en inox et un guide expert de dégustation.</p>                            
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
                                     <div class="h-full w-[20%] bg-emerald-100 rounded-full 
                                                 group-hover:animate-pulse transition-all duration-500"></div>
                                 </div>
                                 <span class="absolute -top-1 left-[20%] transform -translate-x-1/2 px-2 py-1 bg-emerald-1000 text-white text-xs rounded-full">
-                                    20%
+                                    4%
                                 </span>
                             </div>
                         </div>
@@ -752,19 +830,14 @@ window.addEventListener("load", () => {
             </div>
         </div>
     </section>
-    
-    <!-- Grand Prix Final Section reste identique -->
-    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-green-50 to-emerald-100" id="grand-prix">
-        <!-- Contenu existant du grand prix -->
-    </section>
+
     
 
-    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-green-50 to-emerald-100" id="grand-prix">
+    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50" id="grand-prix">
         <!-- Background decorations améliorés -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute top-0 left-1/4 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
-            <div class="absolute top-0 right-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-1/3 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-4000"></div>
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
+            <div class="absolute top-0 right-1/4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
         </div>
     
         <!-- Title Section avec style amélioré -->
@@ -808,6 +881,28 @@ window.addEventListener("load", () => {
                         <div class="flex-1 text-center md:text-left">
                             <h3 class="text-3xl font-bold text-emerald-800 mb-4">1 An de Thé Gratuit</h3>
                             <ul class="space-y-3 text-lg text-emerald-700">
+                                <li class="flex items-center">
+                                    <span class="mr-2">🌱</span>
+                                    12 thés exclusifs de 100g chacun
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">🎁</span>
+                                    Un coffret premium par trimestre
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">✨</span>
+                                    Un infuseur en inox de luxe
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">📚</span>
+                                    Guide expert de dégustation personnalisé
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">⭐</span>
+                                    Accès VIP aux dégustations mensuelles
+                                </li>
+                            </ul>
+                            <ul class="space-y-3 text-lg text-emerald-700">
 
                             </ul>
                             <div class="mt-6">
@@ -820,8 +915,6 @@ window.addEventListener("load", () => {
                 </div>
             </div>
         </div>
-    
-
     </section>
     <!-- Newsletter Section -->
 <section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50">
@@ -1053,98 +1146,7 @@ document.addEventListener('DOMContentLoaded', updateCountdown);
             { text: "Gain 5", color: "#FFEEAD" }
         ];
 
-        function createWheel() {
-            const totalSections = sections.length;
-            const rotationAngle = 360 / totalSections;
-            const svgNamespace = "http://www.w3.org/2000/svg";
-            
-            // Créer l'élément SVG
-            const svg = document.createElementNS(svgNamespace, "svg");
-            svg.setAttribute("viewBox", "0 0 100 100");
-            svg.style.width = "100%";
-            svg.style.height = "100%";
-            
-            // Calculer les paramètres du donut
-            const centerX = 50;
-            const centerY = 50;
-            const outerRadius = 50;
-            const innerRadius = 20;
 
-            sections.forEach((section, index) => {
-                // Calculer les angles pour cette section
-                const startAngle = (index * rotationAngle) * Math.PI / 180;
-                const endAngle = ((index + 1) * rotationAngle) * Math.PI / 180;
-                
-                // Calculer les points du path
-                const outerStartX = centerX + outerRadius * Math.cos(startAngle);
-                const outerStartY = centerY + outerRadius * Math.sin(startAngle);
-                const outerEndX = centerX + outerRadius * Math.cos(endAngle);
-                const outerEndY = centerY + outerRadius * Math.sin(endAngle);
-                
-                const innerStartX = centerX + innerRadius * Math.cos(endAngle);
-                const innerStartY = centerY + innerRadius * Math.sin(endAngle);
-                const innerEndX = centerX + innerRadius * Math.cos(startAngle);
-                const innerEndY = centerY + innerRadius * Math.sin(startAngle);
-                
-                // Créer le path pour cette section
-                const path = document.createElementNS(svgNamespace, "path");
-                const d = [
-                    `M ${outerStartX} ${outerStartY}`,
-                    `A ${outerRadius} ${outerRadius} 0 0 1 ${outerEndX} ${outerEndY}`,
-                    `L ${innerStartX} ${innerStartY}`,
-                    `A ${innerRadius} ${innerRadius} 0 0 0 ${innerEndX} ${innerEndY}`,
-                    'Z'
-                ].join(' ');
-                
-                path.setAttribute("d", d);
-                path.setAttribute("fill", section.color);
-                svg.appendChild(path);
-
-                // Ajouter le texte
-                const textAngle = startAngle + (rotationAngle / 2) * Math.PI / 180;
-                const textRadius = (outerRadius + innerRadius) / 2;
-                const textX = centerX + textRadius * Math.cos(textAngle);
-                const textY = centerY + textRadius * Math.sin(textAngle);
-                
-                const text = document.createElementNS(svgNamespace, "text");
-                text.textContent = section.text;
-                text.setAttribute("x", textX);
-                text.setAttribute("y", textY);
-                text.setAttribute("text-anchor", "middle");
-                text.setAttribute("dominant-baseline", "middle");
-                text.setAttribute("fill", "white");
-                text.setAttribute("font-size", "4");
-                text.setAttribute("font-weight", "bold");
-                text.setAttribute("transform", `rotate(${(index * rotationAngle) + rotationAngle/2}, ${textX}, ${textY})`);
-                
-                svg.appendChild(text);
-            });
-            
-            wheel.appendChild(svg);
-        }
-
-        function spinWheel() {
-            if (isSpinning) return;
-            isSpinning = true;
-            spinBtn.disabled = true;
-
-            const rotations = 5 + Math.random() * 5;
-            const extraDegrees = Math.random() * 360;
-            const totalDegrees = rotations * 360 + extraDegrees;
-
-            wheel.style.transform = `rotate(${totalDegrees}deg)`;
-
-            setTimeout(() => {
-                isSpinning = false;
-                spinBtn.disabled = false;
-                
-                const finalAngle = extraDegrees;
-                const sectionAngle = 360 / sections.length;
-                const winningIndex = Math.floor((360 - (finalAngle % 360)) / sectionAngle);
-            }, 4000);
-        }
-
-        createWheel();
     </script>
     <div class="falling-leaves-container"></div>
     <script>
@@ -1159,6 +1161,7 @@ document.addEventListener('DOMContentLoaded', updateCountdown);
           });
         }
       </script>
+
 </body>
 </html>
 

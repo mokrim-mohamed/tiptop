@@ -29,7 +29,6 @@ public class LoginController {
     public String index(Model model, Principal principal) {
         // Vérifiez si l'utilisateur est connecté
         boolean isAuthenticated = principal != null;
-        System.out.println("Authenticated: " + isAuthenticated);
 
         // Initialiser les rôles
         boolean isAdmin = false;

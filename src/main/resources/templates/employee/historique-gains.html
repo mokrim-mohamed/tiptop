@@ -20,7 +20,9 @@
         <!-- Sidebar -->
         <div class="sidebar" id="sidebar">
             <div class="logo">
-                <img th:src="@{/image/logo.png}" alt="Logo">
+                <a th:href="@{/index}">
+                    <img th:src="@{/image/logo.png}" alt="Tip Top" class="logo"> <!-- Utilisation de th:src -->
+                </a>            
             </div>
             <ul class="menu">
                 <li><a href="/employee/historique-gains" class="active">Chercher un gain</a></li>

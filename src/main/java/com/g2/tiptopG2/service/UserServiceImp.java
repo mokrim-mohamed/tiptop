@@ -48,7 +48,7 @@ public class UserServiceImp implements IUserService {
     // Encoder le mot de passe avant de sauvegarder l'utilisateur
 	    UserEntity existingUser = UserDao.findByEmail(userDto.getEmail());
    		 if (existingUser != null) {
-        throw new RuntimeException("Cet utilisateur avec cet email existe déjà !");
+        throw new RuntimeException("Un utilisateur avec cet email existe déjà !");
     	}
 		userDto.setRoleId(3);
     	BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -135,13 +135,10 @@ public class UserServiceImp implements IUserService {
 	
 	@Override
 	public List<UserDto> getUsersWithGains() {
-		System.out.println("appel methode");
 		List<UserEntity> usersEntities = UserDao.findUsersWithAtLeastOneGain();
 		if(usersEntities.isEmpty()){
-		System.out.println("null");
 			return null;
 		}else{
-			System.out.println("n est pas null");
 			return usersEntities.stream().map(el->modelmapper.map(el, UserDto.class)).collect(Collectors.toList());
 		}
 	}

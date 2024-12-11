@@ -17,9 +17,9 @@
 
         <!-- Sidebar Navigation -->
         <nav class="sidebar" id="sidebar">
-            <div class="logo">
-                <img th:src="@{/image/logo.png}" alt="Logo">
-            </div>
+            <a th:href="@{/index}">
+                <img th:src="@{/image/logo.jpeg}" alt="Tip Top" class="logo"> <!-- Utilisation de th:src -->
+            </a>
             <ul class="menu">
                 <li><a href="/admin/dashboard">Dashboard</a></li>
                 <li><a href="/admin/listeUser" class="active">Liste des utilisateurs </a></li>
