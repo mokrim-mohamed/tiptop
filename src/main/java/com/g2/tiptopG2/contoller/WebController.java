@@ -41,29 +41,13 @@ public class WebController {
         return "register";
     }
     @PostMapping("/register")
-    public String registerUser(
-        @ModelAttribute("user") UserDto userDto,
-        @RequestParam(name = "h-captcha-response", required = false) String captchaResponse,
-        Model model) {
-        
-        // Log pour debug
-        System.out.println("Captcha response: " + captchaResponse);
-        
-        // Valider le captcha
-        if (!validateHCaptcha(captchaResponse)) {
-            model.addAttribute("errorMessage", "Veuillez valider le captcha correctement");
-            // Important : réinjecter la clé du site pour le rechargement du captcha
-            model.addAttribute("siteKey", "68426f62-53ae-4d18-a086-7c405668406c");
-            return "register";
-        }
-        
+    public String registerUser(@ModelAttribute("user") UserDto userDto, Model model) {
         try {
             userService.save(userDto);
             return "redirect:/login";
         } catch (RuntimeException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            model.addAttribute("siteKey", "68426f62-53ae-4d18-a086-7c405668406c");
-            return "register";
+            return "login"; // Assurez-vous que "registre" correspond au nom de la vue de votre page d'inscription
         }
     }
     private boolean validateHCaptcha(String captchaResponse) {
