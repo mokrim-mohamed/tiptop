@@ -554,9 +554,19 @@ window.addEventListener("load", () => {
                     document.querySelector('.next-btn').addEventListener('click', nextSlide);
                 
                     // Auto-rotation every 5 seconds
-                    setInterval(nextSlide, 5000);
+                    setInterval(nextSlide, 2000);
                 });
                 </script>
+                <div class="text-center mb-8">
+                    <h2 class="text-4xl md:text-5xl font-bold text-emerald-800">
+                        <span class="inline-block animate-bounce-slow">🎁</span>
+                        Les lots à gagner
+                        <span class="inline-block animate-bounce-slow">🎁</span>
+                    </h2>
+                    <p class="text-xl text-emerald-700 mt-4">
+                        Découvrez tous les lots exceptionnels de notre grand jeu-concours
+                    </p>
+                </div>
 <div class="card-carousel">
     <button class="carousel-nav prev-btn">❮</button>
     <button class="carousel-nav next-btn">❯</button>
@@ -608,10 +618,9 @@ window.addEventListener("load", () => {
     
                     <!-- Form -->
                     <form class="space-y-8 relative">
-                        <div class="p-6 bg-white/80 backdrop-blur-sm rounded-xl shadow-lg border border-emerald-100">
+                        <div class="p-6 bg-white rounded-xl shadow-lg border border-emerald-100">
                             <p class="text-center text-lg text-emerald-700">
-                                Vous avez jusqu'à 30 jours après la fin du concours pour réclamer vos gains, 
-                                en magasin ou en ligne.
+                                Vous avez jusqu'à 30 jours après la fin du concours pour réclamer vos gains, en magasin ou en ligne.
                             </p>
                         </div>
                         <a th:href="${!isAuthenticated ? '/login' : '/client/participation'}" 
@@ -635,7 +644,7 @@ window.addEventListener("load", () => {
     </section>
     <div class="w-full h-24 bg-gradient-to-b from-emerald-100 to-green-50 -mt-24"></div>
     <!-- Gains Section -->
-    <section class="relative py-16 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50" id="gains">        <!-- Background decorations -->
+    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50" id="gains">        <!-- Background decorations -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
             <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
             <div class="absolute top-0 right-1/4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
@@ -664,6 +673,7 @@ window.addEventListener("load", () => {
                 <div class="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 overflow-hidden">
                     <div class="absolute inset-0 bg-emerald-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <div class="p-8">
+                        
                         <!-- Badge pourcentage -->
                         <div class="absolute top-4 right-4 bg-emerald-100 rounded-full px-3 py-1">
                             <span class="text-emerald-700 font-semibold">60%</span>
@@ -680,8 +690,7 @@ window.addEventListener("load", () => {
                         <!-- Content -->
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Infuseur à thé</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Un infuseur élégant pour vos thés</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Un infuseur en inox de haute qualité, design élégant et pratique pour vos thés en vrac. Parfait pour une infusion optimale.</p>                            
                             <!-- Progress bar -->
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
@@ -712,7 +721,7 @@ window.addEventListener("load", () => {
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Thé Détox</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Boîte de 100g - Thé détox ou infusion</p>
+                            <p class="text-emerald-700 font-medium mb-4">Mélange unique de thé vert, maté et plantes détoxifiantes. Boîte de 100g pour environ 40 tasses de bien-être.</p>
                             
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
@@ -745,8 +754,7 @@ window.addEventListener("load", () => {
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Thé signature</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Boîte de 100g - Thé signature</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Notre création exclusive : un mélange subtil de thé noir, vanille et agrumes. Une expérience gustative unique en 100g.</p>                            
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
                                     <div class="h-full w-[20%] bg-emerald-100 rounded-full 
@@ -776,8 +784,7 @@ window.addEventListener("load", () => {
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Coffret</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Coffret découverte - 39€</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Coffret découverte premium incluant 3 thés différents de 50g chacun et un guide de dégustation personnalisé.</p>                            
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
                                     <div class="h-full w-[20%] bg-emerald-100 rounded-full 
@@ -807,8 +814,7 @@ window.addEventListener("load", () => {
     
                         <div class="text-center">
                             <h3 class="text-xl font-bold text-emerald-800 mb-2">Coffret</h3>
-                            <p class="text-emerald-700 font-medium mb-4">Coffret découverte - 69€</p>
-                            
+                            <p class="text-emerald-700 font-medium mb-4">Notre coffret luxe avec 5 thés exclusifs de 50g, un infuseur en inox et un guide expert de dégustation.</p>                            
                             <div class="mt-4 relative pt-4">
                                 <div class="h-2 w-full bg-emerald-100 rounded-full overflow-hidden">
                                     <div class="h-full w-[20%] bg-emerald-100 rounded-full 
@@ -824,19 +830,14 @@ window.addEventListener("load", () => {
             </div>
         </div>
     </section>
-    
-    <!-- Grand Prix Final Section reste identique -->
-    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-green-50 to-emerald-100" id="grand-prix">
-        <!-- Contenu existant du grand prix -->
-    </section>
+
     
 
-    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-green-50 to-emerald-100" id="grand-prix">
+    <section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50" id="grand-prix">
         <!-- Background decorations améliorés -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute top-0 left-1/4 w-96 h-96 bg-yellow-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
-            <div class="absolute top-0 right-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
-            <div class="absolute -bottom-8 left-1/3 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-4000"></div>
+            <div class="absolute top-0 left-1/4 w-96 h-96 bg-emerald-200 rounded-full mix-blend-multiply opacity-20 animate-blob"></div>
+            <div class="absolute top-0 right-1/4 w-96 h-96 bg-green-200 rounded-full mix-blend-multiply opacity-20 animate-blob animation-delay-2000"></div>
         </div>
     
         <!-- Title Section avec style amélioré -->
@@ -880,6 +881,28 @@ window.addEventListener("load", () => {
                         <div class="flex-1 text-center md:text-left">
                             <h3 class="text-3xl font-bold text-emerald-800 mb-4">1 An de Thé Gratuit</h3>
                             <ul class="space-y-3 text-lg text-emerald-700">
+                                <li class="flex items-center">
+                                    <span class="mr-2">🌱</span>
+                                    12 thés exclusifs de 100g chacun
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">🎁</span>
+                                    Un coffret premium par trimestre
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">✨</span>
+                                    Un infuseur en inox de luxe
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">📚</span>
+                                    Guide expert de dégustation personnalisé
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="mr-2">⭐</span>
+                                    Accès VIP aux dégustations mensuelles
+                                </li>
+                            </ul>
+                            <ul class="space-y-3 text-lg text-emerald-700">
 
                             </ul>
                             <div class="mt-6">
@@ -892,8 +915,6 @@ window.addEventListener("load", () => {
                 </div>
             </div>
         </div>
-    
-
     </section>
     <!-- Newsletter Section -->
 <section class="relative py-24 overflow-hidden bg-gradient-to-b from-emerald-100 to-green-50">

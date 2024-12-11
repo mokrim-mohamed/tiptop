@@ -142,7 +142,7 @@
                     background-color: #f0fdf4;
                     border-radius: 12px;
                     padding: 1rem;
-                    min-width: 100px;
+                    min-width: 90px;
                 }
         
                 .countdown-number {
@@ -150,7 +150,7 @@
                     font-size: 2.5rem;
                     font-weight: 700;
                     line-height: 1;
-                    margin-bottom: 0.5rem;
+                    margin-bottom: 0.25rem;
                 }
         
                 .countdown-label {
@@ -192,7 +192,7 @@
                     }
         
                     .countdown-label {
-                        font-size: 0.875rem;
+                        font-size: 0.85rem;
                     }
                 }
         
@@ -859,7 +859,7 @@
 
 .countdown-label {
     color: #064e3b;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* Gains */
@@ -1095,7 +1095,7 @@ input[type="checkbox"]:checked {
                     font-size: 2.5rem;
                     font-weight: 700;
                     line-height: 1;
-                    margin-bottom: 0.5rem;
+                    margin-bottom: 0.25rem;
                 }
         
                 .countdown-label {
@@ -1128,7 +1128,7 @@ input[type="checkbox"]:checked {
                     }
         
                     .countdown-item {
-                        min-width: 70px;
+                        min-width: 90px;
                         padding: 0.75rem;
                     }
         
@@ -1137,7 +1137,7 @@ input[type="checkbox"]:checked {
                     }
         
                     .countdown-label {
-                        font-size: 0.875rem;
+                        font-size: 0.85rem;
                     }
                 }
         
@@ -1804,7 +1804,7 @@ input[type="checkbox"]:checked {
 
 .countdown-label {
     color: #064e3b;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 /* Gains */
