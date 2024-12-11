@@ -132,7 +132,7 @@ public class AdminController {
     .entrySet().stream()
     .collect(Collectors.toMap(Map.Entry::getKey, entry -> (long) entry.getValue().size()));
 
-    // Prepare ageLabels and ageCounts
+    // Prepare ageLabels and ageCounts  ddd
     List<String> ageLabels = new ArrayList<>(gainsByAgeGroup.keySet());
     List<Long> ageCounts = new ArrayList<>(gainsByAgeGroup.values());
         // Add all statistics to the model
