@@ -73,7 +73,7 @@ public class ClientController {
         userService.deleteUser(id);  
         redirectAttributes.addFlashAttribute("successMessage", "Client supprimé avec succès.");
         
-        // Suppression des cookies
+        // Suppression des cookiesfhfh
         Cookie[] cookies = request.getCookies();
         if (cookies != null) {
             for (Cookie cookie : cookies) {
